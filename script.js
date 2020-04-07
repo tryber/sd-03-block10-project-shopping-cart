@@ -26,6 +26,12 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+
+fetch("https://api.mercadolibre.com/sites/MLB/search?q=computador").then((response) => console.log(response.json()));
+
+
+
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
