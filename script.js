@@ -33,7 +33,7 @@ const appendElement = (parentClass, callback, obj) => document
 
 const addToCart = async ({ sku }) => {
   await fetchAPI(`https://api.mercadolibre.com/items/${sku}`)
-    .then (product => appendElement('cart__items', createCartItemElement, {
+    .then(product => appendElement('cart__items', createCartItemElement, {
       sku: product.id,
       name: product.title,
       salePrice: product.price,
