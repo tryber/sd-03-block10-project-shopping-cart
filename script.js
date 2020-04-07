@@ -12,6 +12,21 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function addToCart() {
+  const id = getSkuFromProductItem(event.target.parentNode);
+  // const id = event.target.parentNode.firstElementChild.innerHTML;
+  console.log(id);
+    const URL = `https://api.mercadolibre.com/items/${id}`;
+    const request = {
+      method: 'GET',
+      Headers: { Accept: 'application/JSON' },
+    };
+
+    fetch(URL, request)
+      .then(data => console.log(data.json()))
+      .catch(() => console.log('não foi dessa vez'));
+}
+
 function createProductItemElement({ id: sku, title: name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -19,7 +34,26 @@ function createProductItemElement({ id: sku, title: name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   if (image !== undefined) section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  button.addEventListener('click', () => {
+    const id = getSkuFromProductItem(event.target.parentNode);
+    const URL = `https://api.mercadolibre.com/items/${id}`;
+    const request = {
+      method: 'GET',
+      Headers: { Accept: 'application/JSON' },
+    };
+
+    fetch(URL, request)
+      .then(data => data.json())
+      .then(json =>
+        document.getElementById('cart__items')
+        .appendChild(createCartItemElement(json))
+      )
+      .then()
+      .catch(erro => erro);
+  });
+
+  section.appendChild(button);
 
   return section;
 }
@@ -32,7 +66,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -52,14 +86,9 @@ function fetchInMercadoLivre(elem) {
 
 window.onload = function onload() {
   fetchInMercadoLivre('computador')
-    .then((data) => {
-      const response = data.json();
-      console.log(response);
-      return response;
-    })
+    .then(data => data.json())
     .then(data => data.results)
     .then((results) => {
-      console.log(results);
       results.forEach((elem) => {
         document.getElementById('items-container')
         .appendChild(createProductItemElement(elem));
