@@ -40,7 +40,7 @@ function createProductItemElement({ sku, name, image }) {
   const btnAddToCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   btnAddToCart.addEventListener('click', () => {
     fetchAPI(`https://api.mercadolibre.com/items/${sku}`)
-      .then((product) => appendElement('cart__items', createCartItemElement, {
+      .then(product => appendElement('cart__items', createCartItemElement, {
         sku: product.id,
         name: product.title,
         salePrice: product.price,
