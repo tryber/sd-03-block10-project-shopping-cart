@@ -13,7 +13,8 @@ function createCustomElement(element, className, innerText) {
 }
 
 function cartItemClickListener(event) {
-  event.target.parentNode.remove();
+  event.target.remove();
+  updateLocalStorage();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -51,7 +52,7 @@ function createProductItemElement({ id: sku, title: name, image }) {
       .then(json =>
         document.getElementById('cart__items')
         .appendChild(createCartItemElement(json)))
-      .then()
+      .then(() => updateLocalStorage())
       .catch(erro => erro);
   });
 
@@ -70,6 +71,16 @@ function fetchInMercadoLivre(elem) {
   return fetch(URL, request);
 }
 
+function updateLocalStorage() {
+  const ol = document.querySelector('.cart__items');
+  localStorage.setItem('list', ol.innerHTML);
+}
+
+function resetClickEventOnCartItems() {
+  const ol = document.querySelector('.cart__items');
+  ol.childNodes.forEach(li => li.addEventListener('click', cartItemClickListener));
+}
+
 window.onload = function onload() {
   fetchInMercadoLivre('computador')
     .then(data => data.json())
@@ -82,14 +93,16 @@ window.onload = function onload() {
     })
     .catch(() => console.log('deu algo errado'));
 
-
   document.querySelector('.empty-cart')
   .addEventListener('click', () => {
-    const ol = document.querySelector('.cart__items');
-    for (let lindex = ol.childNodes.length; lindex > 0; lindex -= 1) {
-      ol.childNodes[lindex - 1].remove();
-    }
+    const li_s = [...document.querySelector('.cart__items').childNodes];
+    li_s.forEach(li => li.remove());
+    updateLocalStorage();
   });
+
+  document.querySelector('.cart__items').innerHTML = localStorage.getItem('list');
+  resetClickEventOnCartItems();
+
 };
 
 // module.exports = {
