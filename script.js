@@ -14,6 +14,7 @@ function createCustomElement(element, className, innerText) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  localStorage.setItem('Cart-items', document.getElementsByClassName('cart__items')[0].innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -30,6 +31,16 @@ const appendElement = (parentClass, callback, obj) => document
   .getElementsByClassName(parentClass)[0]
   .appendChild(callback(obj));
 
+const addToCart = async ({ sku }) => {
+  await fetchAPI(`https://api.mercadolibre.com/items/${sku}`)
+    .then (product => appendElement('cart__items', createCartItemElement, {
+      sku: product.id,
+      name: product.title,
+      salePrice: product.price,
+    }));
+  await (localStorage.setItem('Cart-items', document.getElementsByClassName('cart__items')[0].innerHTML));
+};
+
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -39,12 +50,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   const btnAddToCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   btnAddToCart.addEventListener('click', () => {
-    fetchAPI(`https://api.mercadolibre.com/items/${sku}`)
-      .then(product => appendElement('cart__items', createCartItemElement, {
-        sku: product.id,
-        name: product.title,
-        salePrice: product.price,
-      }));
+    addToCart({ sku });
   });
   section.appendChild(btnAddToCart);
   return section;
@@ -64,6 +70,9 @@ window.onload = function onload() {
       }));
     });
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
+    localStorage.setItem('Cart-items', '');
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Cart-items');
+  document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
 };
