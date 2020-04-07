@@ -1,6 +1,5 @@
 window.onload = function onload() {
-  returnApi()
-  createProductItemElement(qualquercoisa)
+  returnApiInCreateItem()
 };
 
 function createProductImageElement(imageSource) {
@@ -45,17 +44,18 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function returnApi() {
+function returnApiInCreateItem() {
   const url = "https://api.mercadolibre.com/sites/MLB/search?q=$computador";
+  const sectionItems = document.querySelector('.items')
   fetch(url)
-  .then(response => response.json())
-  .then(responseResult => responseResult.results.forEach((item) => {
-    
-    createProductItemElement({ sku: item.id,  name: item.title, image: item.thumbnail })
-  }))
+    .then(response => response.json())
+    .then(responseResult => responseResult.results.forEach((item) => {
+      sectionItems.appendChild(createProductItemElement({ sku: item.id, name: item.title, image: item.thumbnail }))
+
+    }))
 }
 
-const qualquercoisa = {sku: 1, name: 2, image: 3}
+
 
 
 
