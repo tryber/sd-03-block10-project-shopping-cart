@@ -1,5 +1,3 @@
-window.onload = function onload() { };
-
 const myObject = { method: 'GET', headers: new Headers() };
 
 function createProductImageElement(imageSource) {
@@ -23,8 +21,21 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const btnAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
 
+  btnAddCart.addEventListener('click', () => {
+    fetch(`https://api.mercadolibre.com/items/${sku}`)
+      .then(data => data.json())
+      .then(product => {
+        document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement({
+          sku: product.id,
+          name: product.title,
+          salePrice: product.price,
+        }));
+      });
+  });
+
+  section.appendChild(btnAddCart);
   return section;
 }
 
@@ -44,18 +55,25 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject)
-.then(response => response.json())
-.then((data) => {
-  const items = document.querySelector('.items');
+function apiCreateItem() {
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject)
+  .then(response => response.json())
+  .then((data) => {
+    const items = document.querySelector('.items');
 
-  data.results.map(function (res) {
-    return items.appendChild(createProductItemElement(
-      {
-        sku: res.id,
-        name: res.title,
-        image: res.thumbnail,
-      },
-      ));
+    data.results.map(function (res) {
+      return items.appendChild(createProductItemElement(
+        {
+          sku: res.id,
+          name: res.title,
+          image: res.thumbnail,
+        },
+        ));
+    });
   });
-});
+  
+}
+
+window.onload = function onload() {
+  apiCreateItem();
+}
