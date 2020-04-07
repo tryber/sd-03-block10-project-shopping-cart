@@ -2,7 +2,7 @@ window.onload = function onload() {};
 
 const queryKey = 'computador';
 const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${queryKey}`;
-const myObject = { method: 'GET', headers: new Headers(), };
+const myObject = { method: 'GET', headers: new Headers() };
 
 fetch(API_URL, myObject)
   .then(response => response.json())
