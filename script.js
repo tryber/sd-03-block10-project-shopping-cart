@@ -1,3 +1,5 @@
+const myObject = { method: 'GET', headers: new Headers() };
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -28,6 +30,19 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const addElementToCart = async ({ sku }) => {
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
+  .then(data => data.json())
+  .then((product) => {
+    document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement({
+      sku: product.id,
+      name: product.title,
+      salePrice: product.price,
+    }));
+  });
+  await (localStorage.setItem('itemCart', document.getElementsByClassName('cart__items')[0].innerHTML));
+};
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -36,24 +51,12 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   const btnAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-
-  btnAddCart.addEventListener('click', () => {
-    fetch(`https://api.mercadolibre.com/items/${sku}`)
-      .then(data => data.json())
-      .then((product) => {
-        document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement({
-          sku: product.id,
-          name: product.title,
-          salePrice: product.price,
-        }));
-      });
-  });
+  btnAddCart.addEventListener('click', () => addElementToCart({ sku }));
   section.appendChild(btnAddCart);
   return section;
 }
 
 function apiCreateItem() {
-  const myObject = { method: 'GET', headers: new Headers() };
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject)
   .then(response => response.json())
   .then((data) => {
@@ -74,6 +77,9 @@ function apiCreateItem() {
 window.onload = function onload() {
   apiCreateItem();
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
+    localStorage.setItem('itemCart', '');
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('itemCart');
+  document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
 };
