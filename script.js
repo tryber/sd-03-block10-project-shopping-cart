@@ -47,8 +47,7 @@ function returnApiInCreateItem() {
     .then(response => response.json())
     .then(responseResult => responseResult.results.forEach((item) => {
       sectionItems
-      .appendChild
-      (createProductItemElement({ sku: item.id, name: item.title, image: item.thumbnail }));
+      .appendChild(createProductItemElement({ sku: item.id, name: item.title, image: item.thumbnail }));
     }));
 }
 
