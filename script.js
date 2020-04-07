@@ -7,12 +7,16 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
-function cartItemClickListener() { }
+function cartItemClickListener(e) {
+  e.target.parentNode.removeChild(e.target);
+}
+
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', e => cartItemClickListener(e));
   return li;
 }
 
