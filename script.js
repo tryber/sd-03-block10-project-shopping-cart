@@ -81,6 +81,15 @@ window.onload = function onload() {
       });
     })
     .catch(() => console.log('deu algo errado'));
+
+
+  document.querySelector('.empty-cart')
+  .addEventListener('click', () => {
+    const ol = document.querySelector('.cart__items');
+    for (let lindex = ol.childNodes.length; lindex > 0; lindex -= 1) {
+      ol.childNodes[lindex - 1].remove();
+    }
+  });
 };
 
 // module.exports = {
