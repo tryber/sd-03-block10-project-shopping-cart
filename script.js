@@ -50,7 +50,6 @@ function createProductItemElement({ sku, name, image }) {
         }));
       });
   });
-  
   section.appendChild(btnAddCart);
   return section;
 }
