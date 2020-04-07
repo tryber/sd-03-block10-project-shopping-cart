@@ -1,8 +1,21 @@
 window.onload = function onload() { 
   fetchInMercadoLivre('computador')
-    .then(data => data.json())
-    .then(data => console.log(data.results))
-    .then(results => createProductItemElement(results));
+    .then((data) => {
+      const response = data.json();
+      // console.log(response);
+      return response;
+    }).then((data) => {
+      return data.results;
+    })
+    .then((results) => {
+      // console.log(results);
+      results.forEach((elem) => {
+        document.getElementById('items-container')
+        .appendChild(createProductItemElement(elem));
+      });
+      return results[0];
+    })
+    // .catch(() => console.log('deu algo errado'));
 };
 
 function createProductImageElement(imageSource) {
@@ -19,13 +32,13 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id: sku, title: name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
+  if (image !== undefined) section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
