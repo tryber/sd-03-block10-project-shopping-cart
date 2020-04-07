@@ -43,11 +43,12 @@ function createCartItemElement({ sku, name, salePrice }) {
 function returnApiInCreateItem() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
   const sectionItems = document.querySelector('.items');
+  let param;
   fetch(url)
     .then(response => response.json())
     .then(responseResult => responseResult.results.forEach((item) => {
-      sectionItems
-      .appendChild(createProductItemElement({ sku: item.id, name: item.title, image: item.thumbnail }));
+      param = { sku: item.id, name: item.title, image: item.thumbnail };
+      sectionItems.appendChild(createProductItemElement(param));
     }));
 }
 
