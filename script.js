@@ -56,17 +56,16 @@ window.onload = function onload() {
       const response = data.json();
       console.log(response);
       return response;
-    }).then((data) => {
-      return data.results;
     })
+    .then(data => data.results)
     .then((results) => {
       console.log(results);
       results.forEach((elem) => {
         document.getElementById('items-container')
         .appendChild(createProductItemElement(elem));
       });
-      return results[0];
-    }).catch(() => console.log('deu algo errado'));
+    })
+    .catch(() => console.log('deu algo errado'));
 };
 
 // module.exports = {
