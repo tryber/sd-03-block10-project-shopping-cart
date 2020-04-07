@@ -5,7 +5,7 @@ window.onload = function onload() {
     .then(obj => obj.results.forEach(e => document.getElementsByClassName('items')[0].appendChild(createProductItemElement({
       sku: e.id,
       name: e.title,
-      image: e.thumbnail.
+      image: e.thumbnail,
     }))));
 };
 
