@@ -50,7 +50,7 @@ function createProductItemElement({ sku, name, image }) {
         }));
       });
   });
-
+  
   section.appendChild(btnAddCart);
   return section;
 }
@@ -70,5 +70,8 @@ window.onload = function onload() {
         },
         ));
     });
+  });
+  document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
+    document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
 };
