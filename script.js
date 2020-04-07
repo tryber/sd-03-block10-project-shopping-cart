@@ -74,8 +74,8 @@ function apiCreateItem() {
   });
 }
 
-window.onload = function onload() {
-  apiCreateItem();
+window.onload = async function onload() {
+  await apiCreateItem();
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     localStorage.setItem('itemCart', '');
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
