@@ -1,7 +1,7 @@
 update = () => {
   localStorage.setItem('Lista Salva', document.getElementsByClassName('cart__items')[0].innerHTML);
   localStorage.setItem('Total a Pagar', document.getElementsByClassName('total-price')[0].innerHTML);
-}
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -35,9 +35,8 @@ function getSkuFromProductItem(item) {
 
 cartItemClickListener = async (event) => {
   await event.remove();
-  await cardTotal()
+  await cardTotal();
   await update();
-  
 };
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -45,15 +44,15 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => cartItemClickListener(li));
-  cardTotal(update())
-  
+  cardTotal(update());
   return li;
-}
+};
+
 cardTotal = () => {
-  const cartItem = document.querySelectorAll('.cart__item')
+  const cartItem = document.querySelectorAll('.cart__item');
   const price = Math.round([...cartItem].map(e => e.textContent
   .match(/([0-9.]){1,}$/))
-  .reduce((acc, price) => acc + parseFloat(price), 0) * 100) / 100;
+  .reduce((acc, priceItem) => acc + parseFloat(priceItem), 0) * 100) / 100;
   document.getElementsByClassName('total-price')[0].innerHTML= `PRICE: $${price}`
 };
 
@@ -82,6 +81,6 @@ window.onload = () => {
   document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', () => cartItemClickListener(inner)));
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
-    cardTotal(update())
+    cardTotal(update());
   });
 };
