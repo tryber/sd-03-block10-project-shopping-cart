@@ -1,5 +1,7 @@
 window.onload = function onload() { };
 
+const fetchAPI = api => fetch(api).then(response => response.json());
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
