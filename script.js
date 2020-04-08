@@ -120,7 +120,7 @@ function resetClickEventOnCartItems() {
       li.addEventListener('click', cartItemClickListener));
 }
 
-async function seek(data) {
+async function seek(data = 'computador') {
   try {
     const reponse = await fetchInMercadoLivre(data);
     const json = await reponse.json();

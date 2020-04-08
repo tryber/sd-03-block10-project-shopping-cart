@@ -1,3 +1,38 @@
+body {
+  background-image: url( './fundo.wepb' );
+}
+
+header {
+  background-color: lightblue;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: rgb( 71 , 71 , 71 );
+  font-size: 3.5rem;
+  margin: 5px;
+  text-align: center;
+}
+
+label {
+  align-self: flex-end;
+  background-color: lightseagreen;
+  border-radius: 10px;
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-right: 20px;
+  padding: 10px;
+}
+
+input {
+  border-radius: 10px;
+  height: 20px;
+  padding: 5px 10px;
+  width: 90%;
+}
+
 .top-bar {
   align-items: center;
   display: flex;
@@ -31,6 +66,7 @@
 }
 
 .item {
+  background-color: white;
   border: 2px solid blue;
   border-radius: 5px;
   box-sizing: border-box;
@@ -46,6 +82,8 @@
 }
 
 .item .item__title {
+  background-color: plum;
+  border-bottom: groove black;
   flex-grow: 1;
   padding: 10px;
   text-align: center;
@@ -64,6 +102,7 @@
 }
 
 .cart {
+  background-color: lightskyblue;
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
