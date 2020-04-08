@@ -71,22 +71,11 @@ const emptyCart = () => {
 const getSkuFromProductItem = item =>
   item.querySelector('span.item__sku').innerText;
 
-const totalPrice = () => {};
-
-const addLoading = () => {
-  const loadingDiv = document.createElement('div');
-  loadingDiv.className = 'loading';
-  loadingDiv.innerText = 'Loading...';
-  document.querySelector('.items').appendChild(loadingDiv);
-};
-
 const removeLoading = () => {
   document.querySelector('.loading').remove();
 };
 
 window.onload = async () => {
-  addLoading();
-
   const itemsSection = document.querySelector('.items');
   const items = document.querySelectorAll('.cart__item');
   const cartItems = document.querySelector('.cart__items');
@@ -109,5 +98,4 @@ window.onload = async () => {
   buttonEmpty.addEventListener('click', emptyCart);
   cartItems.innerHTML = localStorage.getItem('cart');
   items.forEach(item => item.addEventListener('click', cartItemClickListener));
-  await totalPrice();
 };
