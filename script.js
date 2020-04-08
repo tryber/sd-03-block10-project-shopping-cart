@@ -46,7 +46,7 @@ const appendElement = (parentClass, callback, obj) => document
   .appendChild(callback(obj));
 
 const addToCart = async ({ sku }) => {
-  await fetchAPI(`${proxyUrl}https://api.mercadolibre.com/items/${sku}`)
+  await fetchAPI(`${proxyUrl}https://api.mercadolibre.com/items/${sku}`, { mode: 'cors' })
     .then(product => appendElement('cart__items', createCartItemElement, {
       sku: product.id,
       name: product.title,
@@ -79,7 +79,7 @@ const removeLoading = () => {
 
 window.onload = async () => {
   loading();
-  await fetchAPI(`${proxyUrl}https://api.mercadolibre.com/sites/MLB/search?q=computador`)
+  await fetchAPI(`${proxyUrl}https://api.mercadolibre.com/sites/MLB/search?q=computador`, { mode: 'cors' })
     .then((json) => {
       json.results.forEach(item => appendElement('items', createProductItemElement, {
         sku: item.id,
