@@ -73,16 +73,25 @@ const getSkuFromProductItem = item =>
 
 const totalPrice = () => {};
 
+const addLoading = () => {
+  const loadingDiv = document.createElement('div');
+  loadingDiv.className = 'loading';
+  loadingDiv.innerText = 'Loading...';
+  document.querySelector('.container').appendChild(loadingDiv);
+};
+
 const removeLoading = () => {
   document.querySelector('.loading').remove();
 };
 
 window.onload = async () => {
+  addLoading();
+
   const itemsSection = document.querySelector('.items');
   const items = document.querySelectorAll('.cart__item');
   const cartItems = document.querySelector('.cart__items');
   const buttonEmpty = document.querySelector('.empty-cart');
-
+  
   await API('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(
     data =>
