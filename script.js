@@ -85,7 +85,7 @@ function createProductItemElement({ id: sku, title: name, image }) {
 }
 
 function putLoading() {
-  const div = document.createElement('.loading');
+  const div = document.createElement('div');
   div.className = 'loading';
   div.innerText = 'loading...';
   document.body.appendChild(div);
@@ -120,7 +120,13 @@ async function seek(data) {
     });
     removeLoading();
   } catch (erro) {
-    document.querySelector('.loading').innerText = 'OPS something went wrong';
+    const divLoading = document.querySelector('.loading');
+
+    if (divLoading) divLoading.remove(); 
+
+    const div = document.createElement('div');
+    div.innerText = 'OPS something went wrong';
+    console.log(erro);
   }
 }
 
