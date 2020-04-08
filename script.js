@@ -21,6 +21,14 @@ function updateLocalStorage() {
   localStorage.setItem('list', ol.innerHTML);
 }
 
+async function sumCartsItemPrice() {
+  const arrayLis = await [...document.querySelector('.cart__items').childNodes];
+  const total = await arrayLis.reduce((total, li) =>
+    total + Number(/PRICE: \$(\d*.?\d{0,2})$/.exec(li.innerText)[1])
+  , 0);
+  document.querySelector('section.total-price').innerText = await total;
+}
+
 function cartItemClickListener(event) {
   event.target.remove();
   updateLocalStorage();
@@ -83,14 +91,6 @@ function resetClickEventOnCartItems() {
   document.querySelector('.cart__items')
     .childNodes.forEach(li =>
       li.addEventListener('click', cartItemClickListener));
-}
-
-async function sumCartsItemPrice() {
-    const arrayLis = await [...document.querySelector('.cart__items').childNodes];
-    const total = await arrayLis.reduce((total, li) =>
-      total + Number(/PRICE: \$(\d*.?\d{0,2})$/.exec(li.innerText)[1])
-    , 0);
-    document.querySelector('section.total-price').innerText = await total;
 }
 
 window.onload = function onload() {
