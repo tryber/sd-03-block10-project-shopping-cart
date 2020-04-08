@@ -46,7 +46,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', () => cartItemClickListener(li));
   cardTotal(update());
   return li;
-};
+}
 
 cardTotal = () => {
   const cartItem = document.querySelectorAll('.cart__item');
