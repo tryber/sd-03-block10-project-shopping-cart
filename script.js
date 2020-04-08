@@ -89,7 +89,8 @@ window.onload = async () => {
           }),
         );
       }),
-  ).then(document.querySelector('.loading').remove());
+    document.querySelector('.loading').remove()
+  );
 
   buttonEmpty.addEventListener('click', emptyCart);
   cartItems.innerHTML = localStorage.getItem('cart');
