@@ -95,6 +95,7 @@ async function fetchInMercadoLivre(elem) {
 
   putLoading();
   return fetch(URL, request);
+}
 
 function resetClickEventOnCartItems() {
   document.querySelector('.cart__items')
