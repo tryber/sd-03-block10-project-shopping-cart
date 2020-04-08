@@ -12,6 +12,11 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function updateLocalStorage() {
+  const ol = document.querySelector('.cart__items');
+  localStorage.setItem('list', ol.innerHTML);
+}
+
 function cartItemClickListener(event) {
   event.target.remove();
   updateLocalStorage();
@@ -71,16 +76,10 @@ function fetchInMercadoLivre(elem) {
   return fetch(URL, request);
 }
 
-function updateLocalStorage() {
-  const ol = document.querySelector('.cart__items');
-  localStorage.setItem('list', ol.innerHTML);
-}
-
 function resetClickEventOnCartItems() {
   document.querySelector('.cart__items')
-  .childNodes.forEach(li =>
-    li.addEventListener('click', cartItemClickListener)
-  );
+    .childNodes.forEach(li =>
+      li.addEventListener('click', cartItemClickListener));
 }
 
 window.onload = function onload() {
@@ -97,14 +96,13 @@ window.onload = function onload() {
 
   document.querySelector('.empty-cart')
   .addEventListener('click', () => {
-    const li_s = [...document.querySelector('.cart__items').childNodes];
-    li_s.forEach(li => li.remove());
+    const lis = [...document.querySelector('.cart__items').childNodes];
+    lis.forEach(li => li.remove());
     updateLocalStorage();
   });
 
   document.querySelector('.cart__items').innerHTML = localStorage.getItem('list');
   resetClickEventOnCartItems();
-
 };
 
 // module.exports = {
