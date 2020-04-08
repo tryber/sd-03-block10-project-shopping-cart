@@ -100,7 +100,9 @@ function putLoading() {
   document.body.appendChild(div);
 }
 
-const removeLoading = () => document.querySelector('.loading').remove();
+const removeLoading = () => {
+  document.querySelector('.loading').innerText = '';
+};
 
 function fetchInMercadoLivre(elem) {
   const URL = `https://api.mercadolibre.com/sites/MLB/search?q=${elem}`;
