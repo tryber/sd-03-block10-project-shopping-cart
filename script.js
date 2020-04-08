@@ -74,7 +74,7 @@ const getSkuFromProductItem = item =>
 const totalPrice = () => {};
 
 const removeLoading = () => {
-  document.querySelector('.loading').innerText = '';
+  document.querySelector('.loading').remove();
 };
 
 window.onload = async () => {
