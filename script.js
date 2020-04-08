@@ -40,23 +40,20 @@ function createCartItemElement({ sku, name, salePrice }) {
 
   return li;
 }
+const DontRepeat = add =>({
+  sku: add.id,
+  name: add.title,
+  salePrice: add.price,
+  image: add.thumbnail,
+});
 
-addToCart = async sku => {
-  await fetch(`https://api.mercadolibre.com/items/${sku}`)
+addToCart = async sku => await fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
-  .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement({
-    salePrice: add.price,
-    name: add.title,
-    sku: add.id,
-  })))
-};
+  .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(add))));
 
 window.onload = async () => {
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
-    .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0].appendChild(createProductItemElement({
-      sku: e.id,
-      image: e.thumbnail,
-      name: e.title,
-    }))));
+    .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0]
+          .appendChild(createProductItemElement(DontRepeat(e)))));
 };
