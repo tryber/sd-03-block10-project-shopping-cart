@@ -83,7 +83,7 @@ window.onload = async () => {
   const cartItems = document.querySelector('.cart__items');
   const buttonEmpty = document.querySelector('.empty-cart');
 
-  await API('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
+  await API('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(
     data =>
       data.results.forEach(({ id, title, thumbnail }) => {
