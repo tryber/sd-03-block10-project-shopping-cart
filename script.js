@@ -77,7 +77,7 @@ const addLoading = () => {
   const loadingDiv = document.createElement('div');
   loadingDiv.className = 'loading';
   loadingDiv.innerText = 'Loading...';
-  document.querySelector('.container').appendChild(loadingDiv);
+  document.querySelector('.items').appendChild(loadingDiv);
 };
 
 const removeLoading = () => {
@@ -91,7 +91,7 @@ window.onload = async () => {
   const items = document.querySelectorAll('.cart__item');
   const cartItems = document.querySelector('.cart__items');
   const buttonEmpty = document.querySelector('.empty-cart');
-  
+
   await API('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(
     data =>
