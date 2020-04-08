@@ -68,7 +68,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 
 const loading = () => {
-  document.getElementsByClassName('items')[0].appendChild(createCustomElement('li', 'loading', 'loading'));
+  document.getElementsByClassName('items')[0].appendChild(createCustomElement('p', 'loading', 'loading'));
 };
 
 const removeLoading = () => {
