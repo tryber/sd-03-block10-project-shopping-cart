@@ -46,12 +46,16 @@ const API = url => fetch(url).then(response => response.json());
 window.onload = async () => {
   const itemsSection = document.querySelector('.items');
 
-  await API('https://api.mercadolibre.com/sites/MLB/search?q=$computador').then(
-    data =>
-      data.results.forEach(({ id, title, thumbnail }) => {
-        itemsSection.appendChild(
-          createProductItemElement(id, title, thumbnail),
-        );
-      }),
+  await API('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
+  .then(data => 
+    data.results.forEach(({ id, title, thumbnail }) => {
+      itemsSection.appendChild(
+        createProductItemElement({
+          sku: id,
+          name: title,
+          image: thumbnail,
+        }),
+      );
+    }),
   );
 };
