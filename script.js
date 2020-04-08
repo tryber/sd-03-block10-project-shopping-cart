@@ -42,6 +42,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-document.getElementsByClassName("empty-cart").addEventListener("click", function() {
-  
+document.getElementsByClassName('empty-cart').addEventListener('click', function () {
+
 });
