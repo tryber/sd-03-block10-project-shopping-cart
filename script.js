@@ -30,9 +30,9 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  event.remove();
-  update();
+cartItemClickListener = async (event) => {
+  await event.remove();
+  await update();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
