@@ -47,7 +47,7 @@ window.onload = async () => {
   const itemsSection = document.querySelector('.items');
 
   await API('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
-  .then(data => 
+  .then(data =>
     data.results.forEach(({ id, title, thumbnail }) => {
       itemsSection.appendChild(
         createProductItemElement({
