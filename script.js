@@ -1,4 +1,4 @@
-const proxyUrl = 'http://cors.io/?';
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
