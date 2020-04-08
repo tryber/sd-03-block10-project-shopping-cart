@@ -33,7 +33,7 @@ function getSkuFromProductItem(item) {
 cartItemClickListener = async (event) => {
   await event.remove();
   await update();
-}
+};
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
