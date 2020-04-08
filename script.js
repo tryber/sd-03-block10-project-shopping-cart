@@ -43,7 +43,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 function returnApiInCreateCartItem(selector = 0) {
   for (let i = 0; i < selector.length; i += 1) {
     selector[i].addEventListener('click', (event) => {
-      console.log(event.target.parentElement.firstChild.innerText)
+      console.log(event.target.parentElement.firstChild.innerText);
     });
   }
 }
@@ -60,10 +60,10 @@ function returnApiInCreateItem() {
     }))
     .then(() => {
       returnApiInCreateCartItem(document.querySelectorAll('.item__add'));
-    })
+    });
 }
 
 window.onload = function onload() {
   returnApiInCreateItem();
-  returnApiInCreateCartItem()
+  returnApiInCreateCartItem();
 };
