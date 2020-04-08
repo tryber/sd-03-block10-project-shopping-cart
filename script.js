@@ -118,7 +118,7 @@ async function seek(data) {
 }
 
 window.onload = function onload() {
-  seek('computdor'); // async
+  seek('computador'); // async
 
   document.querySelector('.empty-cart')
   .addEventListener('click', () => {
