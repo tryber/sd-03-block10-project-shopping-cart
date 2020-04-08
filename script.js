@@ -111,13 +111,13 @@ async function seek(data) {
       .appendChild(createProductItemElement(elem));
     });
     removeLoading();
-  } catch {
+  } catch (erro) {
     document.querySelector('.loading').innerText = 'OPS something went wrong';
   }
 }
 
 window.onload = function onload() {
-  seek('computador'); // async
+  seek('computdor'); // async
 
   document.querySelector('.empty-cart')
   .addEventListener('click', () => {
