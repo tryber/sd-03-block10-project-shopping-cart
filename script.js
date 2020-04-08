@@ -89,7 +89,7 @@ window.onload = async () => {
           }),
         );
       }),
-    document.querySelector('.loading').remove()
+    document.querySelector('.loading').remove(),
   );
 
   buttonEmpty.addEventListener('click', emptyCart);
