@@ -30,6 +30,18 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const getitem = () =>
+        new Promise((resolve, reject) =>
+          $.getJSON(
+            `https://api.mercadolibre.com/sites/MLB/search?q=computador`,
+            data => {
+                getitem(data.results[0]);
+                resolve();
+            },
+            reject
+          )
+        );
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
 }
