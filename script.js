@@ -122,7 +122,7 @@ async function seek(data) {
   } catch (erro) {
     const divLoading = document.querySelector('.loading');
 
-    if (divLoading) divLoading.remove(); 
+    if (divLoading) divLoading.remove();
 
     const div = document.createElement('div');
     div.innerText = 'OPS something went wrong';
