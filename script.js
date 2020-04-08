@@ -92,7 +92,7 @@ function putLoading() {
 }
 
 const removeLoading = () => {
-  document.querySelector('.loading').innerText = ''
+  document.querySelector('.loading').innerText = '';
 };
 
 function fetchInMercadoLivre(elem) {
