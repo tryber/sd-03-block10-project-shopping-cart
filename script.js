@@ -1,3 +1,5 @@
+const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -44,7 +46,7 @@ const appendElement = (parentClass, callback, obj) => document
   .appendChild(callback(obj));
 
 const addToCart = async ({ sku }) => {
-  await fetchAPI(`https://api.mercadolibre.com/items/${sku}`)
+  await fetchAPI(`${proxyUrl}https://api.mercadolibre.com/items/${sku}`)
     .then(product => appendElement('cart__items', createCartItemElement, {
       sku: product.id,
       name: product.title,
@@ -71,14 +73,13 @@ const loading = () => {
   document.getElementsByClassName('items')[0].appendChild(createCustomElement('p', 'loading', 'loading'));
 };
 
-loading();
-
 const removeLoading = () => {
   document.getElementsByClassName('loading')[0].remove();
 };
 
 window.onload = async () => {
-  await fetchAPI('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+  loading();
+  await fetchAPI(`${proxyUrl}https://api.mercadolibre.com/sites/MLB/search?q=computador`)
     .then((json) => {
       json.results.forEach(item => appendElement('items', createProductItemElement, {
         sku: item.id,
