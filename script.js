@@ -116,39 +116,39 @@ function deleteLoading() {
   document.body.removeChild(document.querySelector('.loading'));
 }
 
+const itens = document.querySelector('.items');
+
+const start = new Promise((resolve) => {
+  showLoading();
+  console.log('roudou primisu');
+  resolve('done');
+}).then(() => {
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+    .then((result) => {
+      deleteLoading();
+      return result.json();
+    })
+    .then(result => result.results)
+    .then(result => result.forEach((e) => {
+      const elementObject = {
+        sku: [e.id],
+        name: [e.title],
+        image: [e.thumbnail],
+      };
+      const elemento = createProductItemElement(elementObject);
+      itens.appendChild(elemento);
+    }))
+    .then(addEvents);
+});
+
 
 window.onload = async function onload() {
-  const itens = document.querySelector('.items');
-
   returnFromLocalStorage('.cart__items');
 
   const emptyCart = document.querySelector('.empty-cart');
 
   emptyCart.addEventListener('click', emptyCartfunc);
 
-
-  const start = new Promise((resolve) => {
-    showLoading();
-    console.log('roudou primisu');
-    resolve('done');
-  }).then(() => {
-    fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-      .then((result) => {
-        deleteLoading();
-        return result.json();
-      })
-      .then(result => result.results)
-      .then(result => result.forEach((e) => {
-        const elementObject = {
-          sku: [e.id],
-          name: [e.title],
-          image: [e.thumbnail],
-        };
-        const elemento = createProductItemElement(elementObject);
-        itens.appendChild(elemento);
-      }))
-      .then(addEvents);
-  });
 
   await start;
 };
