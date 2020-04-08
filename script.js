@@ -54,7 +54,7 @@ addToCart = sku => fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
   .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(add))));
 
-window.onload = function onload() {
+window.onload = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0]
