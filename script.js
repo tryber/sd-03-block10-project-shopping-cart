@@ -1,4 +1,7 @@
-update = () => localStorage.setItem('Lista Salva', document.getElementsByClassName('cart__items')[0].innerHTML);
+update = () => {
+  localStorage.setItem('Lista Salva', document.getElementsByClassName('cart__items')[0].innerHTML);
+  localStorage.setItem('Total a Pagar', document.getElementsByClassName('total-price')[0].innerHTML);
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -31,18 +34,28 @@ function getSkuFromProductItem(item) {
 }
 
 cartItemClickListener = async (event) => {
-  await event.target.remove();
+  await event.remove();
+  await cardTotal()
   await update();
+  
 };
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  update();
+  li.addEventListener('click', () => cartItemClickListener(li));
+  cardTotal(update())
+  
   return li;
 }
+cardTotal = () => {
+  const cartItem = document.querySelectorAll('.cart__item')
+  const price = Math.round([...cartItem].map(e => e.textContent
+  .match(/([0-9.]){1,}$/))
+  .reduce((acc, price) => acc + parseFloat(price), 0) * 100) / 100;
+  document.getElementsByClassName('total-price')[0].innerHTML= `PRICE: $${price}`
+};
 
 const DontRepeat = add => ({
   sku: add.id,
@@ -55,6 +68,7 @@ addToCart = async (sku) => {
   await fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
   .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(add))));
+  await cardTotal()
   await update();
 };
 
@@ -64,9 +78,10 @@ window.onload = () => {
     .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0]
           .appendChild(createProductItemElement(DontRepeat(e)))));
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
-  document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', cartItemClickListener));
+  document.getElementsByClassName('total-price')[0].innerHTML = localStorage.getItem('Total a Pagar');
+  document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', () => cartItemClickListener(inner)));
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
-    update();
+    cardTotal(update())
   });
 };
