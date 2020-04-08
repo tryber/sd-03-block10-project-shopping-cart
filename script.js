@@ -78,7 +78,7 @@ window.onload = async () => {
   const buttonEmpty = document.querySelector('.empty-cart');
 
   await API('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-  .then(data => {
+  .then((data) => {
     data.results.forEach(({ id, title, thumbnail }) => {
       itemsSection.appendChild(
         createProductItemElement({
