@@ -50,9 +50,12 @@ const DontRepeat = add => ({
   image: add.thumbnail,
 });
 
-addToCart = sku => fetch(`https://api.mercadolibre.com/items/${sku}`)
+addToCart = async (sku) => {
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
   .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(add))));
+  await update();
+}
 
 window.onload = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
