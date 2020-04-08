@@ -86,15 +86,11 @@ function resetClickEventOnCartItems() {
 }
 
 async function sumCartsItemPrice() {
-  try {
     const arrayLis = await [...document.querySelector('.cart__items').childNodes];
     const total = await arrayLis.reduce((total, li) =>
       total + Number(/PRICE: \$(\d*.?\d{0,2})$/.exec(li.innerText)[1])
     , 0);
     document.querySelector('section.total-price').innerText = await total;
-  } catch {
-    console.log('erro em sumCartsItemPrice');
-  }
 }
 
 window.onload = function onload() {
