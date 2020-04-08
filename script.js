@@ -81,7 +81,7 @@ window.onload = async () => {
   document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', () => cartItemClickListener(inner)));
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
-  })
+  });
   await cardTotal();
   await update();
 };
