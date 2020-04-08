@@ -9,11 +9,16 @@ async function soma(number, reset) {
 }
 
 
+// LOCALSTORAGE FUNCTIONS
+function updateLocalStorage(elementId) {
+  const elementToLocal = document.querySelector(elementId).innerHTML;
+  localStorage.setItem(elementId, elementToLocal);
+}
+
 function cartItemClickListener(e) {
   e.target.parentNode.removeChild(e.target);
   updateLocalStorage('.cart__item');
 }
-// LOCALSTORAGE FUNCTIONS
 
 
 function returnFromLocalStorage(elementId) {
@@ -24,10 +29,6 @@ function returnFromLocalStorage(elementId) {
   }
 }
 
-function updateLocalStorage(elementId) {
-  const elementToLocal = document.querySelector(elementId).innerHTML;
-  localStorage.setItem(elementId, elementToLocal);
-}
 
 // ----------------------------------------------------------------
 
