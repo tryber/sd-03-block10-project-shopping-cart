@@ -65,4 +65,8 @@ window.onload = () => {
           .appendChild(createProductItemElement(DontRepeat(e)))));
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
   document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', cartItemClickListener));
+  document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
+    document.getElementsByClassName('cart__items')[0].innerHTML = '';
+    update();
+  })
 };
