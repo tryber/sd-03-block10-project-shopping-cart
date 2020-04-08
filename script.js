@@ -12,6 +12,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+
 const sumPrices = () => {
   const cartItem = document.querySelectorAll('.cart__item');
   document.getElementsByClassName('total-price')[0].textContent = Math.round([...cartItem].map(e => e.textContent
