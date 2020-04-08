@@ -15,7 +15,7 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 const cartItemClickListener = (event) => {
-  event.target.remove()
+  event.target.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -79,5 +79,5 @@ window.onload = async () => {
       }),
   );
 
-  items.forEach(item => item.addEventListener('click', cartItemClickListener))
+  items.forEach(item => item.addEventListener('click', cartItemClickListener));
 };
