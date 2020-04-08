@@ -40,14 +40,14 @@ function createCartItemElement({ sku, name, salePrice }) {
 
   return li;
 }
-const DontRepeat = add =>({
+const DontRepeat = add => ({
   sku: add.id,
   name: add.title,
   salePrice: add.price,
   image: add.thumbnail,
 });
 
-addToCart = async sku => await fetch(`https://api.mercadolibre.com/items/${sku}`)
+addToCart = sku => fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
   .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(add))));
 
