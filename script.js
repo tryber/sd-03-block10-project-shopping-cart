@@ -71,6 +71,7 @@ const removeLoading = () => {
   document.getElementsByClassName('loading')[0].remove();
 };
 
+
 window.onload = async () => {
   await fetchAPI('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then((json) => {
