@@ -78,13 +78,13 @@ function createProductItemElement({ id: sku, title: name, image }) {
 }
 
 function putLoading() {
-  const div = document.createElement('div');
+  const div = document.querySelector('.loading');
   div.className = 'loading';
   div.innerText = 'LOADING';
   document.body.appendChild(div);
 }
 
-const removeLoading = () => document.querySelector('.loading').remove();
+const removeLoading = () => document.querySelector('.loading').innerText = '';
 
 async function fetchInMercadoLivre(elem) {
   const URL = await `https://api.mercadolibre.com/sites/MLB/search?q=${elem}`;
