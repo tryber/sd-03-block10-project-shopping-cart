@@ -39,9 +39,11 @@ function returnFromLocalStorage(elementId) {
 // CREATE EMPTY CART BUTTON
 
 function emptyCartfunc() {
-  document.querySelector('.cart__items').innerHTML = '';
-  soma(0, true);
-  updateLocalStorage('.cart__items');
+  if (document.querySelector('.cart__items')) {
+    document.querySelector('.cart__items').innerHTML = '';
+    soma(0, true);
+    updateLocalStorage('.cart__items');
+  }
 }
 
 
