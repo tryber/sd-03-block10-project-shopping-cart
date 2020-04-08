@@ -21,17 +21,16 @@ function updateLocalStorage() {
   localStorage.setItem('list', ol.innerHTML);
 }
 
-function formatedSumOfPricesIn(array){
+function formatedSumOfPricesIn(array) {
   let value = array.reduce((total, li) =>
     total + parseFloat(/PRICE: \$(\d*\.?\d{0,2})$/.exec(li.innerText)[1])
   , 0).toFixed(2);
 
-  while (value[value.length - 1] === '0')
+  while (value[value.length - 1] === '0') {
     value = value.slice(0, -1);
-  if (value[value.length - 1] === '.')
-    value = value.slice(0, -1);
+  }
 
-  return value;
+  return (value[value.length - 1] === '.') ? value.slice(0, -1) : value;
 }
 
 async function sumCartsItemPrice() {
@@ -78,7 +77,7 @@ function addItemToCart(event) {
     .catch(erro => erro);
 }
 
-function createProductItemElement({ id: sku, title: name, image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
