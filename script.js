@@ -19,19 +19,34 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(
-    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
-  );
+  const buttonAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  buttonAddCart.addEventListener('click', () => {
+    addItem({ sku })
+  });
+  section.appendChild(buttonAddCart);
 
   return section;
 };
+
+const API = url => fetch(url).then(response => response.json());
 
 const getSkuFromProductItem = item =>
   item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+  //add código
 };
+
+const addItem = async ({ sku }) => {
+  const item = await API(`https://api.mercadolibre.com/items/${sku}`)
+  .then(data => createCartItemElement({
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price,
+  }));
+  const cartItems = document.querySelector('.cart__items');
+  await cartItems.appendChild(item);
+}
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -40,8 +55,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
-
-const API = url => fetch(url).then(response => response.json());
 
 window.onload = async () => {
   const itemsSection = document.querySelector('.items');
