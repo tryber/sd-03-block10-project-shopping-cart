@@ -23,10 +23,10 @@ function updateLocalStorage() {
 
 async function sumCartsItemPrice() {
   const arrayLis = await [...document.querySelector('.cart__items').childNodes];
-  const total = await arrayLis.reduce((total, li) =>
+  const totalPrice = await arrayLis.reduce((total, li) =>
     total + Number(/PRICE: \$(\d*.?\d{0,2})$/.exec(li.innerText)[1])
   , 0);
-  document.querySelector('section.total-price').innerText = await total;
+  document.querySelector('section.total-price').innerText = await totalPrice;
 }
 
 function cartItemClickListener(event) {
