@@ -31,7 +31,7 @@ function getSkuFromProductItem(item) {
 }
 
 cartItemClickListener = async (event) => {
-  await event.remove();
+  await event.target.remove();
   await update();
 };
 
@@ -39,10 +39,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', () => cartItemClickListener(li));
+  li.addEventListener('click', cartItemClickListener);
   update();
   return li;
-}
+};
+
 const DontRepeat = add => ({
   sku: add.id,
   name: add.title,
@@ -63,5 +64,5 @@ window.onload = () => {
     .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0]
           .appendChild(createProductItemElement(DontRepeat(e)))));
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
-  document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', () => cartItemClickListener(inner)));
+  document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', cartItemClickListener));
 };
