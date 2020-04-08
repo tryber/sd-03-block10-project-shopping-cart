@@ -67,16 +67,11 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const loading = () => {
-  document.getElementsByClassName('items')[0].appendChild(createCustomElement('p', 'loading', 'loading'));
-};
-
 const removeLoading = () => {
   document.getElementsByClassName('loading')[0].remove();
 };
 
 window.onload = async () => {
-  loading();
   await fetchAPI('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then((json) => {
       json.results.forEach(item => appendElement('items', createProductItemElement, {
