@@ -77,8 +77,10 @@ function updateLocalStorage() {
 }
 
 function resetClickEventOnCartItems() {
-  const ol = document.querySelector('.cart__items');
-  ol.childNodes.forEach(li => li.addEventListener('click', cartItemClickListener));
+  document.querySelector('.cart__items')
+  .childNodes.forEach(li =>
+    li.addEventListener('click', cartItemClickListener)
+  );
 }
 
 window.onload = function onload() {
