@@ -42,7 +42,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   update();
   return li;
-};
+}
 
 const DontRepeat = add => ({
   sku: add.id,
