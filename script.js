@@ -21,7 +21,7 @@ function updateLocalStorage() {
   localStorage.setItem('list', ol.innerHTML);
 }
 
-function formatedSumOfPricesIn(array) {
+async function formatedSumOfPricesIn(array) {
   let value = array.reduce((total, li) =>
     total + parseFloat(/PRICE: \$(\d*\.?\d{0,2})$/.exec(li.innerText)[1])
   , 0).toFixed(2);
@@ -59,7 +59,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
-function addItemToCart(event) {
+async function addItemToCart(event) {
   const id = getSkuFromProductItem(event.target.parentNode);
   const URL = `https://api.mercadolibre.com/items/${id}`;
   const request = {
@@ -67,14 +67,16 @@ function addItemToCart(event) {
     Headers: { Accept: 'application/JSON' },
   };
 
-  fetch(URL, request)
-    .then(data => data.json())
-    .then(json =>
-      document.getElementById('cart__items')
-      .appendChild(createCartItemElement(json)))
-    .then(() => updateLocalStorage())
-    .then(() => sumCartsItemPrice())
-    .catch(erro => erro);
+  try {
+    const response = await fetch(URL, request);
+    const json = await response.json();
+    document.getElementById('cart__items')
+      .appendChild(createCartItemElement(json));
+    updateLocalStorage();
+    sumCartsItemPrice();
+  } catch (erro) {
+    console.log('OPSS we couldn\'t put it in cart, SORRY, try again late')
+  }
 }
 
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
@@ -83,8 +85,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
-
-  if (image !== undefined) section.appendChild(createProductImageElement(image));
+  section.appendChild(createProductImageElement(image));
 
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   button.addEventListener('click', addItemToCart);
@@ -100,9 +101,7 @@ function putLoading() {
   document.body.appendChild(div);
 }
 
-const removeLoading = () => {
-  document.querySelector('.loading').innerText = '';
-};
+const removeLoading = () => document.querySelector('.loading').remove();
 
 function fetchInMercadoLivre(elem) {
   const URL = `https://api.mercadolibre.com/sites/MLB/search?q=${elem}`;
@@ -131,9 +130,7 @@ async function seek(data) {
     });
     removeLoading();
   } catch (erro) {
-    const divLoading = document.querySelector('.loading');
-
-    if (divLoading) divLoading.remove();
+    if (document.querySelector('.loading')) removeLoading();
 
     const div = document.createElement('div');
     div.innerText = 'OPS something went wrong';
@@ -149,6 +146,7 @@ window.onload = function onload() {
     const lis = [...document.querySelector('.cart__items').childNodes];
     lis.forEach(li => li.remove());
     updateLocalStorage();
+    sumCartsItemPrice();
   });
 
   document.querySelector('.cart__items').innerHTML = localStorage.getItem('list');
@@ -156,7 +154,3 @@ window.onload = function onload() {
 
   sumCartsItemPrice();
 };
-
-// module.exports = {
-//   fetchInMercadoLivre,
-// };
