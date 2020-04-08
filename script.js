@@ -53,7 +53,7 @@ cardTotal = () => {
   const price = Math.round([...cartItem].map(e => e.textContent
   .match(/([0-9.]){1,}$/))
   .reduce((acc, priceItem) => acc + parseFloat(priceItem), 0) * 100) / 100;
-  document.getElementsByClassName('total-price')[0].innerHTML = `PRICE: $${price}`;
+  document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
 };
 
 const DontRepeat = add => ({
