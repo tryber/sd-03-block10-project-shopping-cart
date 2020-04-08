@@ -1,3 +1,5 @@
+const API = url => fetch(url).then(response => response.json());
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,6 +14,16 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const cartItemClickListener = (event) => {};
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
 const addItem = async ({ sku }) => {
   const item = await API(`https://api.mercadolibre.com/items/${sku}`)
   .then(data => createCartItemElement({
@@ -21,14 +33,6 @@ const addItem = async ({ sku }) => {
   }));
   const cartItems = document.querySelector('.cart__items');
   await cartItems.appendChild(item);
-};
-
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -47,13 +51,9 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const API = url => fetch(url).then(response => response.json());
-
 const getSkuFromProductItem = item =>
   item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-};
 
 window.onload = async () => {
   const itemsSection = document.querySelector('.items');
