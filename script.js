@@ -6,6 +6,9 @@ async function soma(number, reset) {
   if (reset) {
     price = 0;
   }
+  if (price < 0 || price < 1) {
+    price = 0;
+  }
   priceCamp.innerText = price;
 }
 
@@ -14,13 +17,15 @@ async function soma(number, reset) {
 function updateLocalStorage(elementId) {
   const elementToLocal = document.querySelector(elementId).innerHTML;
   localStorage.setItem(elementId, elementToLocal);
+  const price = document.querySelector('.total-price').innerHTML;
+  localStorage.setItem('price', price);
 }
 
 function cartItemClickListener(e) {
   e.target.parentNode.removeChild(e.target);
   const price = e.target.innerText.split('PRICE: $')[1];
   soma(+price * (-1));
-  updateLocalStorage('.cart__item');
+  updateLocalStorage('.cart__items');
 }
 
 
@@ -29,6 +34,9 @@ function returnFromLocalStorage(elementId) {
   const cartItems = document.querySelectorAll('.cart__item');
   for (let i = 0; i < cartItems.length; i += 1) {
     cartItems[i].addEventListener('click', e => cartItemClickListener(e));
+  }
+  if (localStorage.getItem('price')) {
+    document.querySelector('.total-price').innerHTML = localStorage.getItem('price');
   }
 }
 
