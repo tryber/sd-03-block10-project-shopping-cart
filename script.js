@@ -75,7 +75,7 @@ async function addItemToCart(event) {
     updateLocalStorage();
     sumCartsItemPrice();
   } catch (erro) {
-    console.log('OPSS we couldn\'t put it in cart, SORRY, try again late')
+    console.log('OPSS we couldn\'t put it in cart, SORRY, try again late');
   }
 }
 
