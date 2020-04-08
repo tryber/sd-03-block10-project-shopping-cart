@@ -53,7 +53,7 @@ cardTotal = () => {
   const price = Math.round([...cartItem].map(e => e.textContent
   .match(/([0-9.]){1,}$/))
   .reduce((acc, priceItem) => acc + parseFloat(priceItem), 0) * 100) / 100;
-  document.getElementsByClassName('total-price')[0].innerHTML= `PRICE: $${price}`
+  document.getElementsByClassName('total-price')[0].innerHTML = `PRICE: $${price}`;
 };
 
 const DontRepeat = add => ({
@@ -67,7 +67,7 @@ addToCart = async (sku) => {
   await fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
   .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(add))));
-  await cardTotal()
+  await cardTotal();
   await update();
 };
 
@@ -81,6 +81,7 @@ window.onload = () => {
   document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', () => cartItemClickListener(inner)));
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
-    cardTotal(update());
+    cardTotal();
+    update();
   });
 };
