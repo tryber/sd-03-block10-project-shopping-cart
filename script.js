@@ -78,19 +78,18 @@ window.onload = async () => {
   const buttonEmpty = document.querySelector('.empty-cart');
 
   await API('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-  .then(
-    data =>
-      data.results.forEach(({ id, title, thumbnail }) => {
-        itemsSection.appendChild(
-          createProductItemElement({
-            sku: id,
-            name: title,
-            image: thumbnail,
-          }),
-        );
-      }),
-    document.querySelector('.loading').remove(),
-  );
+  .then(data => {
+    data.results.forEach(({ id, title, thumbnail }) => {
+      itemsSection.appendChild(
+        createProductItemElement({
+          sku: id,
+          name: title,
+          image: thumbnail,
+        }),
+      );
+    });
+    document.querySelector('.loading').remove();
+  });
 
   buttonEmpty.addEventListener('click', emptyCart);
   cartItems.innerHTML = localStorage.getItem('cart');
