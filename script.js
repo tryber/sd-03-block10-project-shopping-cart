@@ -6,6 +6,7 @@ const updateCart = () =>
 
 function cartItemClickListener(event) {
   event.target.remove();
+  updateCart();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -72,9 +73,7 @@ const addElement = (className, callback, obj) =>
  */
 
 window.onload = async () => {
-  await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', {
-    method: 'GET',
-  })
+  await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(res => res.json())
     .then(data =>
       data.results.forEach(result =>
