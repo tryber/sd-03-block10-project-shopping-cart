@@ -72,7 +72,7 @@ const getSkuFromProductItem = item =>
   item.querySelector('span.item__sku').innerText;
 
 const removeLoading = () => {
-  const loading = document.querySelector('.loading')
+  const loading = document.querySelector('.loading');
   loading.remove();
 };
 
