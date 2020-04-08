@@ -21,14 +21,24 @@ function updateLocalStorage() {
   localStorage.setItem('list', ol.innerHTML);
 }
 
+function formatedSumOfPricesIn(array){
+  let value = array.reduce((total, li) =>
+    total + parseFloat(/PRICE: \$(\d*\.?\d{0,2})$/.exec(li.innerText)[1])
+  , 0).toFixed(2);
+
+  while (value[value.length - 1] === '0')
+    value = value.slice(0, -1);
+  if (value[value.length - 1] === '.')
+    value = value.slice(0, -1);
+
+  return value;
+}
+
 async function sumCartsItemPrice() {
   try {
     const arrayLis = [...document.querySelector('.cart__items').childNodes];
     const container = document.querySelector('section.total-price');
-    container.innerText = arrayLis.reduce((total, li) =>
-      total + Number(/PRICE: \$(\d*\.?\d{0,2})$/.exec(li.innerText)[1])
-    , 0)
-    .toFixed(0);
+    container.innerText = await formatedSumOfPricesIn(arrayLis);
   } catch (erro) {
     const container = document.querySelector('section.total-price');
     container.innerText = 'Something wrog in total calculator';
