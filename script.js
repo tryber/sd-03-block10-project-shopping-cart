@@ -27,7 +27,8 @@ async function sumCartsItemPrice() {
     const container = document.querySelector('section.total-price');
     container.innerText = arrayLis.reduce((total, li) =>
       total + Number(/PRICE: \$(\d*\.?\d{0,2})$/.exec(li.innerText)[1])
-    , 0).toFixed(2);
+    , 0)
+    .toFixed(2);
   } catch (erro) {
     const container = document.querySelector('section.total-price');
     container.innerText = 'Something wrog in total calculator';
@@ -90,7 +91,9 @@ function putLoading() {
   document.body.appendChild(div);
 }
 
-const removeLoading = () => document.querySelector('.loading').innerText = '';
+const removeLoading = () => {
+  document.querySelector('.loading').innerText = ''
+};
 
 function fetchInMercadoLivre(elem) {
   const URL = `https://api.mercadolibre.com/sites/MLB/search?q=${elem}`;
