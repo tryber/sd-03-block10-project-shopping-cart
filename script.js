@@ -18,6 +18,8 @@ function updateLocalStorage(elementId) {
 
 function cartItemClickListener(e) {
   e.target.parentNode.removeChild(e.target);
+  const price = e.target.innerText.split('PRICE: $')[1];
+  soma(+price * (-1));
   updateLocalStorage('.cart__item');
 }
 
