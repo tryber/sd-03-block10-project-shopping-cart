@@ -54,7 +54,7 @@ window.onload = async () => {
     .then(response => response.json())
     .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0].appendChild(createProductItemElement({
       sku: e.id,
-      name: e.title,
       image: e.thumbnail,
+      name: e.title,
     }))));
 };
