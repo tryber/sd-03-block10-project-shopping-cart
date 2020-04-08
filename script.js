@@ -75,7 +75,7 @@ const totalPrice = () => {};
 
 const removeLoading = () => {
   document.querySelector('.loading').innerText = '';
-}
+};
 
 window.onload = async () => {
   const itemsSection = document.querySelector('.items');
