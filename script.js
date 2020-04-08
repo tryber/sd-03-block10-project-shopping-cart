@@ -12,6 +12,25 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const addItem = async ({ sku }) => {
+  const item = await API(`https://api.mercadolibre.com/items/${sku}`)
+  .then(data => createCartItemElement({
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price,
+  }));
+  const cartItems = document.querySelector('.cart__items');
+  await cartItems.appendChild(item);
+};
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+};
+
 const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
@@ -21,7 +40,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createProductImageElement(image));
   const buttonAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   buttonAddCart.addEventListener('click', () => {
-    addItem({ sku })
+    addItem({ sku });
   });
   section.appendChild(buttonAddCart);
 
@@ -34,26 +53,6 @@ const getSkuFromProductItem = item =>
   item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  //add código
-};
-
-const addItem = async ({ sku }) => {
-  const item = await API(`https://api.mercadolibre.com/items/${sku}`)
-  .then(data => createCartItemElement({
-    sku: data.id,
-    name: data.title,
-    salePrice: data.price,
-  }));
-  const cartItems = document.querySelector('.cart__items');
-  await cartItems.appendChild(item);
-}
-
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
 };
 
 window.onload = async () => {
