@@ -22,11 +22,17 @@ function updateLocalStorage() {
 }
 
 async function sumCartsItemPrice() {
-  const arrayLis = await [...document.querySelector('.cart__items').childNodes];
-  const totalPrice = await arrayLis.reduce((total, li) =>
-    total + Number(/PRICE: \$(\d*.?\d{0,2})$/.exec(li.innerText)[1])
-  , 0);
-  document.querySelector('section.total-price').innerText = await totalPrice;
+  try {
+    const arrayLis = [...document.querySelector('.cart__items').childNodes];
+    const container = document.querySelector('section.total-price');
+    container.innerText = arrayLis.reduce((total, li) =>
+      total + Number(/PRICE: \$(\d*\.?\d{0,2})$/.exec(li.innerText)[1])
+    , 0).toFixed(2);
+  } catch (erro) {
+    const container = document.querySelector('section.total-price');
+    container.innerText = 'Something wrog in total calculator';
+    console.log(erro);
+  }
 }
 
 function cartItemClickListener(event) {
@@ -86,9 +92,9 @@ function putLoading() {
 
 const removeLoading = () => document.querySelector('.loading').innerText = '';
 
-async function fetchInMercadoLivre(elem) {
-  const URL = await `https://api.mercadolibre.com/sites/MLB/search?q=${elem}`;
-  const request = await {
+function fetchInMercadoLivre(elem) {
+  const URL = `https://api.mercadolibre.com/sites/MLB/search?q=${elem}`;
+  const request = {
     method: 'GET',
     Headers: { Accept: 'application/JSON' },
   };
