@@ -35,8 +35,7 @@ const addItem = async ({ sku }) => {
         salePrice: data.price,
       }),
   );
-  const cartItems = document.querySelector('.cart__items');
-  await cartItems.appendChild(item);
+  await document.querySelector('.cart__items').appendChild(item);
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
