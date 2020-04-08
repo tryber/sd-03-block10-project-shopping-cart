@@ -28,7 +28,7 @@ async function sumCartsItemPrice() {
     container.innerText = arrayLis.reduce((total, li) =>
       total + Number(/PRICE: \$(\d*\.?\d{0,2})$/.exec(li.innerText)[1])
     , 0)
-    .toFixed(2);
+    .toFixed(0);
   } catch (erro) {
     const container = document.querySelector('section.total-price');
     container.innerText = 'Something wrog in total calculator';
@@ -85,15 +85,13 @@ function createProductItemElement({ id: sku, title: name, image }) {
 }
 
 function putLoading() {
-  const div = document.querySelector('.loading');
+  const div = document.createElement('.loading');
   div.className = 'loading';
-  div.innerText = 'LOADING';
+  div.innerText = 'loading...';
   document.body.appendChild(div);
 }
 
-const removeLoading = () => {
-  document.querySelector('.loading').innerText = '';
-};
+const removeLoading = () => document.querySelector('.loading').remove();
 
 function fetchInMercadoLivre(elem) {
   const URL = `https://api.mercadolibre.com/sites/MLB/search?q=${elem}`;
