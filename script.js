@@ -71,11 +71,6 @@ const emptyCart = () => {
 const getSkuFromProductItem = item =>
   item.querySelector('span.item__sku').innerText;
 
-const removeLoading = () => {
-  const loading = document.querySelector('.loading');
-  loading.remove();
-};
-
 window.onload = async () => {
   const itemsSection = document.querySelector('.items');
   const items = document.querySelectorAll('.cart__item');
@@ -94,7 +89,7 @@ window.onload = async () => {
           }),
         );
       }),
-  ).then(removeLoading());
+  ).then(document.querySelector('.loading').remove());
 
   buttonEmpty.addEventListener('click', emptyCart);
   cartItems.innerHTML = localStorage.getItem('cart');
