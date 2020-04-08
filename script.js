@@ -77,15 +77,24 @@ function createProductItemElement({ id: sku, title: name, image }) {
   return section;
 }
 
-function fetchInMercadoLivre(elem) {
-  const URL = `https://api.mercadolibre.com/sites/MLB/search?q=${elem}`;
-  const request = {
+function putLoading() {
+  const div = document.createElement('div');
+  div.className = 'loading';
+  div.innerText = 'LOADING';
+  document.body.appendChild(div);
+}
+
+const removeLoading = () => document.querySelector('.loading').remove();
+
+async function fetchInMercadoLivre(elem) {
+  const URL = await `https://api.mercadolibre.com/sites/MLB/search?q=${elem}`;
+  const request = await {
     method: 'GET',
     Headers: { Accept: 'application/JSON' },
   };
 
-  return fetch(URL, request);
-}
+  putLoading();
+  return fetch(URL, request)}
 
 function resetClickEventOnCartItems() {
   document.querySelector('.cart__items')
@@ -93,17 +102,22 @@ function resetClickEventOnCartItems() {
       li.addEventListener('click', cartItemClickListener));
 }
 
+async function seek(data) {
+  try {
+    const reponse = await fetchInMercadoLivre(data);
+    const json = await reponse.json();
+    await json.results.forEach((elem) => {
+      document.getElementById('items-container')
+      .appendChild(createProductItemElement(elem));
+    });
+    removeLoading();
+  } catch {
+    document.querySelector('.loading').innerText = 'OPS something went wrong';
+  }
+}
+
 window.onload = function onload() {
-  fetchInMercadoLivre('computador')
-    .then(data => data.json())
-    .then(data => data.results)
-    .then((results) => {
-      results.forEach((elem) => {
-        document.getElementById('items-container')
-        .appendChild(createProductItemElement(elem));
-      });
-    })
-    .catch(() => console.log('deu algo errado'));
+  seek('computador'); // async
 
   document.querySelector('.empty-cart')
   .addEventListener('click', () => {
