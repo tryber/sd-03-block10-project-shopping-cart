@@ -1,9 +1,3 @@
-const DonRepeat = (e) => createProductItemElement({
-  sku: e.id,
-  name: e.title,
-  image: e.thumbnail,
-});
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,6 +23,12 @@ function createProductItemElement({ sku, name, image }) {
           .addEventListener('click', () => addToCart(sku));
   return section;
 }
+
+const DonRepeat = e => createProductItemElement({
+  sku: e.id,
+  name: e.title,
+  image: e.thumbnail,
+});
 
 addToCart = sku => fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
