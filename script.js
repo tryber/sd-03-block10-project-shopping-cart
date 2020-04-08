@@ -1,3 +1,27 @@
+const updateCart = () =>
+  localStorage.setItem('Cart_items', document.getElementsByClassName('cart__items')[0].innerHTML);
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+const addToCart = async ({ sku }) => {
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then(res => res.json())
+    .then(product =>
+      addElement('cart__items', createCartItemElement, {
+        sku: product.id,
+        name: product.title,
+        salePrice: product.price,
+      }),
+    );
+  await updateCart();
+};
+
 const addElement = (className, callback, obj) =>
   document.getElementsByClassName(className)[0].appendChild(callback(obj));
 
@@ -32,22 +56,6 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-const updateCart = () =>
-  localStorage.setItem('Cart_items', document.getElementsByClassName('cart__items')[0].innerHTML);
-
-const addToCart = async ({ sku }) => {
-  await fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then(res => res.json())
-    .then(product =>
-      addElement('cart__items', createCartItemElement, {
-        sku: product.id,
-        name: product.title,
-        salePrice: product.price,
-      }),
-    );
-  await updateCart();
-};
-
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -56,23 +64,14 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
 /* ____________________________ MY CODE ___________________________  */
 
-/* 
+/*
 const addElement = (className, callback, obj) =>
   document.getElementsByClassName(className)[0].appendChild(callback(obj));
  */
 
 window.onload = async () => {
-  console.log('loading');
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', {
     method: 'GET',
   })
