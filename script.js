@@ -6,6 +6,17 @@ const addElement = (className, callback, obj) =>
 const updateCart = () =>
   localStorage.setItem('Cart_items', document.getElementsByClassName('cart__items')[0].innerHTML);
 
+const sumAll = async () => {
+  const allItems = document.getElementsByClassName('cart__item');
+  const totalPriceClass = document.querySelector('.total-price');
+  const sumPrices = () =>
+    [...allItems]
+      .map(e => e.textContent.match(/([0-9.]){1,}$/))
+      .reduce((a, b) => Math.round(a + parseFloat(b)), 0 * 100)
+      .toFixed(2);
+  totalPriceClass.innerHTML = `TOTAL: $${sumPrices()}`;
+};
+
 function cartItemClickListener(event) {
   event.target.remove();
   updateCart();
@@ -58,7 +69,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   // Mudando aqui para que todo elemento criado tenha setado um tipo - button -
-  //com classname - item__add - com texto Adicionar ao carrinho!
+  // com classname - item__add - com texto Adicionar ao carrinho!
   const addToCartButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   // Depois, adicionando um evento de click, para adicionar ao carrinho o ID da mercadoria clicada.
   addToCartButton.addEventListener('click', () => {
@@ -70,17 +81,6 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 /* ______________________________________________________  */
-
-const sumAll = async () => {
-  const allItems = document.getElementsByClassName('cart__item');
-  const totalPriceClass = document.querySelector('.total-price');
-  const sumPrices = () =>
-    [...allItems]
-      .map(e => e.textContent.match(/([0-9.]){1,}$/))
-      .reduce((a, b) => Math.round(a + parseFloat(b)), 0 * 100)
-      .toFixed(2);
-      totalPriceClass.innerHTML = `TOTAL: $${sumPrices()}`;
-};
 
 window.onload = async () => {
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
