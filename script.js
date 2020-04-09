@@ -46,7 +46,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const clearCart = () => {
   const clear = document.getElementsByClassName('empty-cart')[0];
-    clear.addEventListener('click', function() {
+  clear.addEventListener('click', function () {
     const cart = document.getElementsByClassName('cart')[0];
     const cartList = document.createElement('ol');
     const removeList = document.getElementsByClassName('cart__items')[0];
