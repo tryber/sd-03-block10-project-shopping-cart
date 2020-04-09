@@ -43,7 +43,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => cartItemClickListener(li));
-  cardTotal(update());
+  update();
   return li;
 }
 
@@ -67,7 +67,7 @@ addToCart = async (sku) => {
   .then(response => response.json())
   .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(add))));
   await cardTotal();
-  await update();
+
 };
 
 disableLoad = () => document.getElementsByClassName('loading')[0].remove();
@@ -83,5 +83,5 @@ window.onload = async () => {
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
-  disableLoad(() => cardTotal(() => update()));
+  disableLoad();
 };
