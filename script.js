@@ -70,7 +70,7 @@ addToCart = async (sku) => {
   await update();
 };
 
-disableLoad = () => document.getElementsByClassName('loading')[0].remove();
+disableLoad = () => document.getElementsByClassName('loading')[0].remove;
 
 window.onload = async () => {
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
