@@ -47,12 +47,10 @@ function appendChildOfCreate(elementHtml, functionCreate, json, keyParam, valueP
 
 function fetchCreateCart() {
   const id = this.parentElement.firstChild.innerText;
- 
   const cartOl = document.querySelector('.cart__items');
   fetch(`https://api.mercadolibre.com/items/${id}`)
     .then(response => response.json())
     .then((responseJson) => {
-      
       appendChildOfCreate(cartOl, createCartItemElement, responseJson, 'salePrice', 'price');
     });
 }
@@ -66,11 +64,10 @@ function returnApiInCreateCartItem(selector = 0) {
 function returnApiInCreateItem() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   const sectionItems = document.querySelector('.items');
-  
+
   fetch(url)
     .then(response => response.json())
     .then(responseResult => responseResult.results.forEach((item) => {
-      
       appendChildOfCreate(sectionItems, createProductItemElement, item, 'image', 'thumbnail');
     }))
     .then(() => {
