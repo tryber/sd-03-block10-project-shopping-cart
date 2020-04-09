@@ -70,13 +70,8 @@ addToCart = async (sku) => {
   await update();
 };
 
-loading = () => {
-  return document.getElementsByClassName('loading')[0].innerHTML = 'loading...'
-};
-
-disableLoad = () => {
-  return document.getElementsByClassName('loading')[0].innerHTML = ''
-};
+loading = () => document.getElementsByClassName('loading')[0].innerHTML === 'loading...';
+disableLoad = () => document.getElementsByClassName('loading')[0].innerHTML === '';
 
 window.onload = async () => {
   await loading();
