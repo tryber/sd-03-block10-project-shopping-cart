@@ -5,10 +5,11 @@ const sumAll = async () => {
   const allItems = document.getElementsByClassName('cart__item');
   const totalPriceClass = document.querySelector('.total-price');
   const sumPrices = () =>
-    [...allItems]
+    ([...allItems]
       .map(e => e.textContent.match(/([0-9.]){1,}$/))
-      .reduce((a, b) => Math.round(a + parseFloat(b)), (0 * 100) / 100)
-      .toFixed(2);
+      .reduce((acc, price) => acc + parseFloat(price), 0) *
+      100) /
+    100;
   totalPriceClass.innerHTML = sumPrices();
 };
 
