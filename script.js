@@ -53,7 +53,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-const API = (url) => fetch(url);
+const API = url => fetch(url);
 API('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
   .then(data => data.json())
   .then((dataJson) => {
