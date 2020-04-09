@@ -10,7 +10,7 @@ const sumAll = async () => {
       .reduce((acc, price) => acc + parseFloat(price), 0).toFixed(2) *
       100) /
     100;
-  totalPriceClass.innerHTML = sumPrices();
+  totalPriceClass.textContent = sumPrices();
 };
 
 /* Códigos referentes ao carrinho */
