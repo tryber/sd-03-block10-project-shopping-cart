@@ -40,20 +40,21 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function returnApiInCreateCartItem(selector = 0) {
-  let id;
+function fetchCreateCart() {
+  let id = this.parentElement.firstChild.innerText;
   let param;
   const cartOl = document.querySelector('.cart__items');
-  for (let i = 0; i < selector.length; i += 1) {
-    selector[i].addEventListener('click', (event) => {
-      id = event.target.parentElement.firstChild.innerText;
-      fetch(`https://api.mercadolibre.com/items/${id}`)
-      .then(response => response.json())
-      .then((responseJson) => {
-        param = {sku: (responseJson).id, name: responseJson.title, salePrice: responseJson.price};
-        cartOl.appendChild(createCartItemElement(param));
-      });
+  fetch(`https://api.mercadolibre.com/items/${id}`)
+    .then(response => response.json())
+    .then((responseJson) => {
+      param = { sku: (responseJson).id, name: responseJson.title, salePrice: responseJson.price };
+      cartOl.appendChild(createCartItemElement(param));
     });
+}
+
+function returnApiInCreateCartItem(selector = 0) {
+  for (let i = 0; i < selector.length; i += 1) {
+    selector[i].addEventListener('click', fetchCreateCart);
   }
 }
 
