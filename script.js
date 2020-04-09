@@ -12,11 +12,11 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-
 const sumPrices = () => {
-  const cartItem = document.querySelectorAll('.cart__item');
-  document.getElementsByClassName('total-price')[0].textContent = Math.round([...cartItem].map(e => e.textContent
-    .match(/([0-9.]){1,}$/))
+  const cartItems = document.querySelectorAll('.cart__item');
+  document.getElementsByClassName('total-price')[0].textContent = Math.round([...cartItems]
+    .map(e => e.textContent
+      .match(/([0-9.]){1,}$/))
     .reduce((acc, price) => acc + parseFloat(price), 0) * 100) / 100;
 };
 
