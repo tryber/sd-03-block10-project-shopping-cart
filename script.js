@@ -7,7 +7,7 @@ const sumAll = async () => {
   const sumPrices = () =>
     ([...allItems]
       .map(e => e.textContent.match(/([0-9.]){1,}$/))
-      .reduce((acc, price) => acc + parseFloat(price), 0) *
+      .reduce((acc, price) => acc + parseFloat(price), 0).toFixed(2) *
       100) /
     100;
   totalPriceClass.innerHTML = sumPrices();
