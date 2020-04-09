@@ -1,17 +1,4 @@
-window.onload = function onload() {
-  // verifica se já existe itens no carrinho
-  if (localStorage.getItem('cart')){
-    const cart = document.getElementsByClassName('cart')[0];
-    const cartList = document.createElement('ol');
-    const removeList = document.getElementsByClassName('cart__items')[0];
-    cartList.className = 'cart__items';
-    cart.removeChild(removeList);
-    cart.appendChild(cartList);
-    cartList.innerHTML = localStorage.getItem('cart');
-    clearCart();
-    cartList.addEventListener('click', cartItemClickListener);
-  }
-};
+window.onload = function onload() {};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -48,9 +35,9 @@ function cartItemClickListener(event) {
   const removeItem = document.getElementsByClassName('cart__items')[0];
   removeItem.removeChild(event.srcElement);
 
-  //Atualiza LocalStorage
+  // Atualiza LocalStorage
   const itemsCart = document.getElementsByClassName('cart__items')[0];
-  localStorage.setItem('cart',itemsCart.innerHTML);
+  localStorage.setItem('cart', itemsCart.innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -86,7 +73,7 @@ const getButtons = (button) => {
       const obj = { sku: id, name: title, salePrice: price };
       itemsCart.appendChild(createCartItemElement(obj));
       clearCart();
-      localStorage.setItem('cart',itemsCart.innerHTML);
+      localStorage.setItem('cart', itemsCart.innerHTML);
     });
   });
 };
@@ -95,6 +82,21 @@ const buttonReady = () => {
   const botoes = document.getElementsByClassName('item__add');
   for (let i = 0; i < botoes.length; i += 1) {
     getButtons(botoes[i]);
+  }
+};
+
+const recoveryCart = () => {
+  // verifica se já existe itens no carrinho
+  if (localStorage.getItem('cart')) {
+    const cart = document.getElementsByClassName('cart')[0];
+    const cartList = document.createElement('ol');
+    const removeList = document.getElementsByClassName('cart__items')[0];
+    cartList.className = 'cart__items';
+    cart.removeChild(removeList);
+    cart.appendChild(cartList);
+    cartList.innerHTML = localStorage.getItem('cart');
+    clearCart();
+    cartList.addEventListener('click', cartItemClickListener);
   }
 };
 
@@ -110,4 +112,5 @@ fetch(API_URL)
     itemsSec.appendChild(createProductItemElement(obj));
   });
   buttonReady();
+  recoveryCart();
 });
