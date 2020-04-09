@@ -84,4 +84,9 @@ window.onload = async () => {
         }),
       ),
     );
+  const esvaziaCarrinho = document.getElementsByClassName('empty-cart')[0];
+  esvaziaCarrinho.addEventListener('click', () => {
+    const clearOl = document.getElementsByClassName('cart__items')[0];
+    clearOl.innerHTML = '';
+  });
 };
