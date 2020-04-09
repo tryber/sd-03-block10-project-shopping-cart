@@ -44,12 +44,12 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(data => data.json())
-  .then((dataJson) => console.log(dataJson.results));
+  .then(dataJson => console.log(dataJson.results));
 
 
 fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
   .then(data => data.json())
-  .then(dataJson => {
+  .then((dataJson) => {
     const itemsSec = document.getElementsByClassName('items')[0];
 
     dataJson.results.forEach(({ id, title, thumbnail }) => {
