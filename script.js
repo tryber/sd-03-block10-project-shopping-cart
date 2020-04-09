@@ -1,21 +1,21 @@
 const addElement = (className, callback, obj) =>
   document.getElementsByClassName(className)[0].appendChild(callback(obj));
 
-/* Códigos referentes ao carrinho */
-
-const updateCart = () =>
-  localStorage.setItem('Cart_items', document.getElementsByClassName('cart__items')[0].innerHTML);
-
 const sumAll = async () => {
   const allItems = document.getElementsByClassName('cart__item');
   const totalPriceClass = document.querySelector('.total-price');
   const sumPrices = () =>
     [...allItems]
       .map(e => e.textContent.match(/([0-9.]){1,}$/))
-      .reduce((a, b) => Math.round(a + parseFloat(b)), 0 * 100)
+      .reduce((a, b) => Math.round(a + parseFloat(b)), (0 * 100) / 100)
       .toFixed(2);
   totalPriceClass.innerHTML = `TOTAL: $${sumPrices()}`;
 };
+
+/* Códigos referentes ao carrinho */
+
+const updateCart = () =>
+  localStorage.setItem('Cart_items', document.getElementsByClassName('cart__items')[0].innerHTML);
 
 function cartItemClickListener(event) {
   event.target.remove();
