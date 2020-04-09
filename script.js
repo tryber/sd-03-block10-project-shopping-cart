@@ -47,7 +47,7 @@ const buttonReady = () => {
   let itemSku = 0;
   let API_SKU = '';
   for (let i = 0; i < botoes.length; i += 1) {
-    botoes[i].addEventListener('click', function () {
+    const buttonClick = botoes[i].addEventListener('click', function () {
       itemSku = getSkuFromProductItem(event.path[1]);
       API_SKU = `https://api.mercadolibre.com/items/${itemSku}`;
       console.log(API_SKU);
@@ -56,7 +56,7 @@ const buttonReady = () => {
       .then((dataJson) => {
         const itemsCart = document.getElementsByClassName('cart__items')[0];
         const { id, title, price } = dataJson;
-        const obj = {sku:id, name: title, salePrice: price};
+        const obj = { sku:id, name: title, salePrice: price };
         itemsCart.appendChild(createCartItemElement(obj));
       });
     });
