@@ -70,11 +70,9 @@ addToCart = async (sku) => {
   await update();
 };
 
-loading = () => document.getElementsByClassName('loading')[0].innerHTML === 'loading...';
-disableLoad = () => document.getElementsByClassName('loading')[0].innerHTML === '';
+disableLoad = () => document.getElementsByClassName('loading')[0].remove();
 
 window.onload = async () => {
-  await loading();
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(response => response.json())
     .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0]
@@ -85,7 +83,5 @@ window.onload = async () => {
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
-  await disableLoad();
-  await cardTotal();
-  await update();
+  disableLoad(() => cardTotal(() => update()));
 };
