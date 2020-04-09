@@ -40,15 +40,19 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+function appendChildOfCreate(elementHtml, functionCreate, param) {
+  elementHtml.appendChild(functionCreate(param));
+}
+
 function fetchCreateCart() {
-  let id = this.parentElement.firstChild.innerText;
+  const id = this.parentElement.firstChild.innerText;
   let param;
   const cartOl = document.querySelector('.cart__items');
   fetch(`https://api.mercadolibre.com/items/${id}`)
     .then(response => response.json())
     .then((responseJson) => {
-      param = { sku: (responseJson).id, name: responseJson.title, salePrice: responseJson.price };
-      cartOl.appendChild(createCartItemElement(param));
+      param = { sku: responseJson.id, name: responseJson.title, salePrice: responseJson.price };
+      appendChildOfCreate(cartOl, createCartItemElement, param)
     });
 }
 
@@ -66,7 +70,7 @@ function returnApiInCreateItem() {
     .then(response => response.json())
     .then(responseResult => responseResult.results.forEach((item) => {
       param = { sku: item.id, name: item.title, image: item.thumbnail };
-      sectionItems.appendChild(createProductItemElement(param));
+      appendChildOfCreate(sectionItems, createProductItemElement, param)
     }))
     .then(() => {
       returnApiInCreateCartItem(document.querySelectorAll('.item__add'));
