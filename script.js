@@ -3,14 +3,13 @@ const addElement = (className, callback, obj) =>
 
 const sumAll = async () => {
   const allItems = document.getElementsByClassName('cart__item');
-  const totalPriceClass = document.querySelector('.total-price');
-  const sumPrices = () =>
-    Math.round([...allItems]
-      .map(e => e.textContent.match(/([0-9.]){1,}$/))
-      .reduce((acc, price) => acc + parseFloat(price), 0).toFixed(2) *
-      100) /
-    100;
-  totalPriceClass.textContent = sumPrices();
+  document.querySelector('.total-price').textContent =
+    Math.round(
+      [...allItems]
+        .map(e => e.textContent.match(/([0-9.]){1,}$/))
+        .reduce((acc, price) => acc + parseFloat(price), 0)
+        .toFixed(2) * 100,
+    ) / 100;
 };
 
 /* Códigos referentes ao carrinho */
