@@ -1,4 +1,9 @@
-window.onload = function onload() { };
+const fetc = fetch('https://api.mercadolibre.com/sites/MLB/search?q=cmputador')
+.then(function (response){
+  return response.json();
+}).then(function (data){
+  return data;
+})
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -14,16 +19,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ sku, name, image ,product}) {
   const section = document.createElement('section');
-  section.className = 'item';
+  section.className = 'items';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
 }
 
 function getSkuFromProductItem(item) {
