@@ -84,4 +84,6 @@ window.onload = async () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
   await disableLoad();
+  await cardTotal();
+  await update();
 };
