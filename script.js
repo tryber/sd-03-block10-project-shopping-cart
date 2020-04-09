@@ -1,7 +1,7 @@
 const addElement = (className, callback, obj) =>
   document.getElementsByClassName(className)[0].appendChild(callback(obj));
 
-const sumAll = async () => {
+/* const sumAll = async () => {
   const allItems = document.getElementsByClassName('cart__item');
   document.querySelector('.total-price').textContent =
     Math.round(
@@ -10,6 +10,18 @@ const sumAll = async () => {
         .reduce((acc, price) => acc + parseFloat(price), 0)
         .toFixed(2) * 100,
     ) / 100;
+}; */
+
+const sumAll = async () => {
+  const allItems = document.getElementsByClassName('cart__item');
+  const totalPriceClass = document.querySelector('.total-price');
+  totalPriceClass.textContent = Math.round(
+    [...allItems]
+      .map(e => e.textContent.match(/([0-9.]){1,}$/))
+      .reduce((acc, price) => acc + parseFloat(price), 0)
+      .toFixed(2) * 100,
+  ) / 100;
+      
 };
 
 /* Códigos referentes ao carrinho */
