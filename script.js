@@ -9,7 +9,7 @@ const sumAll = async () => {
       .map(e => e.textContent.match(/([0-9.]){1,}$/))
       .reduce((a, b) => Math.round(a + parseFloat(b)), (0 * 100) / 100)
       .toFixed(2);
-  totalPriceClass.innerHTML = `TOTAL: $${sumPrices()}`;
+  totalPriceClass.innerHTML = sumPrices();
 };
 
 /* Códigos referentes ao carrinho */
