@@ -59,12 +59,9 @@ const getButtons = (button) => {
 
 const buttonReady = () => {
   const botoes = document.getElementsByClassName('item__add');
-  let itemSku = 0;
-  let API_SKU = '';
-
-   for (let i = 0; i < botoes.length; i += 1) {
-     getButtons(botoes[i]);
-   }
+  for (let i = 0; i < botoes.length; i += 1) {
+    getButtons(botoes[i]);
+  }
 };
 
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
