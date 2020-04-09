@@ -84,6 +84,7 @@ window.onload = async () => {
         }),
       ),
     );
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Cart-items');
   const esvaziaCarrinho = document.getElementsByClassName('empty-cart')[0];
   esvaziaCarrinho.addEventListener('click', () => {
     const clearOl = document.getElementsByClassName('cart__items')[0];
