@@ -20,9 +20,9 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(event) {
+function cartItemClickListener(li) {
   // coloque seu código aqui
-  console.log(event);
+  li.target.remove();
 }
 
 function createCartItemElement({ id, title, price }) {
@@ -64,6 +64,6 @@ fetch(API_URL, myObject)
     });
   });
 
-  /* function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
+/* function getSkuFromProductItem(item) {
+return item.querySelector('span.item__sku').innerText;
 } */
