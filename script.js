@@ -44,9 +44,11 @@ function criaElementosNaTela(arr) {
     sectionItem.appendChild(createProductItemElement(el));
   });
 }
+
 function additemcart(event) {
   event.target.remove();
- }
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
