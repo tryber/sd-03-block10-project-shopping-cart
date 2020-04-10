@@ -44,12 +44,12 @@ function criaElementosNaTela(arr) {
     sectionItem.appendChild(createProductItemElement(el));
   });
 }
-function cartItemClickListener(event) { }
+function additemcart() { }
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', additemcart);
   return li;
 }
 function montarObjCartItem(data) {
@@ -85,3 +85,7 @@ fetch(API_URL, myObj)
   .then(jsonResponse => montarObj(jsonResponse))
   .then(arr => criaElementosNaTela(arr))
   .then(queryButtons);
+
+function additemcart(event) {
+  event.target.remove();
+}
