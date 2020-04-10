@@ -189,6 +189,74 @@ hr {
   }
 }
 
+.loading {
+  display: flex;
+  font-size: 5em;
+  word-spacing: 0;
+  font-weight: 900;
+}
+
+.loading-span {
+  display: block;
+  animation: loading-rotation 2s alternate infinite ease running;
+  transform-origin: 50% -20%;
+}
+
+.dot3 {
+  animation: dot-movement 2s alternate infinite ease-in-out running;
+  transform-origin: -50% -20%;
+}
+
+@keyframes loading-rotation {
+
+  0% {
+    color: red;
+    transform: rotateZ( 90deg );
+  }
+
+  25% {
+    transform: rotateZ( 0deg );
+  }
+
+  50% {
+    transform: rotateZ( 0deg );
+  }
+
+  75% {
+    transform: rotateZ( 0deg );
+  }
+
+  100% {
+    color: blue;
+    transform: rotateZ( 90deg );
+  }
+}
+
+@keyframes dot-movement {
+
+  0% {
+    color: red;
+    transform: translateX( 0 );
+  }
+
+  25% {
+    transform: translate( 0 );
+  }
+
+  50% {
+    color: blue;
+    transform: translate( 300% ) rotateZ( -90deg );
+  }
+
+  75% {
+    transform: translateX( 0 );
+  }
+
+  100% {
+    transform: translateX( 0 );
+  }
+}
+
 footer {
   background-color: rgb( 255 , 128 , 128 );
   display: flex;

@@ -97,8 +97,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 function putLoading() {
   const div = document.createElement('div');
   div.className = 'loading';
-  div.innerText = 'loading...';
-  document.body.appendChild(div);
+  div.innerHTML = '<span class="loading-span">loading</span>..<span class="dot3">.</span>';
+  document.querySelector('.items').appendChild(div);
 }
 
 const removeLoading = () => document.querySelector('.loading').remove();
@@ -122,13 +122,15 @@ function resetClickEventOnCartItems() {
 
 async function seek(data = 'computador') {
   try {
-    const reponse = await fetchInMercadoLivre(data);
-    const json = await reponse.json();
+    const response = await fetchInMercadoLivre(data);
+    // setTimeout(async () => {
+    const json = await response.json();
     await json.results.forEach((elem) => {
       document.getElementById('items-container')
       .appendChild(createProductItemElement(elem));
     });
     removeLoading();
+    // }, 5000);
   } catch (erro) {
     if (document.querySelector('.loading')) removeLoading();
 
