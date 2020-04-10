@@ -95,8 +95,6 @@ const sectionItens = async () => {
 };
 sectionItens();
 
-
-
 // API('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
 //   .then(data => data.json())
 //   .then((dataJson) => {
