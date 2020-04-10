@@ -49,7 +49,7 @@ const addItem = async (sku) => {
   const ol = document.getElementsByClassName('cart__items')[0];
   const itemResponse = await API(`https://api.mercadolibre.com/items/${sku}`);
   const dataJson = await itemResponse.json();
-  const product = createCartItemElement({
+  const product = await createCartItemElement({
     sku: dataJson.id,
     name: dataJson.title,
     salePrice: dataJson.price,
