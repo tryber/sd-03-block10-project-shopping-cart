@@ -6,14 +6,14 @@ function createProductImageElement(imageSource) {
   img.src = imageSource;
   return img;
 }
-
+//retorna a imagem com o destino dela
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   return e;
 }
-
+//retorna um novo elemento
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -21,8 +21,9 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  const newbutton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  newbutton.addEventListener('click', () => addItem(sku));
+  section.appendChild(createdButton);
   return section;
 }
 
