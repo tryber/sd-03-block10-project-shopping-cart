@@ -12,15 +12,27 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+const fetchAPI = api => fetch(api).then(response => response.json());
+
+const append = (aClass, func, objects) => document
+  .getElementsByClassName(aClass)[0]
+  .appendChild(func(objects));
+
 const addToCart = async ({ sku }) => {
   await fetchAPI(`https://api.mercadolibre.com/items/${sku}`)
-    .then((product) => {
-      document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement({
-        sku: product.id,
-        name: product.title,
-        salePrice: product.price,
-      }));
-    });
+    .then((product) => append('cart__items', createCartItemElement, {
+      sku: product.id,
+      name: product.title,
+      salePrice: product.price,
+    }));
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -37,8 +49,6 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const fetchAPI = api => fetch(api).then(response => response.json());
-
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
@@ -47,23 +57,15 @@ const cartItemClickListener = (event) => {
   event.target.remove();
 };
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
-
 window.onload = async () => {
   await fetchAPI('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then((json) => {
-      json.results.forEach(item => document.getElementsByClassName('items')[0].appendChild(createProductItemElement({
+      json.results.forEach(item => append('items', createProductItemElement, {
         sku: item.id,
         name: item.title,
         image: item.thumbnail,
-      })));
+      }));
     });
   document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Cart-items');
 };
