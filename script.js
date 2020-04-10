@@ -47,11 +47,12 @@ function cartItemClickListener(event) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 } */
-
-fetch(API_URL, myObject)
-  .then(data => data.json())
-  .then((data) => {
-    const { id: sku, title: name, thumbnail: image } = data.results[0];
-    const newElement = createProductItemElement({ sku, name, image });
-    document.querySelector('.items').appendChild(newElement);
-  });
+for (let i = 0; i < 50; i += 1) {
+  fetch(API_URL, myObject)
+    .then(data => data.json())
+    .then((data) => {
+      const { id: sku, title: name, thumbnail: image } = data.results[0];
+      const newElement = createProductItemElement({ sku, name, image });
+      document.querySelector('.items').appendChild(newElement);
+    });
+}
