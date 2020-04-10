@@ -76,12 +76,23 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const emptyCart = () => {
+  const ol = document.getElementsByClassName('cart__items')[0];
+  while (ol.childNodes.length > 0) {
+    ol.removeChild(ol.lastElementChild);
+  }
+  const spanCartPrice = document.getElementsByClassName('total-price')[0];
+  spanCartPrice.innerHTML = '';
+};
+
 window.onload = function onload() {
   if (localStorage.getItem('Cart Items')) {
     document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('Cart Items');
     document.getElementsByClassName('total-price')[0].innerHTML = parseFloat(localStorage.getItem('Total Price'));
     document.querySelectorAll('.cart__item').forEach(e => e.addEventListener('click', cartItemClickListener));
   }
+  const buttonEmpty = document.getElementsByClassName('empty-cart')[0];
+  buttonEmpty.addEventListener('click', emptyCart);
 };
 
 const sectionItens = async () => {
