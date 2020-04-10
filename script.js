@@ -14,16 +14,16 @@ function createCustomElement(element, className, innerText) {
 
 const storageLocal = async () => {
   const ol = document.getElementsByClassName('cart__items')[0];
-  const olContainer = document.getElementsByClassName('ol-container')[0];
+  const totalPrice = document.getElementsByClassName('total-price')[0];
   localStorage.setItem('Cart Items', ol.innerHTML);
-  localStorage.setItem('Total Price', olContainer.innerHTML);
+  localStorage.setItem('Total Price', totalPrice.innerHTML);
 };
 
 let sum = 0;
 const finalPrice = (price) => {
   sum += price;
   const spanCartPrice = document.getElementsByClassName('total-price')[0];
-  spanCartPrice.innerHTML = sum;
+  spanCartPrice.innerHTML = sum.toFixed(2);
 };
 
 const cartItemClickListener = async (price) => {
@@ -34,7 +34,7 @@ const cartItemClickListener = async (price) => {
 window.onload = function onload() {
   if (localStorage.getItem('Cart Items')) {
     document.getElementsByTagName('ol')[0].innerHTML = localStorage.getItem('Cart Items');
-    document.getElementsByClassName('ol-container')[0].innerHTML = localStorage.getItem('Total Price');
+    document.getElementsByClassName('total-price')[0].innerHTML = parseInt(localStorage.getItem('Total Price'), 10);
     document.querySelectorAll('.cart__item').forEach(e => e.addEventListener('click', (event) => {
       event.target.remove();
       cartItemClickListener();
