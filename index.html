@@ -6,16 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js"></script>
+    <script type="text/javascript" src="script.js"></script>
   </head>
 
   <body>
     <section class="container">
-      <section class="items"></section>
+      <section class="items">
+        <span class="loading"></span>
+      </section>
       <section class="cart">
         <span class="cart__title">Carrinho de compras</span>
         <button class="empty-cart">Esvaziar carrinho</button>
         <ol class="cart__items"></ol>
+        <div class="ol-container">
+          <span>Preço Total</span>
+          <span class="total-price"></span>
+        </div>
       </section>
     </section>
   </body>
