@@ -41,7 +41,7 @@ function createProductItemElement({ sku, name, image }) {
 }
 function criaElementosNaTela(arr) {
   arr.forEach((el) => {
-    sectionItem.appendChild(createProductItemElement(el));
+    const sec = sectionItem.appendChild(createProductItemElement(el));
   });
 }
 function cartItemClickListener(event) { }
@@ -79,9 +79,7 @@ function queryButtons() {
     el.addEventListener('click', coletarIDsDoElementoClicado);
   });
 }
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
+
 fetch(API_URL, myObj)
   .then(response => response.json())
   .then(jsonResponse => montarObj(jsonResponse))
