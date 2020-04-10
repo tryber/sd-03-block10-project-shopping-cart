@@ -41,7 +41,7 @@ function createProductItemElement({ sku, name, image }) {
 }
 function criaElementosNaTela(arr) {
   arr.forEach((el) => {
-    const sec = sectionItem.appendChild(createProductItemElement(el));
+  sectionItem.appendChild(createProductItemElement(el));
   });
 }
 function cartItemClickListener(event) { }
