@@ -1,5 +1,15 @@
-window.onload = function onload() { };
+//window.onload = function onload() { };
+getResponse()
+  .catch(error => {
+    console.log('Error')
+    console.error(error)
+  })
+async function getResponse() {
 
+  const response = await fetch("https://api.mercadolibre.com/sites/MLB/search?q=$QUERY");
+  const consoleResp = await console.log(response)
+
+}
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
