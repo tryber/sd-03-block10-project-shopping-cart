@@ -66,7 +66,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-};
+}
 
 const removeLoading = () => {
   document.getElementsByClassName('loading')[0].remove();
