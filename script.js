@@ -28,26 +28,24 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-
-
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const regexSkuId = /MLB[0-9]{10}/;
   const element = event.target;
   const textElement = element.innerText;
   let itemRegex = regexSkuId.exec(textElement)[0];
-  
-  let resgLocalStorage = localStorage.getItem('cart').split(',')
-  console.log(resgLocalStorage)
-  
+  let resgLocalStorage = localStorage.getItem('cart').split(',');
   let newArrayItemLocalStorage = [];
   for (let i = 0; i < resgLocalStorage.length; i += 1) {
     if (resgLocalStorage[i] !== itemRegex) {
       newArrayItemLocalStorage.push(resgLocalStorage[i]);
     }
   }
-  console.log(newArrayItemLocalStorage)
-  localStorage.setItem('cart', newArrayItemLocalStorage)
+  if (newArrayItemLocalStorage.length < 1) {
+    localStorage.removeItem('cart');
+  } else {
+    localStorage.setItem('cart', newArrayItemLocalStorage);
+  }
   element.parentElement.removeChild(element);
 }
 
@@ -65,10 +63,6 @@ function appendChildOfCreate(elementHtml, functionCreate, json, keyParam, valueP
 }
 
 let arrayItemLocalStorage;
-
-function resgLocalStorage() {
-
-}
 
 function fetchCreateCartClickListener() {
   const id = this.parentElement.firstChild.innerText;
@@ -99,7 +93,6 @@ function returnApiInCreateCartItem(selector = 0) {
 function returnApiInCreateItem() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   const sectionItems = document.querySelector('.items');
-
   fetch(url)
     .then(response => response.json())
     .then(responseResult => responseResult.results.forEach((item) => {
@@ -110,7 +103,22 @@ function returnApiInCreateItem() {
     });
 }
 
+function createCartItemsLocalStorage() {
+  let resgLocalStorForCart = localStorage.getItem('cart');
+  const cartOl = document.querySelector('.cart__items');
+  if (resgLocalStorForCart !== null) {
+    resgLocalStorForCart = resgLocalStorForCart.split(',');
+    for (let i = 0; i < resgLocalStorForCart.length; i += 1) {
+      fetch(`https://api.mercadolibre.com/items/${resgLocalStorForCart[i]}`)
+      .then(response => response.json())
+      .then(responseJson => 
+        appendChildOfCreate(cartOl, createCartItemElement, responseJson, 'salePrice', 'price'));
+    }
+  }
+}
+
 window.onload = function onload() {
   returnApiInCreateItem();
   returnApiInCreateCartItem();
+  createCartItemsLocalStorage();
 };
