@@ -28,9 +28,26 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  const regexSkuId = /MLB[0-9]{10}/;
   const element = event.target;
+  const textElement = element.innerText;
+  let itemRegex = regexSkuId.exec(textElement)[0];
+  
+  let resgLocalStorage = localStorage.getItem('cart').split(',')
+  console.log(resgLocalStorage)
+  
+  let newArrayItemLocalStorage = [];
+  for (let i = 0; i < resgLocalStorage.length; i += 1) {
+    if (resgLocalStorage[i] !== itemRegex) {
+      newArrayItemLocalStorage.push(resgLocalStorage[i]);
+    }
+  }
+  console.log(newArrayItemLocalStorage)
+  localStorage.setItem('cart', newArrayItemLocalStorage)
   element.parentElement.removeChild(element);
 }
 
@@ -47,19 +64,35 @@ function appendChildOfCreate(elementHtml, functionCreate, json, keyParam, valueP
   elementHtml.appendChild(functionCreate(param));
 }
 
-function fetchCreateCart() {
+let arrayItemLocalStorage;
+
+function resgLocalStorage() {
+
+}
+
+function fetchCreateCartClickListener() {
   const id = this.parentElement.firstChild.innerText;
   const cartOl = document.querySelector('.cart__items');
   fetch(`https://api.mercadolibre.com/items/${id}`)
     .then(response => response.json())
     .then((responseJson) => {
       appendChildOfCreate(cartOl, createCartItemElement, responseJson, 'salePrice', 'price');
+      let resg = localStorage.getItem('cart');
+      if (resg === null) {
+        arrayItemLocalStorage = [];
+        arrayItemLocalStorage.push(id);
+        localStorage.setItem('cart', arrayItemLocalStorage);
+      } else {
+        arrayItemLocalStorage = resg.split(',');
+        arrayItemLocalStorage.push(id);
+        localStorage.setItem('cart', arrayItemLocalStorage);
+      }
     });
 }
 
 function returnApiInCreateCartItem(selector = 0) {
   for (let i = 0; i < selector.length; i += 1) {
-    selector[i].addEventListener('click', fetchCreateCart);
+    selector[i].addEventListener('click', fetchCreateCartClickListener);
   }
 }
 
