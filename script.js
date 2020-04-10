@@ -47,7 +47,7 @@ window.onload = function onload() {
     .then(resp => resp.json)
     .then((json) => {
       json.results.forEach((product) => {
-        document.getElementsByClassName('item')[0]
+        document.getElementsByClassName('items')[0]
           .appendChild(createProductItemElement(
             {
               sku: product.id,
