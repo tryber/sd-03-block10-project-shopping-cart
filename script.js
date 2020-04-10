@@ -138,6 +138,23 @@ async function seek(data = 'computador') {
   }
 }
 
+function teasing() {
+  const ol = document.querySelector('.cart__items');
+  const arrow = document.querySelector('.fa-caret-down');
+
+  ol.style.animationPlayState = 'running';
+  arrow.style.animationPlayState = 'running';
+  setTimeout(() => {
+    ol.style.animationPlayState = 'paused';
+    arrow.style.animationPlayState = 'paused';
+  }, 500);
+}
+
+function arrowEvent() {
+  const arrow = document.querySelector('.fa-caret-down');
+  arrow.addEventListener('click', teasing);
+}
+
 window.onload = function onload() {
   seek('computador'); // async
 
@@ -153,4 +170,6 @@ window.onload = function onload() {
   resetClickEventOnCartItems();
 
   sumCartsItemPrice();
+
+  arrowEvent();
 };
