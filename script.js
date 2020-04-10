@@ -89,4 +89,3 @@ fetch(API_URL, myObj)
   .then(jsonResponse => montarObj(jsonResponse))
   .then(arr => criaElementosNaTela(arr))
   .then(queryButtons);
-
