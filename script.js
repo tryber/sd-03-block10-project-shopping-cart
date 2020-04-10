@@ -44,7 +44,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-    .then(resp => resp.json)
+    .then(resp => resp.json())
     .then((json) => {
       json.results.forEach((product) => {
         document.getElementsByClassName('items')[0]
