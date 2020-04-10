@@ -29,7 +29,6 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
   const regexSkuId = /MLB[0-9]{10}/;
   const element = event.target;
   const textElement = element.innerText;
@@ -84,9 +83,27 @@ function fetchCreateCartClickListener() {
     });
 }
 
+function callItemCart(id) {
+  return fetch(`https://api.mercadolibre.com/items/${id}`);
+}
+
+function totalValueItemCart() {
+  const totalTagText = document.querySelector('.total-price');
+  const totalTagNumber = parseFloat(totalTagText.innerText);
+  let totalValue = totalTagNumber;
+  const id = this.parentElement.firstChild.innerText;
+  callItemCart(id)
+    .then(response => response.json())
+    .then((responseJson) => {
+      totalValue += responseJson.price;
+      totalTagText.innerText = totalValue;
+    })
+}
+
 function returnApiInCreateCartItem(selector = 0) {
   for (let i = 0; i < selector.length; i += 1) {
     selector[i].addEventListener('click', fetchCreateCartClickListener);
+    selector[i].addEventListener('click', totalValueItemCart);
   }
 }
 
@@ -110,9 +127,9 @@ function createCartItemsLocalStorage() {
     resgLocalStorForCart = resgLocalStorForCart.split(',');
     for (let i = 0; i < resgLocalStorForCart.length; i += 1) {
       fetch(`https://api.mercadolibre.com/items/${resgLocalStorForCart[i]}`)
-      .then(response => response.json())
-      .then(responseJson =>
-        appendChildOfCreate(cartOl, createCartItemElement, responseJson, 'salePrice', 'price'));
+        .then(response => response.json())
+        .then(responseJson =>
+          appendChildOfCreate(cartOl, createCartItemElement, responseJson, 'salePrice', 'price'));
     }
   }
 }
