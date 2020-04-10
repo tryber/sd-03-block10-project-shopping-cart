@@ -47,6 +47,8 @@ const API = url => fetch(url);
 
 const addItem = async (sku) => {
   const ol = document.getElementsByClassName('cart__items')[0];
+  const loading = document.getElementsByClassName('loading')[0];
+  loading.innerHTML = 'Loading...';
   const itemResponse = await API(`https://api.mercadolibre.com/items/${sku}`);
   const dataJson = await itemResponse.json();
   const product = await createCartItemElement({
@@ -54,6 +56,7 @@ const addItem = async (sku) => {
     name: dataJson.title,
     salePrice: dataJson.price,
   });
+  loading.innerHTML = '';
   await ol.appendChild(product);
   await finalPrice();
   await storageLocal();
