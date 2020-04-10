@@ -33,9 +33,9 @@ function cartItemClickListener(event) {
   const regexSkuId = /MLB[0-9]{10}/;
   const element = event.target;
   const textElement = element.innerText;
-  let itemRegex = regexSkuId.exec(textElement)[0];
-  let resgLocalStorage = localStorage.getItem('cart').split(',');
-  let newArrayItemLocalStorage = [];
+  const itemRegex = regexSkuId.exec(textElement)[0];
+  const resgLocalStorage = localStorage.getItem('cart').split(',');
+  const newArrayItemLocalStorage = [];
   for (let i = 0; i < resgLocalStorage.length; i += 1) {
     if (resgLocalStorage[i] !== itemRegex) {
       newArrayItemLocalStorage.push(resgLocalStorage[i]);
@@ -71,7 +71,7 @@ function fetchCreateCartClickListener() {
     .then(response => response.json())
     .then((responseJson) => {
       appendChildOfCreate(cartOl, createCartItemElement, responseJson, 'salePrice', 'price');
-      let resg = localStorage.getItem('cart');
+      const resg = localStorage.getItem('cart');
       if (resg === null) {
         arrayItemLocalStorage = [];
         arrayItemLocalStorage.push(id);
@@ -111,7 +111,7 @@ function createCartItemsLocalStorage() {
     for (let i = 0; i < resgLocalStorForCart.length; i += 1) {
       fetch(`https://api.mercadolibre.com/items/${resgLocalStorForCart[i]}`)
       .then(response => response.json())
-      .then(responseJson => 
+      .then(responseJson =>
         appendChildOfCreate(cartOl, createCartItemElement, responseJson, 'salePrice', 'price'));
     }
   }
