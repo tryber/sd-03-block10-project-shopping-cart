@@ -44,7 +44,9 @@ function criaElementosNaTela(arr) {
     sectionItem.appendChild(createProductItemElement(el));
   });
 }
-function additemcart() { }
+function additemcart(event) {
+  event.target.remove();
+ }
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -86,6 +88,3 @@ fetch(API_URL, myObj)
   .then(arr => criaElementosNaTela(arr))
   .then(queryButtons);
 
-function additemcart(event) {
-  event.target.remove();
-}
