@@ -23,7 +23,7 @@ let sum = 0;
 const finalPrice = (price) => {
   sum += price;
   const spanCartPrice = document.getElementsByClassName('total-price')[0];
-  spanCartPrice.innerHTML = sum.toFixed(2);
+  spanCartPrice.innerHTML = Math.round(sum * 100) / 100;
 };
 
 const cartItemClickListener = async (price) => {
