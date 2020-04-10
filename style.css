@@ -1,4 +1,4 @@
-.top-bar{
+.top-bar {
   align-items: center;
   display: flex;
   height: 100px;
@@ -41,7 +41,9 @@
   width: 200px;
 }
 
-
+.item .item__sku {
+  display: none;
+}
 
 .item .item__title {
   flex-grow: 1;
