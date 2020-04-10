@@ -45,7 +45,7 @@ function criaElementosNaTela(arr) {
   });
 }
 
-function additemcart(event) {
+function additemcart() {
   event.target.remove();
 }
 
