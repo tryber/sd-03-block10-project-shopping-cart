@@ -73,45 +73,37 @@ function appendChildOfCreate(elementHtml, functionCreate, json, keyParam, valueP
 
 let arrayItemLocalStorage;
 
-function fetchCreateCartClickListener() {
-  const id = this.parentElement.firstChild.innerText;
-  const cartOl = document.querySelector('.cart__items');
-  fetch(`https://api.mercadolibre.com/items/${id}`)
-    .then(response => response.json())
-    .then((responseJson) => {
-      appendChildOfCreate(cartOl, createCartItemElement, responseJson, 'salePrice', 'price');
-      const resg = localStorage.getItem('cart');
-      if (resg === null) {
-        arrayItemLocalStorage = [];
-        arrayItemLocalStorage.push(id);
-        localStorage.setItem('cart', arrayItemLocalStorage);
-      } else {
-        arrayItemLocalStorage = resg.split(',');
-        arrayItemLocalStorage.push(id);
-        localStorage.setItem('cart', arrayItemLocalStorage);
-      }
-    });
-}
-
 function callItemCart(id) {
   return fetch(`https://api.mercadolibre.com/items/${id}`);
 }
 
-async function totalValueItemCart() {
+async function fetchCreateCartClickListener() {
+  const id = this.parentElement.firstChild.innerText;
+  const cartOl = document.querySelector('.cart__items');
   const totalTagText = document.querySelector('.total-price');
   const totalTagNumber = parseFloat(totalTagText.innerText);
   let totalValue = totalTagNumber;
-  const id = this.parentElement.firstChild.innerText;
-  const itemResponse = await callItemCart(id);
-  const data = await itemResponse.json();
+  const response = await callItemCart(id)
+  const data = await response.json();
   totalValue += data.price;
   totalTagText.innerText = totalValue.toFixed(2);
+  appendChildOfCreate(cartOl, createCartItemElement, data, 'salePrice', 'price');
+  const resg = localStorage.getItem('cart');
+  if (resg === null) {
+    arrayItemLocalStorage = [];
+    arrayItemLocalStorage.push(id);
+    localStorage.setItem('cart', arrayItemLocalStorage);
+  } else {
+    arrayItemLocalStorage = resg.split(',');
+    arrayItemLocalStorage.push(id);
+    localStorage.setItem('cart', arrayItemLocalStorage);
+  }
 }
 
 function returnApiInCreateCartItem(selector = 0) {
   for (let i = 0; i < selector.length; i += 1) {
     selector[i].addEventListener('click', fetchCreateCartClickListener);
-    selector[i].addEventListener('click', totalValueItemCart);
+    /* selector[i].addEventListener('click', totalValueItemCart); */
   }
 }
 
