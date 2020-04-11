@@ -1,4 +1,18 @@
-window.onload = function onload() { };
+window.onload = function onload() {
+  document.querySelector('.cart__items').innerHTML = localStorage.getItem('loadCart');
+  document.querySelectorAll('.cart__item').forEach(el => el.addEventListener('click', this.cartItemClickListener));
+};
+
+const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const myObject = {
+  method: 'GET',
+  headers: { Accept: 'application/json' },
+};
+
+const cartPrice = document.createElement('div');
+cartPrice.className = 'total-price';
+cartPrice.innerHTML = 'R$ 0,00';
+document.querySelector('.cart__title').appendChild(cartPrice);
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -14,30 +28,81 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+/* function cartItemClickListener(li) {
+  // coloque seu código aqui
+  li.target.remove();
+} */
+
+let totalPrice = 0;
+
+function createCartItemElement({ id, title, price }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
+  li.addEventListener('click', (el) => {
+    el.target.remove();
+    totalPrice -= price;
+    cartPrice.innerHTML = totalPrice;
+  });
+  return li;
+}
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  section.querySelector('button').addEventListener('click', () => {
+    // const load = document.createElement('div');
+    // load.innerHTML = 'Loading';
+    // load.className = 'loading';
+    // document.querySelector('.empty-cart').appendChild(load);
+    const URL = `https://api.mercadolibre.com/items/${sku}`;
+    fetch(URL, myObject)
+      .then(data => data.json())
+      .then((data) => {
+        // document.querySelector('.loading').innerHTML = '';
+        // document.querySelectorAll('.loading').forEach(e => e.remove());
+        const { id, title, price } = data;
+        totalPrice += price;
+        cartPrice.innerHTML = totalPrice;
+        const newItem = createCartItemElement({ id, title, price });
+        document.querySelector('.cart__items').appendChild(newItem);
+      });
+  });
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+const load = document.createElement('div');
+load.innerHTML = 'Loading';
+load.className = 'loading';
+document.querySelector('.empty-cart').appendChild(load);
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
+fetch(API_URL, myObject)
+  .then(data => data.json())
+  .then((data) => {
+    load.innerHTML = '';
+    document.querySelector('.loading').remove();
+    data.results.forEach((el) => {
+      const { id: sku, title: name, thumbnail: image } = el;
+      const newElement = createProductItemElement({ sku, name, image });
+      document.querySelector('.items').appendChild(newElement);
+    });
+  });
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
+/* function getSkuFromProductItem(item) {
+return item.querySelector('span.item__sku').innerText;
+} */
+
+document.querySelector('.empty-cart').addEventListener('click', () => {
+  document.querySelector('.cart__items').innerHTML = '';
+  totalPrice = 0;
+  document.querySelector('.total-price').innerHTML = 'R$ 0,00';
+});
+
+window.addEventListener('unload', () => {
+  localStorage.setItem('loadCart', document.querySelector('.cart__items').innerHTML);
+  console.log(document.querySelector('.cart__items').innerHTML);
+});
