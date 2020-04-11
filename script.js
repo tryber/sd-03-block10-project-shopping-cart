@@ -36,10 +36,12 @@ function changeTotalValue(textElement) {
   const totalTagText = document.querySelector('.total-price');
   const totalTagNumber = parseFloat(totalTagText.innerText);
   let totalValue = totalTagNumber;
+  const cartItems = document.querySelector('.cart__items');
   totalValue -= itemRegexOnlyNumbers;
   totalTagText.innerText = totalValue.toFixed(2);
   localStorage.setItem('total', totalValue.toFixed(2));
   if (totalValue === 0) localStorage.removeItem('total');
+  if (cartItems.children.length === 1) totalTagText.innerText = 0;
 }
 
 function cartItemClickListener(event) {
@@ -156,8 +158,23 @@ function createCartItemsLocalStorage() {
   }
 }
 
+function emptyCartFunction() {
+  const emptyCart = document.querySelector('.empty-cart');
+  const cartItems = document.querySelector('.cart__items');
+  const totalPrice = document.querySelector('.total-price');
+  emptyCart.addEventListener('click', () => {
+    for (let i = cartItems.children.length - 1; i >= 0; i -= 1) {
+      cartItems.removeChild(cartItems.children[i]);
+      localStorage.removeItem('cart');
+      localStorage.removeItem('total');
+      totalPrice.innerText = 0;
+    }
+  });
+}
+
 window.onload = function onload() {
   returnApiInCreateItem();
   returnApiInCreateCartItem();
   createCartItemsLocalStorage();
+  emptyCartFunction();
 };
