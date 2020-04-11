@@ -43,8 +43,8 @@ function createProductItemElement({ sku, name, image }) {
     fetch(`https://api.mercadolibre.com/items/${sku}`)
       .then(respo => respo.json())
       .then((product) => {
-        document.getElementsByClassName('cart__items')[0]
-          .appendChild(createCartItemElement({
+        let item = document.getElementsByClassName('cart__items')[0];
+          item.appendChild(createCartItemElement({
             sku: product.id,
             name: product.title,
             salePrice: product.price,
