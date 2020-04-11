@@ -45,11 +45,11 @@ const itemsSection = document.querySelector('.items');
 console.log(itemsSection);
 fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
 .then(data => data.json())
-.then(dataJ => {
+.then((dataJ) => {
   const id = dataJ.results[0].id;
   const name = dataJ.results[0].title;
   const image = dataJ.results[0].thumbnail;
   console.log(dataJ.results[0]);
-  itemsSection.appendChild(createProductItemElement({id, name, image}));
+  itemsSection.appendChild(createProductItemElement( {id, name, image} ));
 })
 .catch(() => console.log('ERROR'));
