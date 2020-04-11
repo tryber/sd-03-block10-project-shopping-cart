@@ -1,16 +1,9 @@
-//  carregar sessão salva no localStorafe
 window.onload = function onload() {
   document.querySelector('.cart__items').innerHTML = localStorage.getItem('loadCart');
   document.querySelectorAll('.cart__item').forEach(el => el.addEventListener('click', this.cartItemClickListener));
 };
-//  Criar mensagem de carregamento
-const load = document.createElement('div');
-load.innerHTML = 'Loading...';
-load.className = 'loading';
-document.querySelector('.loading-area').appendChild(load);
 
-// tipo de requisçao a API
-
+const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 const myObject = {
   method: 'GET',
   headers: { Accept: 'application/json' },
@@ -28,6 +21,18 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+function createCustomElement(element, className, innerText) {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+}
+
+/* function cartItemClickListener(li) {
+  // coloque seu código aqui
+  li.target.remove();
+} */
+
 let totalPrice = 0;
 
 function createCartItemElement({ id, title, price }) {
@@ -42,15 +47,6 @@ function createCartItemElement({ id, title, price }) {
   return li;
 }
 
-//  Criando detalhes do elemento
-function createCustomElement(element, className, innerText) {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
-}
-
-//  Função que criar o novo item a partir do resultado da API request
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -79,30 +75,33 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// requisicao a API
-const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const load = document.createElement('div');
+load.innerHTML = 'Loading';
+load.className = 'loading';
+document.querySelector('.empty-cart').appendChild(load);
 
 fetch(API_URL, myObject)
   .then(data => data.json())
   .then((data) => {
     load.innerHTML = '';
-    document.querySelector('.loading').remove(); // quando a API ir pra fullfiled o texto de loading some
+    document.querySelector('.loading').remove();
     data.results.forEach((el) => {
-      const { id: sku, title: name, thumbnail: image } = el; // object destructuring
+      const { id: sku, title: name, thumbnail: image } = el;
       const newElement = createProductItemElement({ sku, name, image });
       document.querySelector('.items').appendChild(newElement);
     });
   });
 
-//  Limpar Cart
+/* function getSkuFromProductItem(item) {
+return item.querySelector('span.item__sku').innerText;
+} */
+
 document.querySelector('.empty-cart').addEventListener('click', () => {
   document.querySelector('.cart__items').innerHTML = '';
   totalPrice = 0;
   document.querySelector('.total-price').innerHTML = `R$${totalPrice.toFixed(2)}`;
 });
 
-
-//  carregar informações no localStorage
 window.addEventListener('unload', () => {
   localStorage.setItem('loadCart', document.querySelector('.cart__items').innerHTML);
   console.log(document.querySelector('.cart__items').innerHTML);

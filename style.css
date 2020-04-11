@@ -1,13 +1,10 @@
 .top-bar {
   align-items: center;
-  background-color: rgb( 255 , 241 , 89 );
   display: flex;
   height: 100px;
-  justify-content: left;
+  justify-content: space-around;
   margin-bottom: 10px;
-  margin-left: -10px;
-  margin-top: -20px;
-  width: 102%;
+  width: 100%;
 }
 
 .top-bar .input-name-group {
@@ -70,69 +67,10 @@
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
-  width: 30%;
 }
 
 .cart .cart__title {
-  display: block;
   flex-basis: 1;
-  text-align: center;
-  align-self: center;
-  padding: 20px 0;
-  margin: 20px, 0;
-  font-size: 30px;
-}
-
-.logo {
-  text-align: left;
-  margin-left: 20px;
-}
-
-body {
-  background-color: rgb( 238 , 238 , 238 );
-}
-
-.empty-cart {
-  width: 50%;
-  color: black;
-  height: 50px;
-  border-radius: 10%;
-  background-color: rgb( 238 , 238 , 238 );
-  cursor: pointer;
-}
-
-.fixed {
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  margin-right: 50px;
-  background-color: rgb( 255 , 241 , 89 );
-  width: 300px;
-}
-
-.cart__items {
-  display: flex;
-  flex-flow: column;
-}
-
-.cart__item {
-  width: 100%;
-}
-
-.total-price {
-  padding-top: 20px;
-}
-
-li {
-  list-style: square;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.loading {
-  font-size: 50px;
+  font-size: 16pt;
   text-align: center;
 }
