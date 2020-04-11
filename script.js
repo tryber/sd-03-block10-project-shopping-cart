@@ -83,7 +83,7 @@ async function fetchCreateCartClickListener() {
   const totalTagText = document.querySelector('.total-price');
   const totalTagNumber = parseFloat(totalTagText.innerText);
   let totalValue = totalTagNumber;
-  const response = await callItemCart(id)
+  const response = await callItemCart(id);
   const data = await response.json();
   totalValue += data.price;
   totalTagText.innerText = totalValue.toFixed(2);
@@ -103,7 +103,6 @@ async function fetchCreateCartClickListener() {
 function returnApiInCreateCartItem(selector = 0) {
   for (let i = 0; i < selector.length; i += 1) {
     selector[i].addEventListener('click', fetchCreateCartClickListener);
-    /* selector[i].addEventListener('click', totalValueItemCart); */
   }
 }
 
