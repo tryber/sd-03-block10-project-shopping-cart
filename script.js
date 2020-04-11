@@ -33,11 +33,14 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function carregarCarrinho({ sku }) {
   await fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then(product => ('cart__items', createCartItemElement, {
-      sku: product.id,
-      name: product.title,
-      salePrice: product.price,
-    }));
+    .then(product => {
+      'cart__items', createCartItemElement,
+      {
+        sku: product.id,
+        name: product.title,
+        salePrice: product.price,
+      }
+    });
   await localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
 }
 
