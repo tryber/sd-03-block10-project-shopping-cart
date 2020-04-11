@@ -60,15 +60,8 @@ const addNoCarrinho = () => {
   });
 };
 const listarProdutos = () => {
-  let carregando = 'loading';
-  itemsSection.innerHTML = carregando;
-  itemsSection.className = 'items loading'
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-  .then(data => {
-    itemsSection.innerHTML = '';
-    itemsSection.className = 'items'
-    return data.json();
-  })
+  .then(data => data.json())
   .then((dataJ) => {
     const resultados = dataJ.results;
     resultados.forEach((item) => {
