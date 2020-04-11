@@ -1,8 +1,9 @@
-window.onload = function onload() { };
+// window.onload = function onload() { };
 // const fetch = require('node-fetch');
 
 // const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 // const myObj = { method: 'GET' };
+
 
 const fetchar = async () => {
   const response = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador');
@@ -16,12 +17,42 @@ const fetchar = async () => {
     });
   });
   const produtos = document.querySelector('.items');
-  emptyArr.forEach(el => {
-    produtos.appendChild(createProductItemElement(el))
-  })
+  emptyArr.forEach((el) => {
+    produtos.appendChild(createProductItemElement(el));
+  });
 };
-fetchar()
 
+
+const addToCart = (data) => {
+  const obj = {
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price,
+  };
+  const li = createCartItemElement(obj);
+  const ol = document.querySelector('.cart__items');
+  ol.appendChild(li);
+};
+
+const addToCartFetch = async (id) => {
+  const response = await fetch(`https://api.mercadolibre.com/items/${id}`);
+  const data = await response.json();
+  addToCart(data);
+};
+
+const addIdToCart = (event) => {
+  const accessSession = event.target.parentNode;
+  const access = accessSession.firstChild.innerText;
+  addToCartFetch(access);
+};
+
+const acessButtons = () => {
+  const catchButtons = document.querySelectorAll('.item__add');
+  for (let i = 0; i < catchButtons.length; i += 1) {
+    catchButtons[i].addEventListener('click', addIdToCart);
+  }
+};
+acessButtons();
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -54,7 +85,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  // add here
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -64,3 +95,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+fetchar()
+  .then(acessButtons);
