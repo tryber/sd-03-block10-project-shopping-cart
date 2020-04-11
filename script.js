@@ -1,8 +1,17 @@
 const itemsSection = document.querySelector('.items');
 const itemsCarrinho = document.querySelector('.cart__items');
 const removeAll = document.querySelector('.empty-cart');
-window.onload = function onload(){ 
-
+window.onload = function onload(){
+  const produtosJson = window.localStorage;
+  for (let i = 0; i < produtosJson.length; i += 1) {
+    let chave = produtosJson.key(i);
+    let jsonProduto = window.localStorage.getItem(chave);
+    let produtoObjeto = JSON.parse(jsonProduto);
+    let sku = produtoObjeto.sku;
+    let name = produtoObjeto.name;
+    let salePrice = produtoObjeto.salePrice;
+    itemsCarrinho.appendChild(createCartItemElement({ sku, name, salePrice }))
+  }
 };
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -61,9 +70,8 @@ const addNoCarrinho = () => {
         const salePrice = resultados[index].price;
         const produto = createCartItemElement({ sku, name, salePrice });
         itemsCarrinho.appendChild(produto);
-        localStorage.setItem(`sku: ${index}`, sku);
-        localStorage.setItem(`name: ${index}`, name);
-        localStorage.setItem(`salePrice: ${index}`, salePrice);
+        const storageJson = JSON.stringify({ sku, name, salePrice });
+        localStorage.setItem(`${sku}`, storageJson);
         return dataJ;
       });
     });
