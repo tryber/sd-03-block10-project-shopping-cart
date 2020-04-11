@@ -100,7 +100,7 @@ function emptcart() {
   const empt = document.querySelector('.empty-cart');
   empt.addEventListener('click', function () {
     document.querySelector('.cart__items').innerHTML = '';
-  })
+  });
 }
 
 fetch(API_URL, myObj)
@@ -109,4 +109,3 @@ fetch(API_URL, myObj)
   .then(arr => criaElementosNaTela(arr))
   .then(queryButtons)
   .then(emptcart());
-
