@@ -1,4 +1,9 @@
-window.onload = function onload() { };
+const itemsSection = document.querySelector('.items');
+const itemsCarrinho = document.querySelector('.cart__items');
+const removeAll = document.querySelector('.empty-cart');
+window.onload = function onload(){ 
+
+};
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,19 +34,20 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  this.remove();
-}
+//function cartItemClickListener(event) {
+  //this.remove();
+//}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', () => {
+  li.remove();
+  localStorage.removeItem(`${sku}`);
+  });
   return li;
 }
-const itemsSection = document.querySelector('.items');
-const itemsCarrinho = document.querySelector('.cart__items');
 const addNoCarrinho = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(data => data.json())
@@ -53,7 +59,11 @@ const addNoCarrinho = () => {
         const sku = resultados[index].id;
         const name = resultados[index].title;
         const salePrice = resultados[index].price;
-        itemsCarrinho.appendChild(createCartItemElement({ sku, name, salePrice }));
+        const produto = createCartItemElement({ sku, name, salePrice });
+        itemsCarrinho.appendChild(produto);
+        localStorage.setItem(`sku: ${index}`, sku);
+        localStorage.setItem(`name: ${index}`, name);
+        localStorage.setItem(`salePrice: ${index}`, salePrice);
         return dataJ;
       });
     });
@@ -76,11 +86,10 @@ const listarProdutos = () => {
 };
 listarProdutos();
 addNoCarrinho();
-
-const removeAll = document.querySelector('.empty-cart');
 removeAll.addEventListener('click', () => {
   const lis = document.querySelectorAll('li');
   lis.forEach((li) => {
     li.remove();
   });
+  localStorage.clear();
 });
