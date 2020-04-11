@@ -1,3 +1,7 @@
+body {
+  background-color: #fff159;
+}
+
 .top-bar {
   align-items: center;
   display: flex;
@@ -21,6 +25,10 @@
   display: flex;
   justify-content: space-around;
   width: 100%;
+}
+
+.loading {
+  font-size: larger;
 }
 
 .items {
