@@ -129,8 +129,15 @@ function returnApiInCreateCartItem(selector = 0) {
 function returnApiInCreateItem() {
   const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   const sectionItems = document.querySelector('.items');
+  const loading = document.createElement('p');
+  loading.classList.add('loading');
+  loading.innerText = "loading...";
+  sectionItems.appendChild(loading);
   fetch(url)
-    .then(response => response.json())
+    .then((response) => {
+      sectionItems.removeChild(loading);
+      return response.json(); 
+    })
     .then(responseResult => responseResult.results.forEach((item) => {
       appendChildOfCreate(sectionItems, createProductItemElement, item, 'image', 'thumbnail');
     }))
