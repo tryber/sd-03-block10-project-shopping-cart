@@ -36,6 +36,8 @@ function createCartItemElement({ id, title, price }) {
   return li;
 }
 
+let totalPrice = 0;
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -44,12 +46,17 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   section.querySelector('button').addEventListener('click', () => {
+    const load = document.createElement('div');
+    load.innerHTML = 'Loading';
+    load.className = 'loading';
+    document.querySelector('.cart__items').appendChild(load);
     const URL = `https://api.mercadolibre.com/items/${sku}`;
     fetch(URL, myObject)
       .then(data => data.json())
       .then((data) => {
-        console.log(data);
+        document.querySelector('.loading').remove();
         const { id, title, price } = data;
+        totalPrice += price;
         const newItem = createCartItemElement({ id, title, price });
         console.log(document.querySelector('.cart__item'));
         document.querySelector('.cart__items').appendChild(newItem);
@@ -57,6 +64,10 @@ function createProductItemElement({ sku, name, image }) {
   });
   return section;
 }
+
+const cartPrice = document.createElement('div');
+cartPrice.className = 'total-price';
+cartPrice.innerHTML = totalPrice
 
 const load = document.createElement('div');
 load.innerHTML = 'Loading';
