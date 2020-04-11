@@ -44,15 +44,10 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   section.querySelector('button').addEventListener('click', () => {
-    const load = document.createElement('div');
-    load.innerHTML = 'Loading';
-    load.className = 'loading';
-    document.querySelector('.cart__items').appendChild(load);
     const URL = `https://api.mercadolibre.com/items/${sku}`;
     fetch(URL, myObject)
       .then(data => data.json())
       .then((data) => {
-        load.innerHTML = '';
         console.log(data);
         const { id, title, price } = data;
         const newItem = createCartItemElement({ id, title, price });
