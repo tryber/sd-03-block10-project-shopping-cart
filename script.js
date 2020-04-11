@@ -59,7 +59,7 @@ const addNoCarrinho = () => {
         return dataJ;
       });
     });
-  })
+  });
 };
 const listarProdutos = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
@@ -75,6 +75,6 @@ const listarProdutos = () => {
     return dataJ;
   })
   .catch(() => console.log('ERROR'));
-}
+};
 listarProdutos();
 addNoCarrinho();
