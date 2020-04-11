@@ -23,6 +23,14 @@
   width: 100%;
 }
 
+.loading {
+  margin: auto;
+  padding: 0;
+  position: relative;
+  right: 190px;
+  text-align: center;
+}
+
 .items {
   display: flex;
   flex-basis: 70%;
