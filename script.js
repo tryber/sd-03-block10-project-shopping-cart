@@ -43,12 +43,12 @@ function createProductItemElement({ sku, name, image }) {
     fetch(`https://api.mercadolibre.com/items/${sku}`)
       .then(respo => respo.json())
       .then((product) => {
-        let item = document.getElementsByClassName('cart__items')[0];
-          item.appendChild(createCartItemElement({
-            sku: product.id,
-            name: product.title,
-            salePrice: product.price,
-          }));
+        const item = document.getElementsByClassName('cart__items')[0];
+        item.appendChild(createCartItemElement({
+          sku: product.id,
+          name: product.title,
+          salePrice: product.price,
+        }));
       });
   });
   section.appendChild(botaoAdd);
