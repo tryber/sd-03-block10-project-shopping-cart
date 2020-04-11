@@ -53,8 +53,8 @@ function criaElementosNaTela(arr) {
   });
 }
 
-function cartItemClickListener(event){
-  event.target.remove();
+function cartItemClickListener(event) {
+  event.target.parentNode.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -93,11 +93,11 @@ function queryButtons() {
   const buttons = document.querySelectorAll('.item__add');
   buttons.forEach((el) => {
     el.addEventListener('click', coletarIDsDoElementoClicado);
-    });
-  }
+  });
+}
 
-  fetch(API_URL, myObj)
-    .then(response => response.json())
-    .then(jsonResponse => montarObj(jsonResponse))
-    .then(arr => criaElementosNaTela(arr))
-    .then(queryButtons);
+fetch(API_URL, myObj)
+  .then(response => response.json())
+  .then(jsonResponse => montarObj(jsonResponse))
+  .then(arr => criaElementosNaTela(arr))
+  .then(queryButtons);
