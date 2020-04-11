@@ -76,3 +76,11 @@ const listarProdutos = () => {
 };
 listarProdutos();
 addNoCarrinho();
+
+const removeAll = document.querySelector('.empty-cart');
+removeAll.addEventListener('click', () => {
+  const lis = document.querySelectorAll('li');
+  lis.forEach((li) => {
+    li.remove();
+  })
+});
