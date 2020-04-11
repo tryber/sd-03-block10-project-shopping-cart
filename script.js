@@ -28,23 +28,34 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+function changeTotalValue(textElement) {
+  const regexItemPrice = /\$[0-9]{1,10}\.{0,1}[0-9]{0,5}/;
+  const itemRegex = regexItemPrice.exec(textElement)[0];
+  const regexOnlyNumbers = /[0-9]{1,10}\.{0,1}[0-9]{0,5}/;
+  const itemRegexOnlyNumbers = regexOnlyNumbers.exec(itemRegex)[0];
+  console.log(itemRegexOnlyNumbers)
+  const totalTagText = document.querySelector('.total-price');
+  const totalTagNumber = parseFloat(totalTagText.innerText);
+  let totalValue = totalTagNumber;
+  totalValue -= itemRegexOnlyNumbers;
+  totalTagText.innerText = totalValue.toFixed(2);
+}
+
 function cartItemClickListener(event) {
   const regexSkuId = /MLB[0-9]{10}/;
   const element = event.target;
   const textElement = element.innerText;
   const itemRegex = regexSkuId.exec(textElement)[0];
   const resgLocalStorage = localStorage.getItem('cart').split(',');
-  const newArrayItemLocalStorage = [];
-  for (let i = 0; i < resgLocalStorage.length; i += 1) {
-    if (resgLocalStorage[i] !== itemRegex) {
-      newArrayItemLocalStorage.push(resgLocalStorage[i]);
-    }
-  }
+  const indexResg = resgLocalStorage.findIndex(item => item === itemRegex);
+  resgLocalStorage.splice(indexResg, 1);
+  const newArrayItemLocalStorage = resgLocalStorage;
   if (newArrayItemLocalStorage.length < 1) {
     localStorage.removeItem('cart');
   } else {
     localStorage.setItem('cart', newArrayItemLocalStorage);
   }
+  changeTotalValue(textElement)
   element.parentElement.removeChild(element);
 }
 
@@ -87,17 +98,15 @@ function callItemCart(id) {
   return fetch(`https://api.mercadolibre.com/items/${id}`);
 }
 
-function totalValueItemCart() {
+async function totalValueItemCart() {
   const totalTagText = document.querySelector('.total-price');
   const totalTagNumber = parseFloat(totalTagText.innerText);
   let totalValue = totalTagNumber;
   const id = this.parentElement.firstChild.innerText;
-  callItemCart(id)
-    .then(response => response.json())
-    .then((responseJson) => {
-      totalValue += responseJson.price;
-      totalTagText.innerText = totalValue;
-    })
+  const itemResponse = await callItemCart(id);
+  const data = await itemResponse.json();
+  totalValue += data.price;
+  totalTagText.innerText = totalValue.toFixed(2);
 }
 
 function returnApiInCreateCartItem(selector = 0) {
