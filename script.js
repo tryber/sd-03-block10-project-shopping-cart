@@ -1,4 +1,4 @@
-window.onload = function onload() { };
+window.onload = start;
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -22,7 +22,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
 }
 
@@ -40,4 +39,36 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
+}
+
+async function mercadoLivreJson() {
+  const api = await fetch("https://api.mercadolibre.com/sites/MLB/search?q=$computador");
+  return api.json();
+  
+}
+
+async function mercadoLivreResults(funMLJson) {
+  const results = await funMLJson.results;
+  const objItems = await results.map(
+    (item) => ({
+      'sku': item.id,
+      'name': item.title,
+      'image': item.thumbnail,
+      'salePrice': item.price,
+    })
+  );
+  return objItems;
+}
+
+async function printProducts(funMLResults) {
+  funMLResults.forEach(
+    product => 
+      document.querySelector('.items').appendChild( createProductItemElement(product))
+  );
+}
+
+async function start() {
+  const apiJson = await mercadoLivreJson();
+  const objItems = await mercadoLivreResults(apiJson);
+  const productsList = await printProducts(objItems);
 }
