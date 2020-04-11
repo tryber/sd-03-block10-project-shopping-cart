@@ -80,6 +80,7 @@ fetch(API_URL, myObject)
   .then(data => data.json())
   .then((data) => {
     load.innerHTML = '';
+    document.querySelector('.loading').remove();
     data.results.forEach((el) => {
       const { id: sku, title: name, thumbnail: image } = el;
       const newElement = createProductItemElement({ sku, name, image });
