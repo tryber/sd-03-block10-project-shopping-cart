@@ -1,18 +1,6 @@
 const itemsSection = document.querySelector('.items');
 const itemsCarrinho = document.querySelector('.cart__items');
 const removeAll = document.querySelector('.empty-cart');
-window.onload = function onload(){
-  const produtosJson = window.localStorage;
-  for (let i = 0; i < produtosJson.length; i += 1) {
-    let chave = produtosJson.key(i);
-    let jsonProduto = window.localStorage.getItem(chave);
-    let produtoObjeto = JSON.parse(jsonProduto);
-    let sku = produtoObjeto.sku;
-    let name = produtoObjeto.name;
-    let salePrice = produtoObjeto.salePrice;
-    itemsCarrinho.appendChild(createCartItemElement({ sku, name, salePrice }))
-  }
-};
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -42,18 +30,16 @@ function createProductItemElement({ sku, name, image }) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-
-//function cartItemClickListener(event) {
-  //this.remove();
-//}
-
+/*function cartItemClickListener(event) {
+  this.remove();
+}*/
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => {
-  li.remove();
-  localStorage.removeItem(`${sku}`);
+    li.remove();
+    localStorage.removeItem(`${sku}`);
   });
   return li;
 }
@@ -101,3 +87,16 @@ removeAll.addEventListener('click', () => {
   });
   localStorage.clear();
 });
+window.onload = function onload() {
+  const produtosJson = window.localStorage;
+  for (let i = 0; i < produtosJson.length; i += 1) {
+    const chave = produtosJson.key(i);
+    const jsonProduto = window.localStorage.getItem(chave);
+    const produtoObjeto = JSON.parse(jsonProduto);
+    const sku = produtoObjeto.sku;
+    const name = produtoObjeto.name;
+    const salePrice = produtoObjeto.salePrice;
+    itemsCarrinho.appendChild(createCartItemElement({ sku, name, salePrice }));
+  }
+};
+
