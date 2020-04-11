@@ -53,8 +53,7 @@ const addNoCarrinho = () => {
         const sku = resultados[index].id;
         const name = resultados[index].title;
         const salePrice = resultados[index].price;
-        itemsCarrinho.appendChild(createCartItemElement({ sku, name, salePrice })
-        );
+        itemsCarrinho.appendChild(createCartItemElement({ sku, name, salePrice }));
         return dataJ;
       });
     });
