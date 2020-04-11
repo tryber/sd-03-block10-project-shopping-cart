@@ -96,8 +96,17 @@ function queryButtons() {
   });
 }
 
+function emptcart() {
+  const empt = document.querySelector('.empty-cart');
+  empt.addEventListener('click', function () {
+    document.querySelector('.cart__items').innerHTML = '';
+  })
+}
+
 fetch(API_URL, myObj)
   .then(response => response.json())
   .then(jsonResponse => montarObj(jsonResponse))
   .then(arr => criaElementosNaTela(arr))
-  .then(queryButtons);
+  .then(queryButtons)
+  .then(emptcart());
+
