@@ -1,3 +1,10 @@
+function createProductImageElement(imageSource) {
+  const img = document.createElement('img');
+  img.className = 'item__image';
+  img.src = imageSource;
+  return img;
+}
+
 const addElement = (className, callback, obj) =>
   document.getElementsByClassName(className)[0].appendChild(callback(obj));
 
@@ -61,13 +68,6 @@ const addToCart = async ({ sku }) => {
 
 /* Código referente à criação dos Elementos dos produtos */
 
-function createProductImageElement(imageSource) {
-  const img = document.createElement('img');
-  img.className = 'item__image';
-  img.src = imageSource;
-  return img;
-}
-
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -96,6 +96,16 @@ function createProductItemElement({ sku, name, image }) {
 
 /* ______________________________________________________  */
 
+const emptyCart = () => {
+  const esvaziaCarrinho = document.getElementsByClassName('empty-cart')[0];
+  esvaziaCarrinho.addEventListener('click', () => {
+    const clearOl = document.getElementsByClassName('cart__items')[0];
+    clearOl.innerHTML = '';
+    updateCart();
+    sumAll();
+  });
+};
+
 window.onload = async () => {
   addLoading();
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
@@ -109,15 +119,9 @@ window.onload = async () => {
             image: result.thumbnail,
           }),
         ),
+      emptyCart(),
       removeLoading(),
     );
-  const esvaziaCarrinho = document.getElementsByClassName('empty-cart')[0];
-  esvaziaCarrinho.addEventListener('click', () => {
-    const clearOl = document.getElementsByClassName('cart__items')[0];
-    clearOl.innerHTML = '';
-    updateCart();
-    sumAll();
-  });
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Cart_items');
   document
     .querySelectorAll('li')
