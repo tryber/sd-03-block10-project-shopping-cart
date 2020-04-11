@@ -38,6 +38,8 @@ function changeTotalValue(textElement) {
   let totalValue = totalTagNumber;
   totalValue -= itemRegexOnlyNumbers;
   totalTagText.innerText = totalValue.toFixed(2);
+  localStorage.setItem('total', totalValue.toFixed(2));
+  if (totalValue === 0) localStorage.removeItem('total');
 }
 
 function cartItemClickListener(event) {
@@ -71,6 +73,7 @@ function getInnerTextTotal() {
   let totalValue = totalTagNumber;
   totalValue += parseFloat(itemRegexOnlyNumbers);
   totalTagText.innerText = totalValue.toFixed(2);
+  localStorage.setItem('total', totalValue.toFixed(2));
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -145,6 +148,11 @@ function createCartItemsLocalStorage() {
         .then(responseJson =>
           appendChildOfCreate(cartOl, createCartItemElement, responseJson, 'salePrice', 'price'));
     }
+  }
+  const getTotal = localStorage.getItem('total');
+  if (getTotal !== null) {
+    const totalTagText = document.querySelector('.total-price');
+    totalTagText.innerText = getTotal;
   }
 }
 
