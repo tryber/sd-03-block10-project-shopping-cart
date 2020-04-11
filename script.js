@@ -1,17 +1,3 @@
-const items = dados => ({
-  sku: dados.id,
-  name: dados.title,
-  salePrice: dados.price,
-  image: dados.thumbnail,
-});
-
-adicionarItemAoCarrinho = async (sku) => {
-  await fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then(respo => respo.json())
-    .then(products => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(items(products))));
-  await localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
-}
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -44,13 +30,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-async function carregarCarrinho({ sku }) {
-  await fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then(dados => dados.json())
-    .then(dados => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(items(dados))));
-  await localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
-}
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -64,11 +43,25 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+const items = dados => ({
+  sku: dados.id,
+  name: dados.title,
+  salePrice: dados.price,
+  image: dados.thumbnail,
+});
+
+adicionarItemAoCarrinho = async (sku) => {
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then(respo => respo.json())
+    .then(products => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(items(products))));
+  await localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
+};
+
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(resp => resp.json())
     .then(json => json.results.forEach(products => document.getElementsByClassName('items')[0]
       .appendChild(createProductItemElement(items(products)))));
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart__items');
-  document.querySelectorAll('li').forEach(items => items.addEventListener('click', cartItemClickListener));
+  document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
 };
