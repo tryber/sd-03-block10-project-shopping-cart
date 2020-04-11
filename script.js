@@ -36,7 +36,7 @@ function createCartItemElement({ id, title, price }) {
   return li;
 }
 
-let totalPrice = 0;
+let totalPrice = 'Total Price';
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -67,7 +67,8 @@ function createProductItemElement({ sku, name, image }) {
 
 const cartPrice = document.createElement('div');
 cartPrice.className = 'total-price';
-cartPrice.innerHTML = totalPrice
+cartPrice.innerHTML = totalPrice;
+document.querySelector('.cart__title').appendChild(cartPrice);
 
 const load = document.createElement('div');
 load.innerHTML = 'Loading';
