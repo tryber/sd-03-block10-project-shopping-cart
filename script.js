@@ -30,8 +30,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
-
+  this.addEventListener('click', this.remove());
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -51,11 +50,11 @@ const addNoCarrinho = () => {
     const resultados = dataJ.results;
     buttonsShop.forEach((button, index) => {
       button.addEventListener('click', () => {
-        const id = resultados[index].id;
+        const sku = resultados[index].id;
         const name = resultados[index].title;
-        const price = resultados[index].price;
-        console.log(price, id, name);
-        itemsCarrinho.appendChild(createCartItemElement({ id, name, price }));
+        const salePrice = resultados[index].price;
+        itemsCarrinho.appendChild(createCartItemElement({ sku, name, salePrice })
+        );
         return dataJ;
       });
     });
