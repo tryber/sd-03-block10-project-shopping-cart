@@ -59,8 +59,8 @@ function cartItemClickListener(event) {
 }
 
 function getInnerTextTotal() {
-  let cartItem = document.querySelectorAll('.cart__item');
-  let cartItemLast = cartItem[cartItem.length - 1];
+  const cartItem = document.querySelectorAll('.cart__item');
+  const cartItemLast = cartItem[cartItem.length - 1];
   const textElement = cartItemLast.innerText;
   const regexItemPrice = /\$[0-9]{1,10}\.{0,1}[0-9]{0,5}/;
   const itemRegex = regexItemPrice.exec(textElement)[0];
@@ -70,7 +70,7 @@ function getInnerTextTotal() {
   const totalTagNumber = parseFloat(totalTagText.innerText);
   let totalValue = totalTagNumber;
   totalValue += parseFloat(itemRegexOnlyNumbers);
-  totalTagText.innerText = totalValue.toFixed(2)
+  totalTagText.innerText = totalValue.toFixed(2);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -111,7 +111,7 @@ async function fetchCreateCartClickListener() {
       localStorage.setItem('cart', arrayItemLocalStorage);
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 }
 
