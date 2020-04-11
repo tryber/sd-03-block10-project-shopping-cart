@@ -58,6 +58,21 @@ function cartItemClickListener(event) {
   element.parentElement.removeChild(element);
 }
 
+function getInnerTextTotal() {
+  let cartItem = document.querySelectorAll('.cart__item');
+  let cartItemLast = cartItem[cartItem.length - 1];
+  const textElement = cartItemLast.innerText;
+  const regexItemPrice = /\$[0-9]{1,10}\.{0,1}[0-9]{0,5}/;
+  const itemRegex = regexItemPrice.exec(textElement)[0];
+  const regexOnlyNumbers = /[0-9]{1,10}\.{0,1}[0-9]{0,5}/;
+  const itemRegexOnlyNumbers = regexOnlyNumbers.exec(itemRegex)[0];
+  const totalTagText = document.querySelector('.total-price');
+  const totalTagNumber = parseFloat(totalTagText.innerText);
+  let totalValue = totalTagNumber;
+  totalValue += parseFloat(itemRegexOnlyNumbers);
+  totalTagText.innerText = totalValue.toFixed(2)
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -80,23 +95,23 @@ function callItemCart(id) {
 async function fetchCreateCartClickListener() {
   const id = this.parentElement.firstChild.innerText;
   const cartOl = document.querySelector('.cart__items');
-  const totalTagText = document.querySelector('.total-price');
-  const totalTagNumber = parseFloat(totalTagText.innerText);
-  let totalValue = totalTagNumber;
-  const response = await callItemCart(id);
-  const data = await response.json();
-  totalValue += data.price;
-  totalTagText.innerText = totalValue.toFixed(2);
-  appendChildOfCreate(cartOl, createCartItemElement, data, 'salePrice', 'price');
-  const resg = localStorage.getItem('cart');
-  if (resg === null) {
-    arrayItemLocalStorage = [];
-    arrayItemLocalStorage.push(id);
-    localStorage.setItem('cart', arrayItemLocalStorage);
-  } else {
-    arrayItemLocalStorage = resg.split(',');
-    arrayItemLocalStorage.push(id);
-    localStorage.setItem('cart', arrayItemLocalStorage);
+  try {
+    const response = await callItemCart(id);
+    const data = await response.json();
+    appendChildOfCreate(cartOl, createCartItemElement, data, 'salePrice', 'price');
+    getInnerTextTotal();
+    const resg = localStorage.getItem('cart');
+    if (resg === null) {
+      arrayItemLocalStorage = [];
+      arrayItemLocalStorage.push(id);
+      localStorage.setItem('cart', arrayItemLocalStorage);
+    } else {
+      arrayItemLocalStorage = resg.split(',');
+      arrayItemLocalStorage.push(id);
+      localStorage.setItem('cart', arrayItemLocalStorage);
+    }
+  } catch (err) {
+    console.log(err)
   }
 }
 
