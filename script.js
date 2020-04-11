@@ -49,7 +49,7 @@ function createProductItemElement({ sku, name, image }) {
     const load = document.createElement('div');
     load.innerHTML = 'Loading';
     load.className = 'loading';
-    document.querySelector('.cart__items').appendChild(load);
+    document.querySelector('.empty-cart').appendChild(load);
     const URL = `https://api.mercadolibre.com/items/${sku}`;
     fetch(URL, myObject)
       .then(data => data.json())
