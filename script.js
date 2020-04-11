@@ -1,21 +1,10 @@
 const addElement = (className, callback, obj) =>
   document.getElementsByClassName(className)[0].appendChild(callback(obj));
 
-/* const sumAll = async () => {
-  const allItems = document.getElementsByClassName('cart__item');
-  document.querySelector('.total-price').textContent =
-    Math.round(
-      [...allItems]
-        .map(e => e.textContent.match(/([0-9.]){1,}$/))
-        .reduce((acc, price) => acc + parseFloat(price), 0)
-        .toFixed(2) * 100,
-    ) / 100;
-}; */
-
 const sumAll = async () => {
   const allItems = document.getElementsByClassName('cart__item');
-  const totalPriceClass = document.querySelector('.total-price');
-  totalPriceClass.textContent =
+  const totalPriceDisplay = document.querySelector('.total-price');
+  totalPriceDisplay.textContent =
     Math.round(
       [...allItems]
         .map(e => e.textContent.match(/([0-9.]){1,}$/))
@@ -57,6 +46,9 @@ const addToCart = async ({ sku }) => {
   sumAll();
 };
 
+const removeLoading = () => {
+  document.getElementsByClassName('loading')[0].remove();
+};
 /* Código referente à criação dos Elementos dos produtos */
 
 function createProductImageElement(imageSource) {
@@ -97,14 +89,16 @@ function createProductItemElement({ sku, name, image }) {
 window.onload = async () => {
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(res => res.json())
-    .then(data =>
-      data.results.forEach(result =>
-        addElement('items', createProductItemElement, {
-          sku: result.id,
-          name: result.title,
-          image: result.thumbnail,
-        }),
-      ),
+    .then(
+      data =>
+        data.results.forEach(result =>
+          addElement('items', createProductItemElement, {
+            sku: result.id,
+            name: result.title,
+            image: result.thumbnail,
+          }),
+        ),
+      removeLoading(),
     );
   const esvaziaCarrinho = document.getElementsByClassName('empty-cart')[0];
   esvaziaCarrinho.addEventListener('click', () => {
