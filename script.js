@@ -131,12 +131,12 @@ function returnApiInCreateItem() {
   const sectionItems = document.querySelector('.items');
   const loading = document.createElement('p');
   loading.classList.add('loading');
-  loading.innerText = "loading...";
+  loading.innerText = 'loading...';
   sectionItems.appendChild(loading);
   fetch(url)
     .then((response) => {
       sectionItems.removeChild(loading);
-      return response.json(); 
+      return response.json();
     })
     .then(responseResult => responseResult.results.forEach((item) => {
       appendChildOfCreate(sectionItems, createProductItemElement, item, 'image', 'thumbnail');
