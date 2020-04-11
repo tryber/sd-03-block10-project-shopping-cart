@@ -54,7 +54,8 @@ function createProductItemElement({ sku, name, image }) {
     fetch(URL, myObject)
       .then(data => data.json())
       .then((data) => {
-        document.querySelector('.loading').remove();
+        document.querySelector('.loading').innerHTML = '';
+        document.querySelectorAll('.loading').forEach(e => e.remove());
         const { id, title, price } = data;
         totalPrice += price;
         const newItem = createCartItemElement({ id, title, price });
