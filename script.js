@@ -33,7 +33,6 @@ function changeTotalValue(textElement) {
   const itemRegex = regexItemPrice.exec(textElement)[0];
   const regexOnlyNumbers = /[0-9]{1,10}\.{0,1}[0-9]{0,5}/;
   const itemRegexOnlyNumbers = regexOnlyNumbers.exec(itemRegex)[0];
-  console.log(itemRegexOnlyNumbers)
   const totalTagText = document.querySelector('.total-price');
   const totalTagNumber = parseFloat(totalTagText.innerText);
   let totalValue = totalTagNumber;
@@ -55,7 +54,7 @@ function cartItemClickListener(event) {
   } else {
     localStorage.setItem('cart', newArrayItemLocalStorage);
   }
-  changeTotalValue(textElement)
+  changeTotalValue(textElement);
   element.parentElement.removeChild(element);
 }
 
