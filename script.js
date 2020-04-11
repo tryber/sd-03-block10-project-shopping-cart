@@ -9,6 +9,11 @@ const myObject = {
   headers: { Accept: 'application/json' },
 };
 
+const cartPrice = document.createElement('div');
+cartPrice.className = 'total-price';
+cartPrice.innerHTML = 'R$ 0,00';
+document.querySelector('.cart__title').appendChild(cartPrice);
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -23,20 +28,24 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(li) {
+/* function cartItemClickListener(li) {
   // coloque seu código aqui
   li.target.remove();
-}
+} */
+
+let totalPrice = 0;
 
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', (el) => {
+    el.target.remove();
+    totalPrice -= price;
+    cartPrice.innerHTML = `R$ ${totalPrice.toFixed(2)}`;
+  });
   return li;
 }
-
-let totalPrice = 'Total Price';
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -58,18 +67,13 @@ function createProductItemElement({ sku, name, image }) {
         // document.querySelectorAll('.loading').forEach(e => e.remove());
         const { id, title, price } = data;
         totalPrice += price;
+        cartPrice.innerHTML = `R$ ${totalPrice.toFixed(2)};`;
         const newItem = createCartItemElement({ id, title, price });
-        console.log(document.querySelector('.cart__item'));
         document.querySelector('.cart__items').appendChild(newItem);
       });
   });
   return section;
 }
-
-const cartPrice = document.createElement('div');
-cartPrice.className = 'total-price';
-cartPrice.innerHTML = totalPrice;
-document.querySelector('.cart__title').appendChild(cartPrice);
 
 const load = document.createElement('div');
 load.innerHTML = 'Loading';
@@ -94,6 +98,8 @@ return item.querySelector('span.item__sku').innerText;
 
 document.querySelector('.empty-cart').addEventListener('click', () => {
   document.querySelector('.cart__items').innerHTML = '';
+  totalPrice = 0;
+  document.querySelector('.total-price').innerHTML = `R$${totalPrice.toFixed(2)}`;
 });
 
 window.addEventListener('unload', () => {
