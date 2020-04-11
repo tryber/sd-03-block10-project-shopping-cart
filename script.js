@@ -99,7 +99,7 @@ return item.querySelector('span.item__sku').innerText;
 document.querySelector('.empty-cart').addEventListener('click', () => {
   document.querySelector('.cart__items').innerHTML = '';
   totalPrice = 0;
-  document.querySelector('.total-price').innerHTML = `R$${totalPrice.toFixed(2)}`;
+  document.querySelector('.total-price').innerHTML = 'R$ 0,00';
 });
 
 window.addEventListener('unload', () => {
