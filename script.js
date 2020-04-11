@@ -1,14 +1,32 @@
 let valorCarrinho = 0;
+const urlBusca = termo => `https://api.mercadolibre.com/sites/MLB/search?q=${termo}`;
+const urlProduto = itemID => `https://api.mercadolibre.com/items/${itemID}`;
 
-// Funções executadas no carregamento da página
-window.onload = function onload() {
-  const itensCarrinho = document.getElementsByClassName('cart__items')[0];
-  itensCarrinho.innerHTML = localStorage.getItem('cartItems');
-  if (itensCarrinho.childElementCount) {
-    document.querySelector('.total-price').innerHTML = localStorage.getItem('cartTotal');
-    document.getElementsByName('li').forEach((item) => item.addEventListener('click', cartItemClickListener));
+// Texto de carregamento apresentado entre o fetch e a grade
+function loadingText(mode) {
+  if (mode === true) {
+    const textoLoading = createCustomElement('div', 'loading', '');
+    textoLoading.innerHTML = 'Carregando...<br><img src="aguarde.gif"></img>';
+    document.getElementsByClassName('items')[0].appendChild(textoLoading);
+  } else {
+    document.getElementsByClassName('loading')[0].remove();
   }
-  buscaProdutos();
+}
+
+// Gera a grade com os resultados da busca na primeira URL (no topo)
+async function buscaProdutos(termoBusca) {
+  loadingText(true);
+  await fetch(urlBusca(termoBusca), { method: 'GET' })
+    .then(resposta => resposta.json()) // Obtem a resposta formatada em JSON
+    .catch(erro => alert('Erro na obtenção da lista', erro)) // Trata erro caso ocorra
+    .then(respjson => respjson.results) // Obtém os produtos do JSON num array
+    .then((produtos) => {
+      produtos.forEach((prod) => {  // Percorre o array e adiciona à página os valores (produtos)
+        const paramLista = { sku: prod.id, name: prod.title, image: prod.thumbnail };
+        document.querySelector('.items').appendChild(createProductItemElement(paramLista));
+      });
+    loadingText(false);
+    });
 };
 
 // Usada para inserir as imagens nos respectivos produtos
@@ -40,32 +58,36 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// Obtém os dados do produto selecionado na grade pela segunda URL acima
-const adicionaProduto = ({ sku }) => {
-  fetch(URL_Produto(sku))
-    .then(resposta => resposta.json())
-    .catch(erro => alert('Erro na obtenção da lista', erro))
-    .then(respjson => {
-      const paramProd = { sku: respjson.id, name: respjson.title, salePrice: respjson.price }
-      document.querySelector('.cart__items').appendChild(createCartItemElement(paramProd));
-      calculaTotal(paramProd.salePrice, 'add');
-    })
+// Faz a soma do total dos ítens do carrinho ao mesmo tempo que gerencia o localStorage
+async function calculaTotal(valor, operador) {
+  const itensCarrinho = document.getElementsByClassName('cart__items')[0].innerHTML;
+  operador === 'add' ? valorCarrinho += valor : valorCarrinho -= valor;
+  document.getElementsByClassName('total-price')[0].innerText = `Total: R$ ${valorCarrinho}`;
+  //const totalCarrinho = document.getElementsByClassName('total-price')[0].innerHTML;
+  localStorage.setItem('cartItems', itensCarrinho);
 }
 
-// Faz a soma do total dos ítens do carrinho ao mesmo tempo que gerencia o localStorage
-async function calculaTotal (valor, operador) {
-  let itensCarrinho = document.getElementsByClassName('cart__items')[0].innerHTML;
-  operador == 'add' ?
-  valorCarrinho += valor :
-  valorCarrinho -= valor;
-  document.getElementsByClassName('total-price')[0].innerText = `Total: R$ ${valorCarrinho}`;
-  let totalCarrinho = document.getElementsByClassName('total-price')[0].innerHTML;
-  localStorage.setItem('cartItems', itensCarrinho);
-  localStorage.setItem('cartTotal', totalCarrinho);
-}
+// Obtém os dados do produto selecionado na grade pela segunda URL (no topo)
+async function adicionaProduto ({ sku }) {
+  await fetch(urlProduto(sku))
+    .then(resposta => resposta.json())
+    .catch(erro => alert('Erro na obtenção da lista', erro))
+    .then((respjson) => {
+      const paramProd = { sku: respjson.id, name: respjson.title, salePrice: respjson.price };
+      document.querySelector('.cart__items').appendChild(createCartItemElement(paramProd));
+      calculaTotal(paramProd.salePrice, 'add');
+    });
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
+}
+
+// Apaga o ítem do carrinho e recalcula o valor total dos ítens
+function cartItemClickListener(event) {
+  (event.target).parentNode.removeChild(event.target);
+  calculaTotal((event.target).innerText.match(/[^$]*$/), 'sub');
+  // Procura por tudo que vier depois do $, que corresponde ao preço do produto
 }
 
 // Coloca o item selecionado na lista do carrinho
@@ -77,45 +99,28 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// Apaga o ítem do carrinho e recalcula o valor total dos ítens
-function cartItemClickListener(event) {
-  (event.target).parentNode.removeChild(event.target);
-  calculaTotal((event.target).innerText.match(/[^$]*$/), 'sub');
-  // Procura por tudo que vier depois do $, que corresponde ao preço do produto
-}
-
 // Limpa o carrinho e o localStorage
 function emptyCart() {
   document.getElementsByClassName('cart__items')[0].innerHTML = '';
-  document.getElementsByClassName('total-price')[0].innerHTML = '';
+  document.getElementsByClassName('total-price')[0].innerHTML = 'Total: R$ 0,00';
   localStorage.clear();
 }
 
-function loadingText(mode) {
-  if (mode == true) {
-    const textoLoading = createCustomElement('div','loading','Aguarde...');
-    textoLoading.innerHTML = '<img src="aguarde.gif"></img>'
-    document.getElementsByClassName('items')[0].appendChild(textoLoading);
-  }
-  else
-    document.getElementsByClassName('loading').removeChild;
+function runSearch() {
+  buscaProdutos(document.getElementById('input-search').value);
 }
 
-const URL_Busca = (termo) => `https://api.mercadolibre.com/sites/MLB/search?q=${termo}`;
-const URL_Produto = (itemID) => `https://api.mercadolibre.com/items/${itemID}`;
-
-// Gera a grade com os resultados da busca na primeira URL acima
-const buscaProdutos = () => {
-  loadingText(true);
-  fetch(URL_Busca('Drone'), {method: 'GET'})
-   .then(resposta => resposta.json()) // Obtem a resposta formatada em JSON
-   .catch(erro => alert('Erro na obtenção da lista', erro)) // Trata erro caso ocorra
-   .then(respjson => respjson.results) // Obtém os produtos do JSON num array
-   .then(produtos => {
-    produtos.forEach(prod => {  // Percorre o array e adiciona à página os valores (produtos)
-      const paramLista = { sku: prod.id, name: prod.title, image: prod.thumbnail }
-      document.querySelector('.items').appendChild(createProductItemElement(paramLista));
-      loadingText(false);
+/* Funções executadas no carregamento da página. Carrega os itens do localStorage, joga na lista
+e recalcula o total. Apenas usando a tag ol com os childNodes retorna uma lista iterável. POr fim,
+faz a busca*/
+window.onload = function onload() {
+  const itensCarrinho = document.getElementsByClassName('cart__items')[0];
+  itensCarrinho.innerHTML = localStorage.getItem('cartItems');
+  if (itensCarrinho.childElementCount) {
+    document.getElementsByTagName('ol')[0].childNodes.forEach((item) => {
+      item.addEventListener('click', cartItemClickListener);
+      calculaTotal(parseFloat((item).innerText.match(/[^$]*$/)), 'add');
     })
-  })
-}
+  }
+  buscaProdutos('Patinete');
+};
