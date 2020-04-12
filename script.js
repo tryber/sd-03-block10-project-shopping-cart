@@ -45,7 +45,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 function loadJson(URL) {
-  fetch(URL, {method: 'get' })
+  fetch(URL, { method: 'get' })
   .then(resp => resp.json())
   .then(function (data) {
     data.results.forEach((element) => {
