@@ -2,6 +2,14 @@ let valorCarrinho = 0;
 const urlBusca = termo => `https://api.mercadolibre.com/sites/MLB/search?q=${termo}`;
 const urlProduto = itemID => `https://api.mercadolibre.com/items/${itemID}`;
 
+// Usada para gerar elementos dinamicamente pela página
+function createCustomElement(element, className, innerText) {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+}
+
 // Texto de carregamento apresentado entre o fetch e a grade
 function loadingText(mode) {
   if (mode === true) {
@@ -11,38 +19,6 @@ function loadingText(mode) {
   } else {
     document.getElementsByClassName('loading')[0].remove();
   }
-}
-
-// Gera a grade com os resultados da busca na primeira URL (no topo)
-async function buscaProdutos(termoBusca) {
-  loadingText(true);
-  await fetch(urlBusca(termoBusca), { method: 'GET' })
-    .then(resposta => resposta.json()) // Obtem a resposta formatada em JSON
-    .catch(erro => alert('Erro na obtenção da lista', erro)) // Trata erro caso ocorra
-    .then(respjson => respjson.results) // Obtém os produtos do JSON num array
-    .then((produtos) => {
-      produtos.forEach((prod) => {  // Percorre o array e adiciona à página os valores (produtos)
-        const paramLista = { sku: prod.id, name: prod.title, image: prod.thumbnail };
-        document.querySelector('.items').appendChild(createProductItemElement(paramLista));
-      });
-    loadingText(false);
-    });
-};
-
-// Usada para inserir as imagens nos respectivos produtos
-function createProductImageElement(imageSource) {
-  const img = document.createElement('img');
-  img.className = 'item__image';
-  img.src = imageSource;
-  return img;
-}
-
-// Usada para gerar elementos dinamicamente pela página
-function createCustomElement(element, className, innerText) {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
 }
 
 // Cria a grade com os resultados da busca inicial
@@ -58,13 +34,30 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// Faz a soma do total dos ítens do carrinho ao mesmo tempo que gerencia o localStorage
-async function calculaTotal(valor, operador) {
-  const itensCarrinho = document.getElementsByClassName('cart__items')[0].innerHTML;
-  operador === 'add' ? valorCarrinho += valor : valorCarrinho -= valor;
-  document.getElementsByClassName('total-price')[0].innerText = `Total: R$ ${valorCarrinho}`;
-  //const totalCarrinho = document.getElementsByClassName('total-price')[0].innerHTML;
-  localStorage.setItem('cartItems', itensCarrinho);
+// Gera a grade com os resultados da busca na primeira URL (no topo)
+async function buscaProdutos() {
+  document.querySelector('.items').innerHTML = '';
+  loadingText(true);
+  const campoBusca = document.querySelector('#input-search').value;
+  await fetch(urlBusca(campoBusca), { method: 'GET' })
+    .then(resposta => resposta.json()) // Obtem a resposta formatada em JSON
+    .catch(erro => alert('Erro na obtenção da lista', erro)) // Trata erro caso ocorra
+    .then(respjson => respjson.results) // Obtém os produtos do JSON num array
+    .then((produtos) => {
+      produtos.forEach((prod) => {  // Percorre o array e adiciona à página os valores (produtos)
+        const paramLista = { sku: prod.id, name: prod.title, image: prod.thumbnail };
+        document.querySelector('.items').appendChild(createProductItemElement(paramLista));
+      });
+      loadingText(false);
+    });
+}
+
+// Usada para inserir as imagens nos respectivos produtos
+function createProductImageElement(imageSource) {
+  const img = document.createElement('img');
+  img.className = 'item__image';
+  img.src = imageSource;
+  return img;
 }
 
 // Obtém os dados do produto selecionado na grade pela segunda URL (no topo)
@@ -77,7 +70,24 @@ async function adicionaProduto ({ sku }) {
       document.querySelector('.cart__items').appendChild(createCartItemElement(paramProd));
       calculaTotal(paramProd.salePrice, 'add');
     });
-};
+}
+
+// Faz a soma do total dos ítens do carrinho ao mesmo tempo que armazena a lista no localStorage
+async function calculaTotal(valor, operador) {
+  const itensCarrinho = document.getElementsByClassName('cart__items')[0].innerHTML;
+  operador === 'add' ? valorCarrinho += valor : valorCarrinho -= valor;
+  document.getElementsByClassName('total-price')[0].innerText = `Total: R$ ${valorCarrinho}`;
+  localStorage.setItem('cartItems', itensCarrinho);
+}
+
+// Coloca o item selecionado na lista do carrinho
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
@@ -90,15 +100,6 @@ function cartItemClickListener(event) {
   // Procura por tudo que vier depois do $, que corresponde ao preço do produto
 }
 
-// Coloca o item selecionado na lista do carrinho
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
 // Limpa o carrinho e o localStorage
 function emptyCart() {
   document.getElementsByClassName('cart__items')[0].innerHTML = '';
@@ -106,12 +107,8 @@ function emptyCart() {
   localStorage.clear();
 }
 
-function runSearch() {
-  buscaProdutos(document.getElementById('input-search').value);
-}
-
 /* Funções executadas no carregamento da página. Carrega os itens do localStorage, joga na lista
-e recalcula o total. Apenas usando a tag ol com os childNodes retorna uma lista iterável. POr fim,
+e recalcula o total. Apenas usando a tag ol com os childNodes retorna uma lista iterável. Por fim,
 faz a busca*/
 window.onload = function onload() {
   const itensCarrinho = document.getElementsByClassName('cart__items')[0];
@@ -120,7 +117,7 @@ window.onload = function onload() {
     document.getElementsByTagName('ol')[0].childNodes.forEach((item) => {
       item.addEventListener('click', cartItemClickListener);
       calculaTotal(parseFloat((item).innerText.match(/[^$]*$/)), 'add');
-    })
+    });
   }
-  buscaProdutos('Patinete');
+  buscaProdutos('Computador');
 };

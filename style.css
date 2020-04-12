@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(249, 222, 51);
+  background-color: rgb( 249 , 222 , 51 );
 }
 
 .top-bar {
@@ -92,6 +92,7 @@ body {
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;
+  padding: 15px;
 }
 
 .cart .cart__title {
@@ -99,4 +100,8 @@ body {
   font-weight: 800;
   font-size: 16pt;
   text-align: center;
+}
+
+li:hover {
+  background-color: cornflowerblue;
 }
