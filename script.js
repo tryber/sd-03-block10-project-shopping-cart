@@ -1,11 +1,11 @@
 // const products = [];
 const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
-let arrayITensListCart = [];
+
 const itemsAdd = [];
 window.onload = function onload() {
   const itemsForReloadCart = localStorage.getItem('listItemsAdd');
-  arrayITensListCart = JSON.parse(itemsForReloadCart);
+let arrayITensListCart = JSON.parse(itemsForReloadCart);
   console.log(arrayITensListCart);
   arrayITensListCart.forEach(element => this.loadJsonPerProduct(element));
 };
