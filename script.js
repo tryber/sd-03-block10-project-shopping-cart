@@ -1,4 +1,3 @@
-window.onload = function onload() { };
 
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 const myObj = { method: 'GET' };
@@ -9,6 +8,12 @@ const sectionItem = document.querySelector('.items');
 
 
 // Funções
+
+function atualizaLocalStorage() {
+  const itens = document.querySelector('.cart__items').innerHTML;
+  localStorage.removeItem('carrinhoDeCompras');
+  localStorage.setItem('carrinhoDeCompras', itens);
+}
 
 function montarObj(json) {
   const arrResults = [];
@@ -62,6 +67,7 @@ function criaElementosNaTela(arr) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  atualizaLocalStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -81,6 +87,7 @@ function montarObjCartItem(data) {
   const li = createCartItemElement(objForCartItem);
   const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
+  atualizaLocalStorage();
 }
 
 const fetchItemPorID = (id) => {
@@ -107,8 +114,16 @@ function queryButtons() {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
+function recuperaLocalStorage() {
+  const dadosGravados = localStorage.getItem('carrinhoDeCompras');
+  document.querySelector('.cart__items').innerHTML = dadosGravados;
+  document.querySelectorAll('.cart__items').forEach(el => el.addEventListener('click', cartItemClickListener));
+}
+
 fetch(API_URL, myObj)
   .then(response => response.json())
   .then(jsonResponse => montarObj(jsonResponse))
   .then(arr => criaElementosNaTela(arr))
   .then(queryButtons);
+
+window.onload = function onload() { recuperaLocalStorage(); };
