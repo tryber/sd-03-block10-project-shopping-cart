@@ -1,7 +1,8 @@
 // const products = [];
 const items = document.querySelector('.items');
+const cartItems = document.querySelector('.cart__items') 
 window.onload = function onload() {};
-const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -24,7 +25,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+ 
   return section;
 }
 
@@ -36,7 +37,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -44,17 +45,39 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function loadJson(URL) {
+// Retorna todas a lista de produtos que será utilizada pela aplicação .
+function loadJson() {
+  const URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
   fetch(URL, { method: 'get' })
   .then(resp => resp.json())
   .then(function (data) {
     data.results.forEach((element) => {
-      items.appendChild(createProductItemElement(element));
+      items.appendChild(createProductItemElement(element));      
     });
+    const buttonAdd = document.querySelectorAll('.item__add');
+    buttonAdd.forEach(element => {
+      element.addEventListener('click',function (event) {
+        const idProduct = event.currentTarget.parentNode.firstChild.innerText;
+        loadJsonPerProduct(idProduct);
+      });
+    });  
   })
   .catch((err) => {
     console.error(err);
   });
 }
 
-loadJson(url);
+loadJson();
+
+// Retorna um unico produto filtrado pelo id.
+function loadJsonPerProduct(id) {
+  const URL = `https://api.mercadolibre.com/items/${id}`;
+  fetch(URL, { method: 'get' })
+  .then(resp => resp.json())
+  .then(data => {
+    cartItems.appendChild(createCartItemElement(data));
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+}
