@@ -1,8 +1,9 @@
 // const products = [];
 const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
-window.onload = function onload() {};
+window.onload = function onload() {
 
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -34,6 +35,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  event.currentTarget.parentNode.removeChild(event.target);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -50,7 +52,7 @@ function loadJsonPerProduct(id) {
   fetch(URL, { method: 'get' })
   .then(resp => resp.json())
   .then((data) => {
-    cartItems.appendChild(createCartItemElement(data));
+    cartItems.appendChild(createCartItemElement(data));    
   })
   .catch((err) => {
     console.error(err);
