@@ -5,7 +5,7 @@ const cartItems = document.querySelector('.cart__items');
 const itemsAdd = [];
 window.onload = function onload() {
   const itemsForReloadCart = localStorage.getItem('listItemsAdd');
-let arrayITensListCart = JSON.parse(itemsForReloadCart);
+  const arrayITensListCart = JSON.parse(itemsForReloadCart);
   console.log(arrayITensListCart);
   arrayITensListCart.forEach(element => this.loadJsonPerProduct(element));
 };
