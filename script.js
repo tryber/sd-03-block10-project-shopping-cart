@@ -52,7 +52,6 @@ const acessButtons = () => {
     catchButtons[i].addEventListener('click', addIdToCart);
   }
 };
-acessButtons();
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -96,5 +95,12 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-fetchar()
-  .then(acessButtons);
+// Immediately-invoked await async function
+(async () => {
+  try {
+    const response = await fetchar();
+    const accessBtns = await acessButtons();
+  } catch (error) {
+    console.log("Something went wrong:", error)
+  }
+})();
