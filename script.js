@@ -52,7 +52,7 @@ function loadJsonPerProduct(id) {
   fetch(URL, { method: 'get' })
   .then(resp => resp.json())
   .then((data) => {
-    cartItems.appendChild(createCartItemElement(data));    
+    cartItems.appendChild(createCartItemElement(data));
   })
   .catch((err) => {
     console.error(err);
