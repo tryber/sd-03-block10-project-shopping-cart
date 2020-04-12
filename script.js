@@ -66,7 +66,7 @@ window.onload = function onload() {
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart__items');
   document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
-    document.getElementsByClassName('cart__items')[0].innerHTML = " ";
+    document.getElementsByClassName('cart__items')[0].innerHTML = ' ';
     localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
-  })
+  });
 };
