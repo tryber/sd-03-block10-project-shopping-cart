@@ -4,10 +4,10 @@ const cartItems = document.querySelector('.cart__items');
 
 const itemsAdd = [];
 window.onload = function onload() {
-  const itemsForReloadCart = localStorage.getItem('listItemsAdd');
+  /* const itemsForReloadCart = localStorage.getItem('listItemsAdd');
   const arrayITensListCart = JSON.parse(itemsForReloadCart);
   console.log(arrayITensListCart);
-  arrayITensListCart.forEach(element => this.loadJsonPerProduct(element));
+  arrayITensListCart.forEach(element => this.loadJsonPerProduct(element)); */
 };
 
 function createProductImageElement(imageSource) {
