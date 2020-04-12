@@ -2,7 +2,7 @@
 const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
 let arrayITensListCart = [];
-let itemsAdd = [];
+const itemsAdd = [];
 window.onload = function onload() {
   const itemsForReloadCart = localStorage.getItem('listItemsAdd');
   arrayITensListCart = JSON.parse(itemsForReloadCart);
@@ -68,7 +68,7 @@ function loadJsonPerProduct(id) {
   })
   .catch((err) => {
     console.error(err);
-  });  
+  });
 }
 
 // Retorna todas a lista de produtos que será utilizada pela aplicação .
