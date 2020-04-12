@@ -30,8 +30,27 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const storageLocal = async () => {
+  const ol = document.getElementsByClassName('cart__items')[0];
+  const totalPrice = document.getElementsByClassName('total-price')[0];
+  localStorage.setItem('Cart Items', ol.innerHTML);
+  localStorage.setItem('Total Price', totalPrice.innerHTML);
+};
+
+
+const finalPrice = () => {
+  const cartItem = document.querySelectorAll('.cart__item');
+  const price = Math.round([...cartItem].map(e => e.innerText
+    .match(/([0-9.]){1,}$/))
+    .reduce((acc, e) => (acc + parseFloat(e)), 0) * 100) / 100;
+  const spanCartPrice = document.getElementsByClassName('total-price')[0];
+  spanCartPrice.innerHTML = price;
+};
+
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
+  finalPrice();
+  storageLocal();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
