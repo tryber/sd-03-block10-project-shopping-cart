@@ -86,6 +86,8 @@ const fetchar = async () => {
     produtos.appendChild(createProductItemElement(el));
   });
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cartItems');
+  document.querySelectorAll('li')
+    .forEach(el => el.addEventListener('click', cartItemClickListener));
 };
 
 // function getSkuFromProductItem(item) {
