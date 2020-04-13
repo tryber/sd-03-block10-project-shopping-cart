@@ -43,7 +43,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 window.onload = async () => {
   const listaDeitens = document.querySelector('.items');
 
-  await fetch("https://api.mercadolibre.com/sites/MLB/search?q=$computador")
+  await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=$computador`)
   .then(response => response.json())
   .then((data) => {
     const results = data.results;
