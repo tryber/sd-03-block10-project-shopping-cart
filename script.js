@@ -6,13 +6,15 @@ const myObj = { method: 'GET' };
 
 const sectionItem = document.querySelector('.items');
 
-
 // Funções
 
 function atualizaLocalStorage() {
   const itens = document.querySelector('.cart__items').innerHTML;
+  const total = document.querySelector('#total-price').innerHTML;
   localStorage.removeItem('carrinhoDeCompras');
+  localStorage.removeItem('totalCompras');
   localStorage.setItem('carrinhoDeCompras', itens);
+  localStorage.setItem('totalCompras', total);
 }
 
 function montarObj(json) {
@@ -65,7 +67,14 @@ function criaElementosNaTela(arr) {
   });
 }
 
+function subtrai() {
+  const total = parseInt((document.querySelector('#total-price').innerText), 10);
+  const removido = parseInt((event.target.innerHTML.match(/([0-9.]){1,}$/)[0]), 10);
+  document.querySelector('#total-price').innerText = total - removido;
+}
+
 function cartItemClickListener(event) {
+  subtrai();
   event.target.remove();
   atualizaLocalStorage();
 }
@@ -78,6 +87,16 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+function somaCompras(precoDoNovoItem) {
+  if (document.querySelector('#total-price').innerText) {
+    const preco = parseInt((document.querySelector('#total-price').innerText), 10);
+    const novoPreco = preco + precoDoNovoItem;
+    document.querySelector('#total-price').innerText = novoPreco;
+  } else {
+    document.querySelector('#total-price').innerText = precoDoNovoItem;
+  }
+}
+
 function montarObjCartItem(data) {
   const objForCartItem = {
     sku: data.id,
@@ -87,14 +106,16 @@ function montarObjCartItem(data) {
   const li = createCartItemElement(objForCartItem);
   const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
-  atualizaLocalStorage();
+  return objForCartItem;
 }
 
-const fetchItemPorID = (id) => {
+const fetchItemPorID = async (id) => {
   const URL = `https://api.mercadolibre.com/items/${id}`;
-  fetch(URL)
-    .then(response => response.json())
-    .then(data => montarObjCartItem(data));
+  const response = await fetch(URL);
+  const data = await response.json();
+  const obj = await montarObjCartItem(data);
+  somaCompras(obj.salePrice);
+  atualizaLocalStorage();
 };
 
 const coletarIDsDoElementoClicado = (event) => {
@@ -116,8 +137,11 @@ function queryButtons() {
 
 function recuperaLocalStorage() {
   const dadosGravados = localStorage.getItem('carrinhoDeCompras');
+  const total = localStorage.getItem('totalCompras');
   document.querySelector('.cart__items').innerHTML = dadosGravados;
-  document.querySelectorAll('.cart__items').forEach(el => el.addEventListener('click', cartItemClickListener));
+  const arr = document.querySelectorAll('.cart__item');
+  arr.forEach(el => el.addEventListener('click', cartItemClickListener));
+  document.querySelector('#total-price').innerText = total;
 }
 
 fetch(API_URL, myObj)
