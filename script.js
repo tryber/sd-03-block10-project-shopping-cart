@@ -5,11 +5,54 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const salvarLocalStorage = (novoObjeto) => {
+  const pegaBanana = localStorage.getItem('banana');
+  const transformandoBanana = JSON.parse(pegaBanana);
+  const objetoLocalStorage = transformandoBanana;
+  objetoLocalStorage.push(novoObjeto);
+  const transformandoEmString = JSON.stringify(objetoLocalStorage);
+  localStorage.setItem('banana', transformandoEmString);
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`;
+  li.onclick = (event) => {
+    cartItemClickListener(event);
+    removerLocalStorage(sku);
+  };
+  return li;
+}
+
+function adicionaNoCarrinho(sku) {
+  const API_URL_CARRINHO = `https://api.mercadolibre.com/items/${sku}`;
+  const myObjectCarrinho = {
+    method: 'GET',
+    headers: { Accept: 'application/json' },
+  };
+  fetch(API_URL_CARRINHO, myObjectCarrinho)
+      .then(response => response.json())
+      .then((data) => {
+        const novoObjeto = {
+          sku: data.id,
+          name: data.title,
+          salePrice: data.price,
+        };
+        salvarLocalStorage(novoObjeto);
+        const atribuindoObjetosMapeados = createCartItemElement(novoObjeto);
+        const elementoPaiOl = document.getElementsByClassName('cart__items');
+        elementoPaiOl[0].appendChild(atribuindoObjetosMapeados);
+      }).catch((error) => {
+        console.log('A solicitação para adicionar no carrinho foi rejeitada.', error);
+      });
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -57,15 +100,6 @@ window.onload = function onload() {
     });
 };
 
-const salvarLocalStorage = (novoObjeto) => {
-  const pegaBanana = localStorage.getItem('banana');
-  const transformandoBanana = JSON.parse(pegaBanana);
-  const objetoLocalStorage = transformandoBanana;
-  objetoLocalStorage.push(novoObjeto);
-  const transformandoEmString = JSON.stringify(objetoLocalStorage);
-  localStorage.setItem('banana', transformandoEmString);
-};
-
 const removerLocalStorage = (sku) => {
   const pegaBanana = localStorage.getItem('banana');
   const transformandoBanana = JSON.parse(pegaBanana);
@@ -88,38 +122,4 @@ function cartItemClickListener(event) {
   console.log(clickedElement);
   const elementoOl = document.querySelector('.cart__items');
   elementoOl.removeChild(clickedElement);
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`;
-  li.onclick = (event) => {
-    cartItemClickListener(event);
-    removerLocalStorage(sku);
-  };
-  return li;
-}
-
-function adicionaNoCarrinho(sku) {
-  const API_URL_CARRINHO = `https://api.mercadolibre.com/items/${sku}`;
-  const myObjectCarrinho = {
-    method: 'GET',
-    headers: { Accept: 'application/json' },
-  };
-  fetch(API_URL_CARRINHO, myObjectCarrinho)
-      .then(response => response.json())
-      .then((data) => {
-        const novoObjeto = {
-          sku: data.id,
-          name: data.title,
-          salePrice: data.price,
-        };
-        salvarLocalStorage(novoObjeto);
-        const atribuindoObjetosMapeados = createCartItemElement(novoObjeto);
-        const elementoPaiOl = document.getElementsByClassName('cart__items');
-        elementoPaiOl[0].appendChild(atribuindoObjetosMapeados);
-      }).catch((error) => {
-        console.log('A solicitação para adicionar no carrinho foi rejeitada.', error);
-      });
 }
