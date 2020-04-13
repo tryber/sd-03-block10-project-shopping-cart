@@ -51,8 +51,7 @@ function montarObj(json) {
     });
   });
   document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart');
-  document.querySelectorAll('li')
-    .forEach((el) => { el.addEventListener('click', cartItemClickListener) });
+  document.querySelectorAll('li').forEach((el) => { el.addEventListener('click', cartItemClickListener) });
   return arrProducts;
 }
 
