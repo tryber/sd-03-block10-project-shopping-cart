@@ -3,6 +3,7 @@ const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 const myObj = { method: 'GET' };
 
 const sectionItem = document.querySelector('.items');
+const lStorage = () => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
 
 function montarObj(json) {
   const arrResults = [];
@@ -18,7 +19,9 @@ function montarObj(json) {
       image: el.thumbnail,
     });
   });
-
+  document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart');
+  document.querySelectorAll('li')
+    .forEach((el) => el.addEventListener('click', cartItemClickListener));
   return arrProducts;
 }
 function createProductImageElement(imageSource) {
@@ -55,6 +58,7 @@ function criaElementosNaTela(arr) {
 
 function cartItemClickListener(event) {
   event.target.parentNode.removeChild(event.target);
+  lStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -80,7 +84,8 @@ const fetchItemPorID = (id) => {
   const URL = `https://api.mercadolibre.com/items/${id}`;
   fetch(URL)
     .then(response => response.json())
-    .then(data => montarObjCartItem(data));
+    .then(data => montarObjCartItem(data))
+    .then(lStorage);
 };
 
 const coletarIDsDoElementoClicado = (event) => {
@@ -104,8 +109,8 @@ function emptcart() {
 }
 
 fetch(API_URL, myObj)
-  .then(response => response.json())
-  .then(jsonResponse => montarObj(jsonResponse))
-  .then(arr => criaElementosNaTela(arr))
-  .then(queryButtons)
-  .then(emptcart());
+.then(response => response.json())
+.then(jsonResponse => montarObj(jsonResponse))
+.then(arr => criaElementosNaTela(arr))
+.then(queryButtons)
+.then(emptcart())
