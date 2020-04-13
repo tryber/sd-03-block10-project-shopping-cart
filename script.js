@@ -139,6 +139,6 @@ function getSkuFromProductItem(item) {
 removeAllItems.addEventListener('click', function () {
   cartItems.innerHTML = '';
   localStorage.removeItem('listItemsAdd');
-  totalPrice.innerText = `Total is : 0`;
+  totalPrice.innerText = 'Total is : 0';
   priceCaculator(JSON.parse(localStorage.getItem('listItemsAdd')));
 });
