@@ -59,6 +59,7 @@ function createProduct(el, className, innerText) {
   return product;
 }
 
+// 2.Each product has a button with the name "Adicionar ao carrinho!"
 // createProductItemElement function
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -66,16 +67,17 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProduct('span', 'item__sku', sku));
   section.appendChild(createProduct('span', 'item__title', name));
   section.appendChild(createProductImg(image));
-  const btnAddCart = createProduct('button', 'item__add', 'Adicionar ao carrinho!');// 2.Each product has a button with the name "Adicionar ao carrinho!"
+  const btnAddCart = createProduct('button', 'item__add', 'Adicionar ao carrinho!');
   btnAddCart.addEventListener('click', () => addElementToCart({ sku }));
   section.appendChild(btnAddCart);
   return section;
 }
 
-// element returned from the function createProductItemElement(product)
+// searching for the term "computador"
+// element returned from the function createProductItemElement(product).
 // 1. Product listing, endpoint "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
 async function apiCreateItem() {
-  await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject) // searching for the term computador
+  await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject)
   .then(response => response.json())
   .then((data) => {
     const items = document.querySelector('.items');
