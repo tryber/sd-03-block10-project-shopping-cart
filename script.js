@@ -99,5 +99,6 @@ function getSkuFromProductItem(item) {
 }
 
 removeAllItems.addEventListener('click', function () {
+  cartItems.innerHTML = '';
   localStorage.removeItem('listItemsAdd');
 });
