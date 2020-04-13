@@ -21,6 +21,18 @@ function loadingText(mode) {
   }
 }
 
+// Faz a soma do total dos ítens do carrinho ao mesmo tempo que armazena a lista no localStorage
+async function getTotalValue(valor, operador) {
+  const itensCarrinho = document.getElementsByClassName('cart__items')[0].innerHTML;
+  if (operador === 'add') {
+    valorCarrinho += valor;
+} else {
+    valorCarrinho -= valor;
+  }
+  document.getElementsByClassName('total-price')[0].innerText = `Total: R$ ${valorCarrinho}`;
+  localStorage.setItem('cartItems', itensCarrinho);
+}
+
 // Apaga o ítem do carrinho e recalcula o valor total dos ítens
 function cartItemClickListener(event) {
   (event.target).parentNode.removeChild(event.target);
@@ -74,7 +86,8 @@ function createProductItemElement({ sku, name, image }) {
 async function getProducts() {
   document.querySelector('.items').innerHTML = '';
   loadingText(true);
-  const campoBusca = document.querySelector('#input-search').value;
+  //const campoBusca = document.querySelector('#input-search').value;
+  const campoBusca = 'computador';
   await fetch(urlBusca(campoBusca), { method: 'GET' })
     .then(resposta => resposta.json()) // Obtem a resposta formatada em JSON
     .catch(erro => alert('Erro na obtenção da lista', erro)) // Trata erro caso ocorra
@@ -86,14 +99,6 @@ async function getProducts() {
       });
       loadingText(false);
     });
-}
-
-// Faz a soma do total dos ítens do carrinho ao mesmo tempo que armazena a lista no localStorage
-async function getTotalValue(valor, operador) {
-  const itensCarrinho = document.getElementsByClassName('cart__items')[0].innerHTML;
-  operador === 'add' ? (valorCarrinho += valor) : (valorCarrinho -= valor);
-  document.getElementsByClassName('total-price')[0].innerText = `Total: R$ ${valorCarrinho}`;
-  localStorage.setItem('cartItems', itensCarrinho);
 }
 
 function getSkuFromProductItem(item) {
@@ -119,5 +124,5 @@ window.onload = function onload() {
       getTotalValue(parseFloat((item).innerText.match(/[^$]*$/)), 'add');
     });
   }
-  getProducts('Computador');
+  getProducts();
 };

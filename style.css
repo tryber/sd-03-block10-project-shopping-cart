@@ -43,6 +43,10 @@ body {
   width: 80%;
 }
 
+.search input {
+  width: 70%;
+}
+
 .items {
   display: flex;
   flex-basis: 70%;
