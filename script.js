@@ -1,3 +1,19 @@
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  button.onclick = () => {
+    adicionaNoCarrinho(sku);
+  }
+  section.appendChild(button);
+
+  return section;
+};
+
 function produtoParaProdutoResumido(produto) {
   return {
     sku: produto.id,
@@ -43,6 +59,7 @@ const removerLocalStorage = (sku) => {
     if (item.sku !== sku) {
       return true;
     }
+    return false;
   });
   const transformandoEmString = JSON.stringify(filtroSKU);
   localStorage.setItem('banana', transformandoEmString);
@@ -61,22 +78,6 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  button.onclick = () => {
-    adicionaNoCarrinho(sku);
-  }
-  section.appendChild(button);
-
-  return section;
-};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
