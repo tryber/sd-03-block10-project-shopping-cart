@@ -36,12 +36,35 @@ function loadJsonPerProduct(id) {
   });
 }
 
-   const itemsForReloadCart = localStorage.getItem('listItemsAdd');
-   const itemsTemp = JSON.parse(itemsForReloadCart);
-   itemsTemp.forEach(element => loadJsonPerProduct(element));
- window.onload = function onload() {
-  loadJson();
- };
+const itemsForReloadCart = localStorage.getItem('listItemsAdd');
+const itemsTemp = JSON.parse(itemsForReloadCart);
+itemsTemp.forEach(element => loadJsonPerProduct(element));
+
+// Retorna todas a lista de produtos que será utilizada pela aplicação .
+function loadJson() {
+  const URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  fetch(URL, { method: 'get' })
+  .then(resp => resp.json())
+  .then(function (data) {
+    data.results.forEach((element) => {
+      items.appendChild(createProductItemElement(element));
+    });
+    const buttonAdd = document.querySelectorAll('.item__add');
+    buttonAdd.forEach((element) => {
+      element.addEventListener('click', function (event) {
+        const idProduct = event.currentTarget.parentNode.firstChild.innerText;
+        loadJsonPerProduct(idProduct);
+      });
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+}
+
+window.onload = function onload() {
+   loadJson();
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -70,27 +93,3 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-
-// Retorna todas a lista de produtos que será utilizada pela aplicação .
-function loadJson() {
-  const URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-  fetch(URL, { method: 'get' })
-  .then(resp => resp.json())
-  .then(function (data) {
-    data.results.forEach((element) => {
-      items.appendChild(createProductItemElement(element));
-    });
-    const buttonAdd = document.querySelectorAll('.item__add');
-    buttonAdd.forEach((element) => {
-      element.addEventListener('click', function (event) {
-        const idProduct = event.currentTarget.parentNode.firstChild.innerText;
-        loadJsonPerProduct(idProduct);
-      });
-    });
-  })
-  .catch((err) => {
-    console.error(err);
-  });
-}
-
-
