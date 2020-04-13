@@ -1,6 +1,15 @@
 const itemsSection = document.querySelector('.items');
 const itemsCarrinho = document.querySelector('.cart__items');
 const removeAll = document.querySelector('.empty-cart');
+const container = document.querySelector('.container');;
+const carregando = document.querySelector('.loading');
+const loader = document.createElement('div');
+const loading = () => {
+  loader.innerHTML = 'Carregando';
+  loader.className = 'loading';
+  container.appendChild(loader);
+};
+loading();
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -66,6 +75,7 @@ const listarProdutos = () => {
   .then(data => data.json())
   .then(dataJ => dataJ.results)
   .then((resultados) => {
+    loader.remove();
     resultados.forEach((item) => {
       const id = item.id;
       const name = item.title;
