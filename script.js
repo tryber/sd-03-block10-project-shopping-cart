@@ -45,7 +45,7 @@ window.onload = async () => {
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then((json) => {
       json.results.forEach((product) => {
-      document.getElementsByClassName('items')[0].appendChild(
+        document.querySelector('items').appendChild(
         createProductItemElement({
           sku: product.id,
           name: product.title,
