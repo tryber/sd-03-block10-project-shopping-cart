@@ -38,10 +38,11 @@ async function cartItemJson() {
           const address = `https://api.mercadolibre.com/items/${itemId}`;
           const item = await fetch(address)
           const itemJson = await item.json();
-          console.log(itemJson);
           const itemCart = await mercadoLivreResults({ results: [itemJson] });
-          console.log(itemCart);
-          await createCartItemElement(itemCart[0]);
+          itemCart.forEach(
+            product =>
+            document.querySelector('.cart__items').appendChild(createCartItemElement(product)),
+          )
         }
       )
     }
@@ -49,7 +50,7 @@ async function cartItemJson() {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -72,6 +73,7 @@ async function mercadoLivreResults(funMLJson) {
       sku: item.id,
       name: item.title,
       image: item.thumbnail,
+      salePrice: item.price,
     }),
   );
   return objItems;
