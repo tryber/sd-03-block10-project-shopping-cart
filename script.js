@@ -23,7 +23,7 @@ window.onload = function onload(createProductItemElement) {
       const elementoItems = document.getElementsByClassName('items');
       elementosCriados.forEach(elementoCriado => elementoItems[0].appendChild(elementoCriado));
     })
-    .catch(error => {
+    .catch((error) => {
       console.log('A solicitação foi rejeitada.', error);
     });
 };
@@ -33,17 +33,16 @@ const salvarLocalStorage = (novoObjeto) => {
   const transformandoBanana = JSON.parse(pegaBanana);
   const objetoLocalStorage = transformandoBanana;
   objetoLocalStorage.push(novoObjeto);
-  let transformandoEmString = JSON.stringify(objetoLocalStorage);
+  const transformandoEmString = JSON.stringify(objetoLocalStorage);
   localStorage.setItem('banana', transformandoEmString);
-  console.log(localStorage);
-}
+};
 
 function adicionaNoCarrinho(sku) {
   const API_URL_CARRINHO = `https://api.mercadolibre.com/items/${sku}`;
   const myObjectCarrinho = {
-      method: 'GET',
+    method: 'GET',
 
-    };
+  };
   fetch(API_URL_CARRINHO, myObjectCarrinho)
       .then(response => response.json())
       .then((data) => {
@@ -54,26 +53,22 @@ function adicionaNoCarrinho(sku) {
         };
         salvarLocalStorage(novoObjeto);
         const atribuindoObjetosMapeados = createCartItemElement(novoObjeto);
-        let elementoPaiOl = document.getElementsByClassName('cart__items');
-        let p = elementoPaiOl[0].appendChild(atribuindoObjetosMapeados);
-        console.log('p',p);
+        const elementoPaiOl = document.getElementsByClassName('cart__items');
+        const p = elementoPaiOl[0].appendChild(atribuindoObjetosMapeados);
       }).catch((error) => {
-        console.log("A solicitação para adicionar no carrinho foi rejeitada.", error);
-      })
-};
+        console.log('A solicitação para adicionar no carrinho foi rejeitada.', error);
+      });
+}
 
 const removerLocalStorage = (sku) => {
   const pegaBanana = localStorage.getItem('banana');
-  const transformandoBanana = JSON.parse(pegaBanana); //tranformando em array
-  console.log('w',transformandoBanana);
+  const transformandoBanana = JSON.parse(pegaBanana);
   const filtroSKU = transformandoBanana.filter((item) => {
-    if(item.sku !== sku){
+    if (item.sku !== sku) {
       return true;
-    } else {
-      return false;
     }
   });
-  let transformandoEmString = JSON.stringify(filtroSKU);
+  const transformandoEmString = JSON.stringify(filtroSKU);
   localStorage.setItem('banana', transformandoEmString);
 }
 
@@ -82,7 +77,7 @@ function createProductImageElement(imageSource) {
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-}
+};
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
@@ -105,13 +100,12 @@ function createProductItemElement({ sku, name, image }) {
   onload(onload);
 
   return section;
-}
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-//REMOVE ELEMENTOS DA LISTA
 function cartItemClickListener(event) {
   const clickedElement = event.target;
   console.log(clickedElement);
@@ -123,19 +117,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`;
-  //remove da lista o elemento clicado.
   li.onclick = (event) => {
     cartItemClickListener(event);
     removerLocalStorage(sku);
   }
   return li;
 }
-//LocalStorage
-//1 - gravar o novoObjeto no localStorage
-//2 - apagar o novoObjeto do localStarage
-//3 - salavar o novoObjeto no localStorage
-//salavar no localStorage
-  // li.addEventListener('click', salvarNoLocalStorage);
-  // li.onchange = (parametro) => {
-  //   salvarNoLocalStorage(parametro);
-  // }
