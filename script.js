@@ -9,6 +9,11 @@ const storage = () => {
   localStorage.setItem('Lista Salva', document.getElementsByClassName('cart__items')[0].innerHTML);
 };
 
+function cartItemClickListener(event) {
+  document.getElementsByClassName('cart__items')[0].removeChild(event.target);
+  storage();
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -17,12 +22,16 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const request = url => fetch(url).then(resp => resp.json());
+
+const addChild = (element, child) => element.appendChild(child);
+
 const addToCart = async (sku) => {
   await request(`https://api.mercadolibre.com/items/${sku}`)
   .then(res => addChild(document.getElementsByClassName('cart__items')[0],
   createCartItemElement(convert(res))));
   storage();
-}
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -53,15 +62,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  document.getElementsByClassName('cart__items')[0].removeChild(event.target);
-  storage();
-}
-
-const addChild = (element, child) => element.appendChild(child);
-
-const request = url => fetch(url).then(resp => resp.json());
-
 window.onload = async () => {
   await request('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(res => res.results.map(pc => addChild(
@@ -69,6 +69,6 @@ window.onload = async () => {
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
   document.querySelectorAll('li').forEach(element => element.addEventListener('click', cartItemClickListener));
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
-      document.getElementsByClassName('cart__items')[0].innerHTML = ''; storage(); });
-
-}
+    document.getElementsByClassName('cart__items')[0].innerHTML = ''; storage();
+  });
+};
