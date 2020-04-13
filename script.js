@@ -125,5 +125,5 @@ window.onload = function onload() {
     .then(arr => criaElementosNaTela(arr))
     .then(loading())
     .then(queryButtons)
-    .then(emptcart());
-};
+    .then(emptcart);
+}
