@@ -110,6 +110,7 @@ function emptcart() {
   empt.addEventListener('click', function () {
     document.querySelector('.cart__items').innerHTML = '';
   });
+  document.querySelector('#loading').remove();
 }
 
 fetch(API_URL, myObj)
