@@ -2,7 +2,7 @@
 const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
 
-let itemsAdd = [];
+
 let itemsTemp = [];
 window.onload = function onload() { 
   const itemsForReloadCart = localStorage.getItem('listItemsAdd');
@@ -57,6 +57,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
+let itemsAdd = [];
 // Retorna um unico produto filtrado pelo id.
 function loadJsonPerProduct(id) {
   const URL = `https://api.mercadolibre.com/items/${id}`;
