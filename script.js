@@ -57,7 +57,8 @@ window.onload = function onload() {
       json.results.forEach((products) => {
         document.getElementsByClassName('items')[0]
         .appendChild(
-          createProductItemElement({ sku: products.id, name: products.title, image: products.thumbnail }));
+          createProductItemElement(
+            { sku: products.id, name: products.title, image: products.thumbnail }));
       });
     });
 
