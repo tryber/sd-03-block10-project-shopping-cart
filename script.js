@@ -51,7 +51,7 @@ cardTotal = () => {
   const cartItem = document.querySelectorAll('.cart__item');
   const price = [...cartItem].map(e => e.textContent
   .match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0);
-  document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
+  document.getElementsByClassName('total-price')[0].innerHTML = `${price.toFixed(2)}`;
 };
 
 const DontRepeat = add => ({
