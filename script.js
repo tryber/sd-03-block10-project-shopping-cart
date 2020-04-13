@@ -9,8 +9,7 @@ const sectionItem = document.querySelector('.items');
 // Funções
 
 function transNumber(num) {
-  (Math.floor(num * 100) / 100).toFixed(1);
-  return num;
+  return (Math.floor(num * 100) / 100);
 }
 
 function atualizaLocalStorage() {
@@ -89,7 +88,7 @@ function somaCompras(precoDoNovoItem) {
     //   acc += number;
     //   return acc;
     // }, 0);
-    return resultado;
+    return resultado.toFixed(1);
   }
   return precoDoNovoItem;
 }
