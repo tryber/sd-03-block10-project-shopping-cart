@@ -31,6 +31,11 @@ const myObj = { method: 'GET' };
 const sectionItem = document.querySelector('.items');
 const lStorage = () => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
 
+function cartItemClickListener(event) {
+  event.target.parentNode.removeChild(event.target);
+  lStorage();
+}
+
 function montarObj(json) {
   const arrResults = [];
   json.results.forEach((el) => {
@@ -57,10 +62,6 @@ function criaElementosNaTela(arr) {
   });
 }
 
-function cartItemClickListener(event) {
-  event.target.parentNode.removeChild(event.target);
-  lStorage();
-}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
