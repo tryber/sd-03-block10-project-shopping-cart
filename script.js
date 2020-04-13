@@ -27,29 +27,6 @@ window.onload = function onload() {
     });
 };
 
-function adicionaNoCarrinho(sku) {
-  const API_URL_CARRINHO = `https://api.mercadolibre.com/items/${sku}`;
-  const myObjectCarrinho = {
-    method: 'GET',
-    headers: { Accept: 'application/json' },
-  };
-  fetch(API_URL_CARRINHO, myObjectCarrinho)
-      .then(response => response.json())
-      .then((data) => {
-        const novoObjeto = {
-          sku: data.id,
-          name: data.title,
-          salePrice: data.price,
-        };
-        salvarLocalStorage(novoObjeto);
-        const atribuindoObjetosMapeados = createCartItemElement(novoObjeto);
-        const elementoPaiOl = document.getElementsByClassName('cart__items');
-        elementoPaiOl[0].appendChild(atribuindoObjetosMapeados);
-      }).catch((error) => {
-        console.log('A solicitação para adicionar no carrinho foi rejeitada.', error);
-      });
-}
-
 const salvarLocalStorage = (novoObjeto) => {
   const pegaBanana = localStorage.getItem('banana');
   const transformandoBanana = JSON.parse(pegaBanana);
@@ -121,4 +98,27 @@ function createCartItemElement({ sku, name, salePrice }) {
     removerLocalStorage(sku);
   }
   return li;
+}
+
+function adicionaNoCarrinho(sku) {
+  const API_URL_CARRINHO = `https://api.mercadolibre.com/items/${sku}`;
+  const myObjectCarrinho = {
+    method: 'GET',
+    headers: { Accept: 'application/json' },
+  };
+  fetch(API_URL_CARRINHO, myObjectCarrinho)
+      .then(response => response.json())
+      .then((data) => {
+        const novoObjeto = {
+          sku: data.id,
+          name: data.title,
+          salePrice: data.price,
+        };
+        salvarLocalStorage(novoObjeto);
+        const atribuindoObjetosMapeados = createCartItemElement(novoObjeto);
+        const elementoPaiOl = document.getElementsByClassName('cart__items');
+        elementoPaiOl[0].appendChild(atribuindoObjetosMapeados);
+      }).catch((error) => {
+        console.log('A solicitação para adicionar no carrinho foi rejeitada.', error);
+      });
 }
