@@ -1,29 +1,3 @@
-window.onload = function onload() { };
-const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-const myObj = { method: 'GET' };
-
-const sectionItem = document.querySelector('.items');
-const lStorage = () => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
-
-function montarObj(json) {
-  const arrResults = [];
-  json.results.forEach((el) => {
-    arrResults.push(el);
-  });
-
-  const arrProducts = [];
-  arrResults.forEach((el) => {
-    arrProducts.push({
-      sku: el.id,
-      name: el.title,
-      image: el.thumbnail,
-    });
-  });
-  document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart');
-  document.querySelectorAll('li')
-    .forEach((el) => el.addEventListener('click', cartItemClickListener));
-  return arrProducts;
-}
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -48,6 +22,33 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
 
   return section;
+}
+
+window.onload = function onload() { };
+const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const myObj = { method: 'GET' };
+
+const sectionItem = document.querySelector('.items');
+const lStorage = () => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
+
+function montarObj(json) {
+  const arrResults = [];
+  json.results.forEach((el) => {
+    arrResults.push(el);
+  });
+
+  const arrProducts = [];
+  arrResults.forEach((el) => {
+    arrProducts.push({
+      sku: el.id,
+      name: el.title,
+      image: el.thumbnail,
+    });
+  });
+  document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart');
+  document.querySelectorAll('li')
+    .forEach((el) => { el.addEventListener('click', cartItemClickListener) });
+  return arrProducts;
 }
 
 function criaElementosNaTela(arr) {
@@ -109,8 +110,8 @@ function emptcart() {
 }
 
 fetch(API_URL, myObj)
-.then(response => response.json())
-.then(jsonResponse => montarObj(jsonResponse))
-.then(arr => criaElementosNaTela(arr))
-.then(queryButtons)
-.then(emptcart())
+  .then(response => response.json())
+  .then(jsonResponse => montarObj(jsonResponse))
+  .then(arr => criaElementosNaTela(arr))
+  .then(queryButtons)
+  .then(emptcart());
