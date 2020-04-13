@@ -91,7 +91,7 @@ function atualizarPreco(parametro) {
   document.querySelector('#total-price').innerText = parametro;
 }
 
-function somaCompras(precoDoNovoItem) {
+async function somaCompras(precoDoNovoItem) {
   if (document.querySelector('#total-price').innerText) {
     const preco = parseInt((document.querySelector('#total-price').innerText), 10);
     const novoPreco = preco + precoDoNovoItem;
@@ -117,8 +117,8 @@ const fetchItemPorID = async (id) => {
   const response = await fetch(URL);
   const data = await response.json();
   const obj = await montarObjCartItem(data);
-  const precoOuNull = await somaCompras(obj.salePrice);
-  atualizarPreco(precoOuNull);
+  const preco = await somaCompras(obj.salePrice);
+  atualizarPreco(preco);
   atualizaLocalStorage();
 };
 
