@@ -53,3 +53,4 @@ const listar = () => {
     });
   });
 };
+listar();
