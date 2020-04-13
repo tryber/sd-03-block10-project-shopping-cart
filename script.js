@@ -12,8 +12,8 @@ async function priceCaculator(arr) {
   let price = 0;
   if (arr != null) {
     arr.forEach((element) => {
-    const URL = `https://api.mercadolibre.com/items/${element}`;
-    fetch(URL, { method: 'get' })
+      const URL = `https://api.mercadolibre.com/items/${element}`;
+      fetch(URL, { method: 'get' })
   .then(resp => resp.json())
   .then((data) => {
     price += data.price;
