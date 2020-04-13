@@ -7,7 +7,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
   const indexRemoved = Array.from(event.currentTarget.parentNode.children).indexOf(event.target);
   // itemsAdd = arrayITensListCart.splice(indexRemoved, 1);
-  console.log(itemsAdd.splice(indexRemoved, 1));
+  itemsAdd.splice(indexRemoved, 1);
   event.currentTarget.parentNode.removeChild(event.target);
   localStorage.setItem('listItemsAdd', JSON.stringify(itemsAdd));
 }
@@ -36,10 +36,12 @@ function loadJsonPerProduct(id) {
   });
 }
 
-const itemsForReloadCart = localStorage.getItem('listItemsAdd');
-const itemsTemp = JSON.parse(itemsForReloadCart);
-itemsTemp.forEach(element => loadJsonPerProduct(element));
-window.onload = function onload() {};
+   const itemsForReloadCart = localStorage.getItem('listItemsAdd');
+   const itemsTemp = JSON.parse(itemsForReloadCart);
+   itemsTemp.forEach(element => loadJsonPerProduct(element));
+ window.onload = function onload() {
+  loadJson();
+ };
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -91,4 +93,4 @@ function loadJson() {
   });
 }
 
-loadJson();
+
