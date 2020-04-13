@@ -13,8 +13,8 @@ async function priceCaculator(arr) {
     fetch(URL, { method: 'get' })
   .then(resp => resp.json())
   .then((data) => {
-     price += data.price;
-     totalPrice.innerText = `Total is : ${price}`;
+    price += data.price;
+    totalPrice.innerText = `Total is : ${price}`;
   });
   });
 }
