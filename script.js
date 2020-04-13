@@ -21,6 +21,10 @@ const saveLocalItems = () => {
   localStorage.setItem('cartItems', document.getElementsByClassName('cart__items')[0].innerHTML);
 };
 
+const cleanTotalPrice = () => {
+  localStorage.removeItem('cartPrice');
+};
+
 const emptyCart = () => {
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     document.querySelectorAll('li').forEach((el) => {
@@ -29,10 +33,6 @@ const emptyCart = () => {
     saveLocalItems();
     cleanTotalPrice();
   });
-};
-
-const cleanTotalPrice = () => {
-  localStorage.removeItem('cartPrice');
 };
 
 const updatePrices = (price) => {
@@ -46,6 +46,7 @@ const updatePrices = (price) => {
     screenPrice.innerText = localStorage.cartPrice;
   }
 };
+
 
 function cartItemClickListener(event) {
   event.target.remove();
@@ -127,6 +128,7 @@ const fetchar = async () => {
   try {
     await fetchar();
     await emptyCart();
+    await updatePrices(0);
   } catch (error) {
     console.log('Something went wrong:\n', error);
   }
