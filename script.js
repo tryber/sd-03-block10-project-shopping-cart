@@ -26,7 +26,7 @@ async function getTotalValue(valor, operador) {
   const itensCarrinho = document.getElementsByClassName('cart__items')[0].innerHTML;
   if (operador === 'add') {
     valorCarrinho += valor;
-} else {
+  } else {
     valorCarrinho -= valor;
   }
   document.getElementsByClassName('total-price')[0].innerText = `Total: R$ ${valorCarrinho}`;
@@ -86,7 +86,7 @@ function createProductItemElement({ sku, name, image }) {
 async function getProducts() {
   document.querySelector('.items').innerHTML = '';
   loadingText(true);
-  //const campoBusca = document.querySelector('#input-search').value;
+  // const campoBusca = document.querySelector('#input-search').value;
   const campoBusca = 'computador';
   await fetch(urlBusca(campoBusca), { method: 'GET' })
     .then(resposta => resposta.json()) // Obtem a resposta formatada em JSON
