@@ -44,6 +44,17 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+const itemFilho = (data) => {
+  const obj = {
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price,
+  };
+  const li = createCartItemElement(obj);
+  const ol = document.querySelector('.cart__items');
+  ol.appendChild(li);
+};
+
 function chamaId(id) {
   const url = `https://api.mercadolibre.com/items/${id}`;
   fetch(url)
@@ -81,14 +92,3 @@ fetch(API_URL)
     });
   })
   .then(botaoAdd);
-
-const itemFilho = (data) => {
-  const obj = {
-    sku: data.id,
-    name: data.title,
-    salePrice: data.price,
-  };
-  const li = createCartItemElement(obj);
-  const ol = document.querySelector('.cart__items');
-  ol.appendChild(li);
-};
