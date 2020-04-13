@@ -49,8 +49,8 @@ const getProductData = async () => {
   await fetch(API_URL)
     .then(response => response.json())
     .then((data) => {
-      return data.results.forEach(({ id, title, thumbnail }) => {
-        productsList.appendChild(
+      data.results.forEach(({ id, title, thumbnail }) => {
+        return productsList.appendChild(
           createProductItemElement({ sku: id, name: title, image: thumbnail }),
         );
       });
