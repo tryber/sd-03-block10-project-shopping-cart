@@ -144,10 +144,20 @@ function recuperaLocalStorage() {
   document.querySelector('#total-price').innerText = total;
 }
 
+function emptycart() {
+  const empt = document.querySelector('.empty-cart');
+  empt.addEventListener('click', function () {
+    document.querySelector('.cart__items').innerHTML = '';
+    document.querySelector('#total-price').innerHTML = '';
+    atualizaLocalStorage();
+  });
+}
+
 fetch(API_URL, myObj)
   .then(response => response.json())
   .then(jsonResponse => montarObj(jsonResponse))
   .then(arr => criaElementosNaTela(arr))
-  .then(queryButtons);
+  .then(queryButtons)
+  .then(emptycart);
 
 window.onload = function onload() { recuperaLocalStorage(); };
