@@ -5,11 +5,11 @@ const convert = add => ({
   image: add.thumbnail,
 });
 
-const priceTotal = async () => {
+const priceTotal = () => {
   const Itens = document.querySelectorAll('.cart__item');
-  const price = [...Itens].map(item => item.textContent.match(/[\d.\d]+$/))
-    .reduce((ac, cv) => ac + parseFloat(cv), 0).toFixed(2);
-  document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
+  document.getElementsByClassName('total-price')[0].textContent = Math.round(
+    [...Itens].map(item => item.textContent.match(/[\d.\d]+$/))
+.reduce((ac, cv) => ac + parseFloat(cv), 0) * 100) / 100;
 };
 
 const storage = () => {
