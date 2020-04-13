@@ -49,9 +49,8 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 cardTotal = () => {
   const cartItem = document.querySelectorAll('.cart__item');
-  const price = Math.round([...cartItem].map(e => e.textContent
-  .match(/([0-9.]){1,}$/))
-  .reduce((acc, priceItem) => acc + parseFloat(priceItem), 0) * 100) / 100;
+  const price = [...cartItem].map(e => e.textContent
+  .match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0);
   document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
 };
 
@@ -80,10 +79,11 @@ window.onload = async () => {
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
   document.getElementsByClassName('total-price')[0].innerHTML = localStorage.getItem('Total a Pagar');
   document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', () => cartItemClickListener(inner)));
-  document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
+  document.getElementsByClassName('empty-cart')[0].addEventListener('click', async () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
+    await cardTotal(update());
   });
   await disableLoad();
   await cardTotal();
-  await update()
+  await update();
 };
