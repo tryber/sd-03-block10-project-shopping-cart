@@ -22,9 +22,9 @@ const cartUpdating = () => {
   sum();
 };
 
-const skuProduct = (item) => {
-  return item.querySelector('span.item__sku').innerText;
-}
+// const skuProduct = (item) => {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 // 3. Perform removal with cartItemClickListener(event)
 function cartItemClickListener(event) {
   event.target.remove();
@@ -72,6 +72,7 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+// element returned from the function createProductItemElement(product)
 // 1. Product listing, endpoint "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
 async function apiCreateItem() {
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject) // searching for the term computador
@@ -80,7 +81,7 @@ async function apiCreateItem() {
     const items = document.querySelector('.items');
 // array results
     data.results.map(function (res) {
-      return items.appendChild(createProductItemElement(// element returned from the function createProductItemElement(product)
+      return items.appendChild(createProductItemElement(
         {
           sku: res.id,
           name: res.title,
@@ -91,10 +92,12 @@ async function apiCreateItem() {
   });
   document.getElementsByClassName('loading')[0].remove();
 }
+
+// 6.Button to clear the shopping cart.
 // 4. Load the shopping cart through localStorage when starting the page
 window.onload = async function onload() {
   await apiCreateItem();
-  document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {// 6.Button to clear the shopping cart.
+  document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     localStorage.setItem('itemCart', '');
     localStorage.setItem('cartTotalPrice', 0);
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
