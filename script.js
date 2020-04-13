@@ -85,5 +85,5 @@ window.onload = async () => {
   });
   await disableLoad();
   await cardTotal();
-  await update();
+  await update()
 };
