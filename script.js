@@ -8,13 +8,13 @@ function produtoParaProdutoResumido(produto) {
 
 window.onload = function onload() {
   if (localStorage.getItem('banana') == null) {
-    localStorage.setItem('banana','[]');
+    localStorage.setItem('banana', '[]');
   }
 
   const myObject = {
     method: 'GET',
-    headers: { 'Accept': 'application/json' },
-  }
+
+  };
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=computador`, myObject)
     .then((response) => response.json())
     .then((data) => {
@@ -32,8 +32,8 @@ function adicionaNoCarrinho(sku) {
   const API_URL_CARRINHO = `https://api.mercadolibre.com/items/${sku}`;
     const myObjectCarrinho = {
       method: 'GET',
-      headers: { 'Accept': 'application/json' },
-    }
+
+    };
     fetch(API_URL_CARRINHO, myObjectCarrinho)
       .then((response) => response.json())
       .then((data) => { //informações do produto acessados pelo id específico retornando sku, name e salePrice
