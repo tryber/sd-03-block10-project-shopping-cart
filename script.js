@@ -155,7 +155,7 @@ function emptycart() {
     document.querySelector('#total-price').innerHTML = '';
     atualizaLocalStorage();
   });
-  document.querySelector('#loading').innerHTML = '';
+  document.querySelector('#loading').remove();
 }
 
 function loading() {
