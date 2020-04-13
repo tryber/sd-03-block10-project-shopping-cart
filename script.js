@@ -30,6 +30,33 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const clearTotal = () => {
+  const totalSum = document.getElementsByClassName('total-price');
+
+  if (totalSum.length) {
+    const totalSec = document.getElementsByClassName('total')[0];
+    totalSec.removeChild(totalSum[0]);
+  }
+};
+
+const total = async () => {
+  clearTotal();
+  const itemsCart = document.getElementsByClassName('cart__item');
+  let sum = 0;
+  for (let i = 0; i < itemsCart.length; i += 1) {
+    const itemsCartStr = itemsCart[i].innerText;
+    const startPrice = itemsCartStr.indexOf('PRICE:') + 8;
+    const endPrice = itemsCartStr.length;
+    const price = Number(itemsCartStr.slice(startPrice, endPrice));
+    sum += price;
+  }
+  const totalSec = document.getElementsByClassName('total')[0];
+  const paragraph = document.createElement('p');
+  paragraph.className = 'total-price';
+  paragraph.innerText = `Total do Carrinho : ${sum.toFixed(2)}`;
+  totalSec.appendChild(paragraph);
+};
+
 const doSum = async () => {
   await total();
 };
@@ -112,33 +139,6 @@ const loading = () => {
   paragraph.innerText = 'loading...';
   paragraph.className = 'loading';
   itemsSec.appendChild(paragraph);
-};
-
-const clearTotal = () => {
-  const totalSum = document.getElementsByClassName('total-price');
-
-  if (totalSum.length) {
-    const totalSec = document.getElementsByClassName('total')[0];
-    totalSec.removeChild(totalSum[0]);
-  }
-};
-
-const total = async () => {
-  clearTotal();
-  const itemsCart = document.getElementsByClassName('cart__item');
-  let sum = 0;
-  for (let i = 0; i < itemsCart.length; i += 1) {
-    const itemsCartStr = itemsCart[i].innerText;
-    const startPrice = itemsCartStr.indexOf('PRICE:') + 8;
-    const endPrice = itemsCartStr.length;
-    const price = Number(itemsCartStr.slice(startPrice, endPrice));
-    sum += price;
-  }
-  const totalSec = document.getElementsByClassName('total')[0];
-  const paragraph = document.createElement('p');
-  paragraph.className = 'total-price';
-  paragraph.innerText = `Total do Carrinho : ${sum.toFixed(2)}`;
-  totalSec.appendChild(paragraph);
 };
 
 loading();
