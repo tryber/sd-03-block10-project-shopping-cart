@@ -45,7 +45,7 @@ function reloadCartList() {
     console.log('valor nulo');
   } else {
     itemsTemp.forEach(element => loadJsonPerProduct(element));
-  } 
+  }
 }
 
 function createProductImageElement(imageSource) {
@@ -98,12 +98,12 @@ window.onload = function onload() {};
 
   // reloadCartList();
 (async () => {
-    try {
-      await reloadCartList();
-      await loadJson();
+  try {
+    await reloadCartList();
+    await loadJson();
     } catch (error) {
-      console.log('erro durante atualização:', error);
-    } 
+        console.log('erro durante atualização:', error);
+    }
 })();
 
 function getSkuFromProductItem(item) {
