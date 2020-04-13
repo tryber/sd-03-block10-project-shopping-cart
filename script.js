@@ -132,10 +132,10 @@ function returnApiInCreateItem() {
   const loading = document.createElement('p');
   loading.classList.add('loading');
   loading.innerText = 'loading...';
-  sectionItems.appendChild(loading);
+ /*  sectionItems.appendChild(loading); */
   fetch(url)
     .then((response) => {
-      sectionItems.removeChild(loading);
+      /* sectionItems.removeChild(loading); */
       return response.json();
     })
     .then(responseResult => responseResult.results.forEach((item) => {
