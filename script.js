@@ -75,12 +75,18 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 // Retorna todas a lista de produtos que será utilizada pela aplicação .
 function loadJson() {
   const URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+  const loading = document.createElement('p');
+  loading.setAttribute('id','loading');
+  loading.innerHTML = 'LOADING ..';
+  console.log(loading);
+  items.appendChild(loading); 
   fetch(URL, { method: 'get' })
   .then(resp => resp.json())
   .then(function (data) {
     data.results.forEach((element) => {
       items.appendChild(createProductItemElement(element));
     });
+    items.removeChild(loading);
     const buttonAdd = document.querySelectorAll('.item__add');
     buttonAdd.forEach((element) => {
       element.addEventListener('click', function (event) {
