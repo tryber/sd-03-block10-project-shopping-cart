@@ -100,7 +100,32 @@ O retorno desse _endpoint_ será algo no formato json. Por exemplo, se for pesqu
         {
             "id": "MLB1341925291",
             "site_id": "MLB",
-            "title": "Processador Intel Core I5-9400f 6 Núcleos 128 Gb",
+            "title": "Processador Intel Core I5-9400e Ouvido Gamer Exbom Hf-g390p4 Azul E Led
+￼￼Adicionar ao carrinho!
+Disco Rígido Interno Western Digital Wd Green Power Wd5000avcs 500gb Verde
+￼￼Adicionar ao carrinho!
+Disco Rígido Externo Western Digital Wd Elements Se Wdbjrt0040bbk 4tb Preto
+￼￼Adicionar ao carrinho!
+Computador Pc Completo Intel 8gb Hd 500gb Wifi Win10 C/ Monitor
+￼￼Adicionar ao carrinho!
+Pc Completo Gamer A4 6300 3.8ghz, Wi-fi! Frete Gratis! Nfe
+￼￼Adicionar ao carrinho!
+Cpu Pc Intel Core I5 3.2 4gb Hd 500 Limpa Estoque
+￼￼Adicionar ao carrinho!
+Notebook Legacy Cloud 2gb 14.1 32gb Windowns 10 Multilaser
+￼￼Adicionar ao carrinho!
+Pc Gamer Completo Intel 8gb Hd 500gb R5 230 2gb Wifi Hdmi Win10 C/ Monitor
+￼￼Adicionar ao carrinho!
+Notebook Intel Air Celeron N3350 4gb Hd 64gb Win 10 13.3
+￼￼Adicionar ao carrinho!
+Cpu Completa Dell Core 2 Duo 4gb Hd 160 + Wifi
+￼￼Adicionar ao carrinho!
+Cpu Pc Intel Core I5 8g Hd1terra C/ Garantia 1 Ano
+￼￼Adicionar ao carrinho!
+Cpu Completa Dell Core 2 Duo E8400 4gb Ssd120 + Monitor 17
+￼￼Adicionar ao carrinho!
+Pc Gamer Intel Core I5 3.4ghz 8gb Ssd240gb Csgo Lol Freefire
+￼f 6 Núcleos 128 Gb",
             "seller": {
                 "id": 385471334,
                 "permalink": null,
