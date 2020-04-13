@@ -1,6 +1,5 @@
-window.onload = function onload() { }
-const API_URL = "https://api.mercadolibre.com/sites/MLB/search?q=computador";
-const mtd = { metodo: 'GET' };
+window.onload = function onload() { };
+const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -45,6 +44,13 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+function chamaId(id) {
+  const url = `https://api.mercadolibre.com/items/${id}`;
+  fetch(url)
+    .then(response => response.json())
+    .then(data => itemFilho(data));
+}
+
 function coletaBotao(event) {
   const acessa = event.target.parentNode;
   const priIdEl = acessa.firstChild.innerText;
@@ -53,7 +59,6 @@ function coletaBotao(event) {
 
 function botaoAdd() {
   const add = document.querySelectorAll('.item__add');
-  console.log(add)
   add.forEach((param) => {
     param.addEventListener('click', coletaBotao);
   });
@@ -73,12 +78,11 @@ fetch(API_URL)
       };
       const product = createProductItemElement(all);
       a.appendChild(product);
-    })
+    });
   })
   .then(botaoAdd);
 
 const itemFilho = (data) => {
-  console.log(data)
   const obj = {
     sku: data.id,
     name: data.title,
@@ -87,11 +91,4 @@ const itemFilho = (data) => {
   const li = createCartItemElement(obj);
   const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
-}
-
-function chamaId(id) {
-  const url = `https://api.mercadolibre.com/items/${id}`;
-  fetch(url)
-    .then(response => response.json())
-    .then(data => itemFilho(data));
-}
+};
