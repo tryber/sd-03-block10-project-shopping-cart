@@ -13,7 +13,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -46,11 +46,11 @@ window.onload = async () => {
     .then((json) => {
       json.results.forEach((product) => {
         document.querySelector('items').appendChild(
-        createProductItemElement({
-          sku: product.id,
-          name: product.title,
-          image: product.thumbnail,
-        }));
+          createProductItemElement({
+            sku: product.id,
+            name: product.title,
+            image: product.thumbnail,
+          }));
       });
     });
 };
