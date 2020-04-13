@@ -4,12 +4,20 @@ const removeAll = document.querySelector('.empty-cart');
 const container = document.querySelector('.container');
 const carregando = document.querySelector('.loading');
 const loader = document.createElement('div');
+const totalPrice = document.querySelector('.total-price');
+let total = 0;
 const loading = () => {
   loader.innerHTML = 'Carregando';
   loader.className = 'loading';
   container.appendChild(loader);
 };
 loading();
+async function sumTotal(salePrice) {
+  return await (total += salePrice);
+}
+async function subTotal(salePrice) {
+  return await (total -= salePrice);
+}
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -46,6 +54,10 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => {
     li.remove();
+    subTotal(salePrice);
+    total = Math.round(total * 100) / 100;
+    totalPrice.innerHTML = total;
+    console.log(total);
     localStorage.removeItem(`${sku}`);
   });
   return li;
@@ -60,6 +72,10 @@ function adicionarItem(dataJ) {
       const salePrice = resultados[index].price;
       const produto = createCartItemElement({ sku, name, salePrice });
       itemsCarrinho.appendChild(produto);
+      sumTotal(salePrice);
+      total = Math.round(total * 100) / 100;
+      totalPrice.innerHTML = total;
+      console.log(total);
       const storageJson = JSON.stringify({ sku, name, salePrice });
       localStorage.setItem(`${sku}`, storageJson);
     });
