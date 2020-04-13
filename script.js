@@ -3,10 +3,11 @@ const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
 const removeAllItems = document.querySelector('.empty-cart');
 const totalPrice = document.createElement('p');
+const cart = document.getElementsByClassName('cart');
 totalPrice.setAttribute('class', 'total-price');
 const itemsAdd = [];
 
-async function priceCaculator(arr) {
+function priceCaculator(arr) {
   let price = 0;
   arr.forEach((element) => {
     const URL = `https://api.mercadolibre.com/items/${element}`;
@@ -44,7 +45,7 @@ function loadJsonPerProduct(id) {
   .then(resp => resp.json())
   .then((data) => {
     cartItems.appendChild(createCartItemElement(data));
-    cartItems.appendChild(totalPrice);
+    cart[0].appendChild(totalPrice);
     console.log(data.id);
     itemsAdd.push(data.id);
     localStorage.setItem('listItemsAdd', JSON.stringify(itemsAdd));
