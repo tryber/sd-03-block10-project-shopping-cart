@@ -27,6 +27,24 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+async function addCartItem() {
+  document.querySelectorAll('.item__add').forEach(
+    async (button) => {
+      button.addEventListener('click',
+      async (button) => {
+        const eventId = button.closest('.item__sku');
+        console.log(event);
+        console.log(eventId);
+        const address = `https://api.mercadolibre.com/items/$${eventId}`;
+        const item = await fetch(address);
+        console.log(item);
+      }
+    );
+    }
+  )
+}
+
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
 }
@@ -67,6 +85,7 @@ async function start() {
   const apiJson = await mercadoLivreJson();
   const objItems = await mercadoLivreResults(apiJson);
   await printProducts(objItems);
+  await addCartItem();
 }
 
 window.onload = start;
