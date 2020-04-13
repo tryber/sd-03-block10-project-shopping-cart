@@ -3,7 +3,7 @@ const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
 
 
-let itemsTemp = [];
+const itemsAdd = [];
 const itemsForReloadCart = localStorage.getItem('listItemsAdd');
 itemsTemp = JSON.parse(itemsForReloadCart);
 itemsTemp.forEach(element => this.loadJsonPerProduct(element));
@@ -38,7 +38,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-const itemsAdd = [];
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const indexRemoved = Array.from(event.currentTarget.parentNode.children).indexOf(event.target);
