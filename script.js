@@ -31,7 +31,7 @@ function getSkuFromProductItem(item) {
 }
 
 function roundNumber(value, decimals) {
-  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+  return Number(Math.round(`${value}e${decimals}`) + `e-${decimals}`);
 }
 
 const clearTotal = () => {
