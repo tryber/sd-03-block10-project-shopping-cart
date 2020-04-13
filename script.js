@@ -2,7 +2,22 @@
 const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
 const removeAllItems = document.querySelector('.empty-cart');
+const totalPrice = document.createElement('p');
+totalPrice.setAttribute('class','total-price');
 const itemsAdd = [];
+
+async function priceCaculator(arr) {
+  let price = 0;
+  arr.forEach(element => {
+    const URL = `https://api.mercadolibre.com/items/${element}`;
+  fetch(URL, { method: 'get' })
+  .then(resp => resp.json())
+  .then((data) => {
+   price += data.price;
+   totalPrice.innerText = `Total is : ${price}`;
+  })
+  });  
+}
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
@@ -11,6 +26,7 @@ function cartItemClickListener(event) {
   itemsAdd.splice(indexRemoved, 1);
   event.currentTarget.parentNode.removeChild(event.target);
   localStorage.setItem('listItemsAdd', JSON.stringify(itemsAdd));
+  priceCaculator(JSON.parse(localStorage.getItem('listItemsAdd')));
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -28,9 +44,11 @@ function loadJsonPerProduct(id) {
   .then(resp => resp.json())
   .then((data) => {
     cartItems.appendChild(createCartItemElement(data));
+    cartItems.appendChild(totalPrice);
     console.log(data.id);
     itemsAdd.push(data.id);
     localStorage.setItem('listItemsAdd', JSON.stringify(itemsAdd));
+    priceCaculator(JSON.parse(localStorage.getItem('listItemsAdd')));
   })
   .catch((err) => {
     console.error(err);
@@ -40,7 +58,6 @@ function loadJsonPerProduct(id) {
 function reloadCartList() {
   const itemsForReloadCart = localStorage.getItem('listItemsAdd');
   const itemsTemp = JSON.parse(itemsForReloadCart);
-  console.log(itemsTemp);
   if (itemsTemp == null) {
     console.log('valor nulo');
   } else {
