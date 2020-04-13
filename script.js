@@ -13,6 +13,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 function createProductItemElement({ sku, name, image }) {
+  
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -48,8 +49,8 @@ window.onload = async () => {
   .then((data) => {
     const results = data.results;
     results.forEach(({ id, title, thumbnail }) => {
-      console.log(id, title, thumbnail);
-      listaDeitens.appendChild(createProductItemElement({ id, name, image }));
+      console.log(id, title, thumbnail)
+      listaDeitens.appendChild(createProductItemElement({ sku: id, name: title, image: thumbnail }))
     });
     return data;
   })
