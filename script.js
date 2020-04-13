@@ -56,7 +56,6 @@ const addNoCarrinho = () => {
         itemsCarrinho.appendChild(produto);
         const storageJson = JSON.stringify({ sku, name, salePrice });
         localStorage.setItem(`${sku}`, storageJson);
-        total += sumTotal(salePrice);
         return dataJ;
       });
     });
@@ -97,8 +96,4 @@ window.onload = function onload() {
     const salePrice = produtoObjeto.salePrice;
     itemsCarrinho.appendChild(createCartItemElement({ sku, name, salePrice }));
   }
-};
-
-const sumTotal = async () => {
-
 };
