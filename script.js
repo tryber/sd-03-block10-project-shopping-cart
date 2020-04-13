@@ -27,23 +27,26 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-async function addCartItem() {
-  document.querySelectorAll('.item__add').forEach(
-    async (button) => {
-      button.addEventListener('click',
-      async (button) => {
-        const eventId = button.closest('.item__sku');
-        console.log(event);
-        console.log(eventId);
-        const address = `https://api.mercadolibre.com/items/$${eventId}`;
-        const item = await fetch(address);
-        console.log(item);
-      }
-    );
+async function cartItemJson() {
+  document.querySelectorAll('.item').forEach(
+    (element) => {
+      const itemId = element.querySelector('.item__sku').innerHTML;
+      const button = element.querySelector('.item__add');
+      button.addEventListener(
+        'click',
+        async () => {
+          const address = `https://api.mercadolibre.com/items/${itemId}`;
+          const item = await fetch(address)
+          const itemJson = await item.json();
+          console.log(itemJson);
+          const itemCart = await mercadoLivreResults({ results: [itemJson] });
+          console.log(itemCart);
+          await createCartItemElement(itemCart[0]);
+        }
+      )
     }
   )
 }
-
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
@@ -85,7 +88,7 @@ async function start() {
   const apiJson = await mercadoLivreJson();
   const objItems = await mercadoLivreResults(apiJson);
   await printProducts(objItems);
-  await addCartItem();
+  const jsonCart = await cartItemJson();
 }
 
 window.onload = start;
