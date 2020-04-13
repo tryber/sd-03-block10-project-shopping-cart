@@ -1,6 +1,20 @@
 const API_URL = "https://api.mercadolibre.com/sites/MLB/search?q=$computador";
 
-window.onload = function onload() { };
+window.onload = async () => {
+  const listaDeitens = document.querySelector('.items');
+
+  await fetch(API_URL)
+  .then((response) => response.json())
+  .then((data) => {
+    const results = data.results;
+    results.forEach(({id, title, thumbnail}) => {
+      console.log(id,title,thumbnail);
+      listaDeitens.appendChild(createProductItemElement({ id, name, image }));      
+    });
+    return data;
+  })
+  .catch(() => console.log('ERROR Listar listarProdutos'));
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -43,24 +57,3 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-const listarProdutos = async () => {
-  const listaDeitens = document.querySelector('.items');
-
-  await fetch(API_URL)
-  .then(response => response.json())
-  .then((data) => {
-    const results = data.results;
-    results.forEach((item) => {
-      const id = item.id;
-      const name = item.title;
-      const image = item.thumbnail;
-      console.log(item);
-      listaDeitens.appendChild(createProductItemElement({ id, name, image }));      
-    });
-    return data;
-  })
-  .catch(() => console.log('ERROR Listar listarProdutos'));
-};
-
-console.log(listarProdutos());
