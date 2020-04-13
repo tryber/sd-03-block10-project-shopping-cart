@@ -3,7 +3,6 @@
 
 // const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
 // const myObj = { method: 'GET' };
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -20,6 +19,15 @@ function createCustomElement(element, className, innerText) {
 
 const saveLocalItems = () => {
   localStorage.setItem('cartItems', document.getElementsByClassName('cart__items')[0].innerHTML);
+};
+
+const emptyCart = () => {
+  document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
+    document.querySelectorAll('li').forEach((el) => {
+      el.remove();
+    });
+    saveLocalItems();
+  });
 };
 
 function cartItemClickListener(event) {
@@ -46,11 +54,11 @@ const addToCart = (data) => {
   ol.appendChild(li);
 };
 
-
 const addToCartFetch = async ({ sku }) => {
   const response = await fetch(`https://api.mercadolibre.com/items/${sku}`);
   const data = await response.json();
   addToCart(data);
+  // updatePrices(data.base_price);
   saveLocalItems();
 };
 
@@ -98,7 +106,8 @@ const fetchar = async () => {
 (async () => {
   try {
     await fetchar();
+    await emptyCart();
   } catch (error) {
-    console.log('Something went wrong:', error);
+    console.log('Something went wrong:\n', error);
   }
 })();
