@@ -111,11 +111,11 @@ function emptcart() {
   empt.addEventListener('click', function () {
     document.querySelector('.cart__items').innerHTML = '';
   });
-  document.querySelector('#loading').remove();
+  document.querySelector('.loading').remove();
 }
 
 function loading() {
-  document.querySelector('#loading').innerHTML = 'loading...';
+  document.querySelector('.loading').innerHTML = 'loading...';
 }
 
 window.onload = function onload() {
