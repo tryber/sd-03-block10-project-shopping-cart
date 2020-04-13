@@ -64,12 +64,17 @@ const salvarLocalStorage = (novoObjeto) => {
 
 const removerLocalStorage = (sku) => {
   const pegaBanana = localStorage.getItem('banana');
-  const transformandoBanana = JSON.parse(pegaBanana);
-  let transformandoEmString = JSON.stringify(objetoLocalStorage);
+  const transformandoBanana = JSON.parse(pegaBanana); //tranformando em array
+  console.log('w',transformandoBanana); 
+  const filtroSKU = transformandoBanana.filter((item) => {
+    if(item.sku !== sku){
+      return true;
+    } else {
+      return false;
+    }
+  });
+  let transformandoEmString = JSON.stringify(filtroSKU);
   localStorage.setItem('banana', transformandoEmString);
-  console.log(localStorage);
-  console.log('r',transformandoEmString);
-  console.log('q',transformandoEmString);
 }
 
 function createProductImageElement(imageSource) {
@@ -112,8 +117,8 @@ function cartItemClickListener(event) {
   console.log(clickedElement);
   const elementoOl = document.querySelector('.cart__items');
   elementoOl.removeChild(clickedElement);
+  
 }
-
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -122,6 +127,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   //remove da lista o elemento clicado.
   li.onclick = (event) => {
     cartItemClickListener(event);
+    removerLocalStorage(sku);
   }
   return li;
 }
