@@ -48,8 +48,8 @@ const getProductData = async () => {
   const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${queryKey}`;
   await fetch(API_URL)
     .then(response => response.json())
-    .then(data => {
-      return data.results.map(({ id, title, thumbnail }) => {
+    .then((data) => {
+      return data.results.forEach(({ id, title, thumbnail }) => {
         productsList.appendChild(
           createProductItemElement({ sku: id, name: title, image: thumbnail }),
         );
