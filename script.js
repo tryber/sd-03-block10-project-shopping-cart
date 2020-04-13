@@ -38,7 +38,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-let itemsAdd = [];
+const itemsAdd = [];
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const indexRemoved = Array.from(event.currentTarget.parentNode.children).indexOf(event.target);
@@ -64,7 +64,7 @@ function loadJsonPerProduct(id) {
   .then((data) => {
     cartItems.appendChild(createCartItemElement(data));
     console.log(data.id);
-    itemsAdd.push(data.id);   
+    itemsAdd.push(data.id);
     localStorage.setItem('listItemsAdd', JSON.stringify(itemsAdd));
   })
   .catch((err) => {
