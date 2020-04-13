@@ -87,14 +87,17 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+function atualizarPreco(parametro) {
+  document.querySelector('#total-price').innerText = parametro;
+}
+
 function somaCompras(precoDoNovoItem) {
   if (document.querySelector('#total-price').innerText) {
     const preco = parseInt((document.querySelector('#total-price').innerText), 10);
     const novoPreco = preco + precoDoNovoItem;
-    document.querySelector('#total-price').innerText = novoPreco;
-  } else {
-    document.querySelector('#total-price').innerText = precoDoNovoItem;
+    return novoPreco;
   }
+  return precoDoNovoItem;
 }
 
 function montarObjCartItem(data) {
@@ -114,7 +117,8 @@ const fetchItemPorID = async (id) => {
   const response = await fetch(URL);
   const data = await response.json();
   const obj = await montarObjCartItem(data);
-  somaCompras(obj.salePrice);
+  const precoOuNull = await somaCompras(obj.salePrice);
+  atualizarPreco(precoOuNull);
   atualizaLocalStorage();
 };
 
