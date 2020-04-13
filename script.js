@@ -7,7 +7,7 @@ const cart = document.getElementsByClassName('cart');
 totalPrice.setAttribute('class', 'total-price');
 const itemsAdd = [];
 
-function priceCaculator(arr) {
+async function priceCaculator(arr) {
   let price = 0;
   arr.forEach((element) => {
     const URL = `https://api.mercadolibre.com/items/${element}`;
