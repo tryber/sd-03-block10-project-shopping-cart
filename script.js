@@ -44,6 +44,18 @@ function item1(typedSearch) {
   return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=$${typedSearch}`);
 }
 
+/* function doSubmit() {
+  const search = 'computer';
+  item1(search)
+    .then (response => response.json())
+    .then (data => {
+      data.results.forEach(element => {
+        const {id, title, thumbnail} = element;
+        const results = document.querySelector('.results');
+        results.appendChild(createProductItemElement({sku: id, name: title, image: thumbnail}));
+      });
+    })
+} */
 
 async function doSubmit() {
   const search = 'computer';
