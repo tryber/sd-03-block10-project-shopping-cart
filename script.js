@@ -30,7 +30,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function roundNumber(value, decimals) {
+function roundNumber(value) {
   return Number(Math.round(value * 100) / 100);
 }
 
@@ -52,7 +52,7 @@ const total = async () => {
     const startPrice = itemsCartStr.indexOf('PRICE:') + 8;
     const endPrice = itemsCartStr.length;
     let price = Number(itemsCartStr.slice(startPrice, endPrice));
-    price = roundNumber(price, 2);
+    price = roundNumber(price);
     sum += price;
   }
   const totalSec = document.getElementsByClassName('total')[0];
