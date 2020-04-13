@@ -1,3 +1,5 @@
+const API = url => fetch(url);
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,24 +14,12 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
-  return section;
-}
-
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  // coloque seu códi go aqui
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -40,23 +30,36 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-const API = url => fetch(url);
-
-/* const addItem = async ({ sku }) => {
-  const ol = document.getElementsByClassName('cart_items')[0];
+const addItem = async (sku) => {
   const loading = document.createElement('span');
   loading.innerHTML = 'Loading...';
+  const ol = document.getElementsByClassName('cart__items')[0];
   ol.appendChild(loading);
-  const responseAPI = await API(`https://api.mercadolibre.com/items/${sku}`);
-  const data = await responseAPI.json();
+  const response = await API(`https://api.mercadolibre.com/items/${sku}`);
+  const data = await response.json();
   const product = await createCartItemElement({
     sku: data.id,
     name: data.title,
     salePrice: data.price,
   });
   ol.removeChild(loading);
-  ol.appendChild(product);
-}; */
+  await ol.appendChild(product);
+};
+
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const createBtn = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  createBtn.addEventListener('click', () => addItem(sku));
+  section.appendChild(createBtn);
+  return section;
+}
+
+
 
 
 window.onload = function onload() {
