@@ -1,4 +1,6 @@
-window.onload = function onload() {};
+window.onload = function onload() {
+  getProductData();
+};
 
 async function getProductData() {
   const queryKey = 'computador';
