@@ -42,7 +42,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const API = url => fetch(url);
 
-const addItemOnList = async ({ sku }) => {
+/* const addItem = async ({ sku }) => {
   const ol = document.getElementsByClassName('cart_items')[0];
   const loading = document.createElement('span');
   loading.innerHTML = 'Loading...';
@@ -56,7 +56,8 @@ const addItemOnList = async ({ sku }) => {
   });
   ol.removeChild(loading);
   ol.appendChild(product);
-};
+}; */
+
 
 window.onload = function onload() {
   const listItems = async () => {
