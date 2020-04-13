@@ -79,11 +79,16 @@ function somaCompras(precoDoNovoItem) {
     arrProdutos.forEach((el) => {
       refinando.push(el.innerHTML.match(/([0-9.]){1,}$/)[0]);
     });
-    const resultado = refinando.reduce((acc, cur) => {
-      const number = transNumber(parseFloat(cur));
-      acc += number;
-      return acc;
-    }, 0);
+    let resultado = 0;
+    for (let i = 0; i < refinando.length; i += 1) {
+      const number = transNumber(parseFloat(refinando[i]));
+      resultado += number;
+    }
+    // const resultado = refinando.reduce((acc, cur) => {
+    //   const number = transNumber(parseFloat(cur));
+    //   acc += number;
+    //   return acc;
+    // }, 0);
     return resultado.toFixed(2);
   }
   return precoDoNovoItem;
