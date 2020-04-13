@@ -55,6 +55,52 @@ const allProdu = fetch('https://api.mercadolibre.com/sites/MLB/search?q=computad
       const product = createProductItemElement(all);
       a.appendChild(product);
     });
-  });
+  })
+  .then(botao());
 
-allProdu();
+function montaObj(data) {
+  const objCart = {
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price,
+  };
+  const li = createCartItemElement(objCart);
+  const ol = document.querySelector('.cart__items');
+  ol.appendChild(li);
+}
+
+
+const clickIds = (event) => {
+  const section = event.target.parentNode;
+  const priElement = section.firstChild.innerText;
+  fetchId(priElement);
+};
+
+function botao() {
+  const item = document.querySelectorAll('.item__add');
+  item.forEach((param) => {
+    param.addEventListener('click', clickIds);
+  });
+};
+
+allProdu;
+
+const fetchId = ({ id }) => {
+  const API = `https://api.mercadolibre.com/items/${id}`;
+  fetch(API)
+    .then(response => response.json())
+    .then(data => montaObj(data));
+};
+
+
+
+/* .then(function () {
+  const allBotao = document.querySelectorAll('.item__add');
+  const botao = allBotao.forEach(() => {
+    allBotao.forEach((addEventListener) => {
+      const teste = fetch(`https://api.mercadolibre.com/items/${}`)
+      createCartItemElement();
+      console.log(teste)
+    })
+  })
+}) */
