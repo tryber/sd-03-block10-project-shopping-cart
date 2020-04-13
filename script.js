@@ -48,7 +48,11 @@ window.onload = async () => {
   .then((data) => {
     const results = data.results;
     results.forEach(({ id, title, thumbnail }) => {
-      listaDeitens.appendChild(createProductItemElement({ sku: id, name: title, image: thumbnail }));
+      listaDeitens.appendChild(createProductItemElement({
+        sku: id, 
+        name: title, 
+        image: thumbnail 
+      }));
     });
     return data;
   })
