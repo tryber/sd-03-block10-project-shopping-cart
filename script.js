@@ -126,4 +126,4 @@ window.onload = function onload() {
     .then(loading())
     .then(queryButtons)
     .then(emptcart);
-}
+};
