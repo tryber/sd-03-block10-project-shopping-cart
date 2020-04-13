@@ -129,9 +129,7 @@ window.onload = function onload() {
       console.log('erro durante atualização:', error);
     }
   })();
-};z
-
-
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
