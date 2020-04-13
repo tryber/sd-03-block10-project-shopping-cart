@@ -31,7 +31,7 @@ function getSkuFromProductItem(item) {
 }
 
 function roundNumber(value) {
-  return Number(Math.round(value * 100) / 100);
+  return parseFloat(Number(Math.round(value * 100) / 100));
 }
 
 const clearTotal = () => {
