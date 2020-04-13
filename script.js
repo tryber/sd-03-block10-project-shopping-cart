@@ -118,3 +118,7 @@ fetch(API_URL, myObj)
   .then(arr => criaElementosNaTela(arr))
   .then(queryButtons)
   .then(emptcart());
+
+function loading() {
+  document.querySelector('#loading').innerHTML = 'loading...';
+}
