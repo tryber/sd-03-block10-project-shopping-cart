@@ -2,26 +2,26 @@ function produtoParaProdutoResumido(produto) {
   return {
     sku: produto.id,
     name: produto.title,
-    image: produto.thumbnail
-  }
+    image: produto.thumbnail,
+  };
 }
-window.onload = function onload() { 
-  if (localStorage.getItem("banana") == null) {
-    localStorage.setItem("banana", "[]");
+
+window.onload = function onload() {
+  if (localStorage.getItem('banana') == null) {
+    localStorage.setItem('banana','[]');
   }
-  const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=computador`
+
   const myObject = {
     method: 'GET',
-    headers: {'Accept': 'application/json'}
+    headers: { 'Accept': 'application/json' },
   }
-  fetch(API_URL, myObject)
+  fetch(`https://api.mercadolibre.com/sites/MLB/search?q=computador`, myObject)
     .then((response) => response.json())
     .then((data) => {
       const objetosMapeados = data.results.map(produtoParaProdutoResumido);
       const elementosCriados = objetosMapeados.map(createProductItemElement);
       const elementoItems = document.getElementsByClassName('items');
       elementosCriados.forEach((elementoCriado) => elementoItems[0].appendChild(elementoCriado));
-      
     })
     .catch((error) => {
       console.log("A solicitação foi rejeitada.", error);
@@ -32,7 +32,7 @@ function adicionaNoCarrinho(sku) {
   const API_URL_CARRINHO = `https://api.mercadolibre.com/items/${sku}`;
     const myObjectCarrinho = {
       method: 'GET',
-      headers: {'Accept': 'application/json'}
+      headers: { 'Accept': 'application/json' },
     }
     fetch(API_URL_CARRINHO, myObjectCarrinho)
       .then((response) => response.json())
@@ -65,7 +65,7 @@ const salvarLocalStorage = (novoObjeto) => {
 const removerLocalStorage = (sku) => {
   const pegaBanana = localStorage.getItem('banana');
   const transformandoBanana = JSON.parse(pegaBanana); //tranformando em array
-  console.log('w',transformandoBanana); 
+  console.log('w',transformandoBanana);
   const filtroSKU = transformandoBanana.filter((item) => {
     if(item.sku !== sku){
       return true;
@@ -94,7 +94,6 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -117,7 +116,6 @@ function cartItemClickListener(event) {
   console.log(clickedElement);
   const elementoOl = document.querySelector('.cart__items');
   elementoOl.removeChild(clickedElement);
-  
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -131,12 +129,10 @@ function createCartItemElement({ sku, name, salePrice }) {
   }
   return li;
 }
-
 //LocalStorage
 //1 - gravar o novoObjeto no localStorage
 //2 - apagar o novoObjeto do localStarage
 //3 - salavar o novoObjeto no localStorage
-
 //salavar no localStorage
   // li.addEventListener('click', salvarNoLocalStorage);
   // li.onchange = (parametro) => {
