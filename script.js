@@ -22,7 +22,7 @@ const saveLocalItems = () => {
 };
 
 const cleanTotalPrice = () => {
-  localStorage.removeItem('cartPrice');
+  localStorage.cartPrice = 0;
 };
 
 const emptyCart = () => {
@@ -36,7 +36,7 @@ const emptyCart = () => {
 };
 
 const updatePrices = (price) => {
-  const screenPrice = document.getElementsByClassName('total-price')[0].firstElementChild;
+  const screenPrice = document.getElementsByClassName('total-price')[0];
   if (!localStorage.getItem('cartPrice')) {
     localStorage.setItem('cartPrice', Math.round(price * 100) / 100);
     screenPrice.innerText = localStorage.cartPrice;
