@@ -134,7 +134,7 @@ function returnApiInCreateItem() {
   loading.innerText = 'loading...';
   /*  sectionItems.appendChild(loading); */
   fetch(url)
-    .then((response) => response.json())
+    .then(response => response.json())
     /* sectionItems.removeChild(loading); */
     .then(responseResult => responseResult.results.forEach((item) => {
       appendChildOfCreate(sectionItems, createProductItemElement, item, 'image', 'thumbnail');
