@@ -38,8 +38,8 @@ function changeTotalValue(textElement) {
   let totalValue = totalTagNumber;
   const cartItems = document.querySelector('.cart__items');
   totalValue -= itemRegexOnlyNumbers;
-  totalTagText.innerText = (Math.floor(totalValue * 100) / 100).toFixed(2);
-  localStorage.setItem('total', totalValue.toFixed(2));
+  totalTagText.innerText = Math.round(totalValue * 100) / 100;
+  localStorage.setItem('total', totalValue);
   if (totalValue === 0) localStorage.removeItem('total');
   if (cartItems.children.length === 1) totalTagText.innerText = 0;
 }
@@ -74,8 +74,8 @@ function getInnerTextTotal() {
   const totalTagNumber = parseFloat(totalTagText.innerText);
   let totalValue = totalTagNumber;
   totalValue += parseFloat(itemRegexOnlyNumbers);
-  totalTagText.innerText = (Math.floor(totalValue * 100) / 100).toFixed(2);
-  localStorage.setItem('total', totalValue.toFixed(2));
+  totalTagText.innerText = (Math.round(totalValue * 100) / 100);
+  localStorage.setItem('total', totalValue);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
