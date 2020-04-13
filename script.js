@@ -10,15 +10,21 @@ const itemsAdd = [];
 
 async function priceCaculator(arr) {
   let price = 0;
+  if(arr != null ) { 
   arr.forEach((element) => {
     const URL = `https://api.mercadolibre.com/items/${element}`;
     fetch(URL, { method: 'get' })
   .then(resp => resp.json())
   .then((data) => {
     price += data.price;
+     price = Math.floor(price * 100) / 100;
     totalPrice.innerText = `Total is : ${price}`;
   });
   });
+}
+  else {
+   console.log('valor nulo')  
+  }
 }
 
 function cartItemClickListener(event) {
