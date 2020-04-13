@@ -40,7 +40,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function item1 (typedSearch){
+function item1(typedSearch) {
   return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=$${typedSearch}`);
 }
 
