@@ -9,7 +9,7 @@ const sectionItem = document.querySelector('.items');
 // Funções
 
 function transNumber(num) {
-  return (Math.floor(num * 100) / 100);
+  return (Math.round(num.toFixed(2) * 100) / 100);
 }
 
 function atualizaLocalStorage() {
@@ -80,7 +80,7 @@ function somaCompras(precoDoNovoItem) {
     });
     let resultado = 0;
     for (let i = 0; i < refinando.length; i += 1) {
-      const number = transNumber(parseFloat(refinando[i]));
+      const number = parseFloat(refinando[i]);
       resultado += number;
     }
     // const resultado = refinando.reduce((acc, cur) => {
@@ -88,7 +88,7 @@ function somaCompras(precoDoNovoItem) {
     //   acc += number;
     //   return acc;
     // }, 0);
-    return resultado.toFixed(1);
+    return transNumber(resultado);
   }
   return precoDoNovoItem;
 }
