@@ -1,3 +1,4 @@
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -117,11 +118,12 @@ function loading() {
   document.querySelector('#loading').innerHTML = 'loading...';
 }
 
-fetch(API_URL, myObj)
-  .then(response => response.json())
-  .then(jsonResponse => montarObj(jsonResponse))
-  .then(arr => criaElementosNaTela(arr))
-  .then(loading())
-  .then(queryButtons)
-  .then(emptcart());
-
+window.onload = function onload() {
+  fetch(API_URL, myObj)
+    .then(response => response.json())
+    .then(jsonResponse => montarObj(jsonResponse))
+    .then(arr => criaElementosNaTela(arr))
+    .then(loading())
+    .then(queryButtons)
+    .then(emptcart());
+};
