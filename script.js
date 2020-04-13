@@ -69,7 +69,6 @@ const doSum = async () => {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const removeItem = document.getElementsByClassName('cart__items')[0];
-  console.log(event.srcElement);
   removeItem.removeChild(event.srcElement);
   // Atualiza LocalStorage e total do carrinho
   doSum();
