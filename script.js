@@ -7,9 +7,8 @@ let itemsTemp = [];
 const itemsForReloadCart = localStorage.getItem('listItemsAdd');
 itemsTemp = JSON.parse(itemsForReloadCart);
 itemsTemp.forEach(element => this.loadJsonPerProduct(element));
-window.onload = function onload() {
- 
-};
+
+window.onload = function onload() {};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
