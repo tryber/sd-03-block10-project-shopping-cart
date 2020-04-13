@@ -47,9 +47,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-cardTotal = () => {
-  const cartItem = document.querySelectorAll('.cart__item');
-  const price = [...cartItem].map(e => e.textContent
+cardTotal = async () => {
+  const cartItem = await document.querySelectorAll('.cart__item');
+  const price = await [...cartItem].map(e => e.textContent
   .match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0);
   document.getElementsByClassName('total-price')[0].innerHTML = `${price.toFixed(2)}`;
 };
