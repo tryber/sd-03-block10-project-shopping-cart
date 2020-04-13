@@ -38,10 +38,10 @@ function loadJsonPerProduct(id) {
 }
 
 function reloadCartList() {
-const itemsForReloadCart = localStorage.getItem('listItemsAdd');
-const itemsTemp = JSON.parse(itemsForReloadCart);
-console.log(itemsTemp);
-itemsTemp.forEach(element => loadJsonPerProduct(element));
+  const itemsForReloadCart = localStorage.getItem('listItemsAdd');
+  const itemsTemp = JSON.parse(itemsForReloadCart);
+  console.log(itemsTemp);
+  itemsTemp.forEach(element => loadJsonPerProduct(element));
 }
 
 function createProductImageElement(imageSource) {
