@@ -8,13 +8,13 @@ function createProductItemElement({ sku, name, image }) {
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   button.onclick = () => {
     adicionaNoCarrinho(sku);
-  }
+  };
   section.appendChild(button);
 
   return section;
-};
+}
 
-function produtoParaProdutoResumido(produto) {
+function objetoResumido(produto) {
   return {
     sku: produto.id,
     name: produto.title,
@@ -33,7 +33,7 @@ window.onload = function onload() {
   fetch(API_URL, myObject)
     .then(response => response.json())
     .then((data) => {
-      const objetosMapeados = data.results.map(produtoParaProdutoResumido);
+      const objetosMapeados = data.results.map(objetoResumido);
       const elementosCriados = objetosMapeados.map(createProductItemElement);
       const elementoItems = document.getElementsByClassName('items');
       elementosCriados.forEach(elementoCriado => elementoItems[0].appendChild(elementoCriado));
@@ -63,14 +63,14 @@ const removerLocalStorage = (sku) => {
   });
   const transformandoEmString = JSON.stringify(filtroSKU);
   localStorage.setItem('banana', transformandoEmString);
-}
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-};
+}
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
@@ -97,7 +97,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.onclick = (event) => {
     cartItemClickListener(event);
     removerLocalStorage(sku);
-  }
+  };
   return li;
 }
 
