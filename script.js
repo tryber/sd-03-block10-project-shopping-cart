@@ -59,12 +59,12 @@ function adicionarItem(dataJ) {
 const addNoCarrinho = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(data => data.json())
-  .then((dataJ) => adicionarItem(dataJ));
+  .then(dataJ => adicionarItem(dataJ));
 };
 const listarProdutos = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(data => data.json())
-  .then((dataJ) => dataJ.results)
+  .then(dataJ => dataJ.results)
   .then((resultados) => {
     resultados.forEach((item) => {
       const id = item.id;
