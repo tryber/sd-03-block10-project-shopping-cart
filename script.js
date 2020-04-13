@@ -41,42 +41,38 @@ function createCartItemElement({ sku, name, salePrice }) {
   });
   return li;
 }
+function adicionarItem(dataJ) {
+  const buttonsShop = document.querySelectorAll('.item__add');
+  const resultados = dataJ.results;
+  buttonsShop.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      const sku = resultados[index].id;
+      const name = resultados[index].title;
+      const salePrice = resultados[index].price;
+      const produto = createCartItemElement({ sku, name, salePrice });
+      itemsCarrinho.appendChild(produto);
+      const storageJson = JSON.stringify({ sku, name, salePrice });
+      localStorage.setItem(`${sku}`, storageJson);
+    });
+  });
+}
 const addNoCarrinho = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(data => data.json())
-  .then((dataJ) => {
-    const buttonsShop = document.querySelectorAll('.item__add');
-    const resultados = dataJ.results;
-    buttonsShop.forEach((button, index) => {
-      button.addEventListener('click', () => {
-        fetch(`https://api.mercadolibre.com/items/${resultados[index].id}`)
-        .then(datas => datas.json())
-        .then((dataJs) => {
-          const sku = dataJs.id;
-          const name = dataJs.title;
-          const salePrice = dataJs.price;
-          const produto = createCartItemElement({ sku, name, salePrice });
-          itemsCarrinho.appendChild(produto);
-          const storageJson = JSON.stringify({ sku, name, salePrice });
-          localStorage.setItem(`${sku}`, storageJson);
-          return dataJs;
-        });
-      });
-    });
-  });
+  .then((dataJ) => adicionarItem(dataJ));
 };
 const listarProdutos = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(data => data.json())
-  .then((dataJ) => {
-    const resultados = dataJ.results;
+  .then((dataJ) => dataJ.results)
+  .then((resultados) => {
     resultados.forEach((item) => {
       const id = item.id;
       const name = item.title;
       const image = item.thumbnail;
       itemsSection.appendChild(createProductItemElement({ id, name, image }));
     });
-    return dataJ;
+    return resultados;
   })
   .catch(() => console.log('ERROR'));
 };
