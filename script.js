@@ -54,7 +54,7 @@ function adicionaNoCarrinho(sku) {
         salvarLocalStorage(novoObjeto);
         const atribuindoObjetosMapeados = createCartItemElement(novoObjeto);
         const elementoPaiOl = document.getElementsByClassName('cart__items');
-        const p = elementoPaiOl[0].appendChild(atribuindoObjetosMapeados);
+        elementoPaiOl[0].appendChild(atribuindoObjetosMapeados);
       }).catch((error) => {
         console.log('A solicitação para adicionar no carrinho foi rejeitada.', error);
       });
@@ -67,6 +67,7 @@ const removerLocalStorage = (sku) => {
     if (item.sku !== sku) {
       return true;
     }
+    return;
   });
   const transformandoEmString = JSON.stringify(filtroSKU);
   localStorage.setItem('banana', transformandoEmString);
