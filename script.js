@@ -119,17 +119,19 @@ function loadJson() {
   });
 }
 
-window.onload = function onload() {};
+window.onload = function onload() {
+  (async () => {
+    try {
+      await reloadCartList();
+      await loadJson();
+      priceCaculator(JSON.parse(localStorage.getItem('listItemsAdd')));
+    } catch (error) {
+      console.log('erro durante atualização:', error);
+    }
+  })();
+};
 
-(async () => {
-  try {
-    await reloadCartList();
-    await loadJson();
-    // priceCaculator(JSON.parse(localStorage.getItem('listItemsAdd')));
-  } catch (error) {
-    console.log('erro durante atualização:', error);
-  }
-})();
+
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
