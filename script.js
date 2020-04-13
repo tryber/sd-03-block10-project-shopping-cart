@@ -2,13 +2,40 @@ window.onload = function onload() {
   getProductData();
 };
 
+const productModel = () => {
+  return {
+    sku: result.id,
+    name: result.title,
+    price: result.price,
+    image: result.thumbnail,
+  };
+};
+
 async function getProductData() {
   const queryKey = 'computador';
   const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${queryKey}`;
-  const myObject = { method: 'GET' };
+  const myObject = { method: 'GET', headers: { Accept: 'application/json' } };
   fetch(API_URL, myObject)
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data => {
+      const dataBase = data
+      console.log(dataBase);
+    })
+    .then(dataBase => {
+      const productData = dataBase.results.map(result => {
+        return {
+          sku: result.id,
+          name: result.title,
+          price: result.price,
+          image: result.thumbnail,
+        };
+      });
+      return productData;
+    })
+    .then(() => console.log(productData));
+  // .then(data => {
+  //   return data.results.map(results => {}
+  // })
 }
 
 function createProductImageElement(imageSource) {
