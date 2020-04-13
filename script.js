@@ -41,11 +41,12 @@ function reloadCartList() {
   const itemsForReloadCart = localStorage.getItem('listItemsAdd');
   const itemsTemp = JSON.parse(itemsForReloadCart);
   console.log(itemsTemp);
-  if(itemsTemp == null) {
-    console.log('valor nulo')
+  if (itemsTemp == null) {
+    console.log('valor nulo');
   } else {
-  itemsTemp.forEach(element => loadJsonPerProduct(element));
-}}
+    itemsTemp.forEach(element => loadJsonPerProduct(element));
+  } 
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -94,15 +95,17 @@ function loadJson() {
 }
 
 window.onload = function onload() {};
-  
-  //reloadCartList();
-  (async () => {
+
+  // reloadCartList();
+(async () => {
     try {
       await reloadCartList();
       await loadJson();
-    }catch (error) {
+    } catch (error) {
       console.log('erro durante atualização:', error);
-    }} )();
+    } 
+})();
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
