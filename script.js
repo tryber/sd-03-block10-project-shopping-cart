@@ -8,6 +8,11 @@ const sectionItem = document.querySelector('.items');
 
 // Funções
 
+function transNumber(num) {
+  (Math.floor(num * 100) / 100).toFixed(1);
+  return num;
+}
+
 function atualizaLocalStorage() {
   const itens = document.querySelector('.cart__items').innerHTML;
   const total = document.querySelector('#total-price').innerHTML;
@@ -67,15 +72,31 @@ function criaElementosNaTela(arr) {
   });
 }
 
-function subtrai() {
-  const total = parseInt((document.querySelector('#total-price').innerText), 10);
-  const removido = parseInt((event.target.innerHTML.match(/([0-9.]){1,}$/)[0]), 10);
-  document.querySelector('#total-price').innerText = total - removido;
+function somaCompras(precoDoNovoItem) {
+  if (document.querySelector('#total-price').innerText) {
+    const arrProdutos = document.querySelectorAll('.cart__item');
+    const refinando = [];
+    arrProdutos.forEach((el) => {
+      refinando.push(el.innerHTML.match(/([0-9.]){1,}$/)[0]);
+    });
+    const resultado = refinando.reduce((acc, cur) => {
+      const number = transNumber(parseFloat(cur));
+      acc += number;
+      return acc;
+    }, 0);
+    return resultado.toFixed(2);
+  }
+  return precoDoNovoItem;
+}
+
+function atualizarPreco(parametro) {
+  document.querySelector('#total-price').innerText = parametro;
 }
 
 function cartItemClickListener(event) {
-  subtrai();
   event.target.remove();
+  const preco = somaCompras();
+  atualizarPreco(preco);
   atualizaLocalStorage();
 }
 
@@ -87,19 +108,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function atualizarPreco(parametro) {
-  document.querySelector('#total-price').innerText = parametro;
-}
-
-async function somaCompras(precoDoNovoItem) {
-  if (document.querySelector('#total-price').innerText) {
-    const preco = parseInt((document.querySelector('#total-price').innerText), 10);
-    const novoPreco = preco + precoDoNovoItem;
-    return novoPreco;
-  }
-  return precoDoNovoItem;
-}
-
 function montarObjCartItem(data) {
   const objForCartItem = {
     sku: data.id,
@@ -109,7 +117,8 @@ function montarObjCartItem(data) {
   const li = createCartItemElement(objForCartItem);
   const ol = document.querySelector('.cart__items');
   ol.appendChild(li);
-  return objForCartItem;
+  const price = transNumber(objForCartItem.salePrice);
+  return price;
 }
 
 const fetchItemPorID = async (id) => {
@@ -117,7 +126,7 @@ const fetchItemPorID = async (id) => {
   const response = await fetch(URL);
   const data = await response.json();
   const obj = await montarObjCartItem(data);
-  const preco = await somaCompras(obj.salePrice);
+  const preco = await somaCompras(obj);
   atualizarPreco(preco);
   atualizaLocalStorage();
 };
