@@ -58,7 +58,7 @@ const total = async () => {
   const totalSec = document.getElementsByClassName('total')[0];
   const paragraph = document.createElement('p');
   paragraph.className = 'total-price';
-  paragraph.innerText = `${sum.toFixed(2)}`;
+  paragraph.innerText = `${sum}`;
   totalSec.appendChild(paragraph);
 };
 
@@ -79,7 +79,7 @@ function cartItemClickListener(event) {
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice.toFixed(2)}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
