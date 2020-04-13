@@ -101,9 +101,9 @@ window.onload = function onload() {};
   try {
     await reloadCartList();
     await loadJson();
-    } catch (error) {
-        console.log('erro durante atualização:', error);
-    }
+  } catch (error) {
+    console.log('erro durante atualização:', error);
+  }
 })();
 
 function getSkuFromProductItem(item) {
