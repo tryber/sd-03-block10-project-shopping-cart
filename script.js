@@ -4,10 +4,11 @@ const cartItems = document.querySelector('.cart__items');
 
 
 let itemsTemp = [];
+const itemsForReloadCart = localStorage.getItem('listItemsAdd');
+itemsTemp = JSON.parse(itemsForReloadCart);
+itemsTemp.forEach(element => this.loadJsonPerProduct(element));
 window.onload = function onload() {
-  const itemsForReloadCart = localStorage.getItem('listItemsAdd');
-  itemsTemp = JSON.parse(itemsForReloadCart);
-  itemsTemp.forEach(element => this.loadJsonPerProduct(element));
+ 
 };
 
 function createProductImageElement(imageSource) {
