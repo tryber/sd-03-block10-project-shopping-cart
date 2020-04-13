@@ -7,8 +7,22 @@ const convert = add => ({
 
 const storage = () => {
   localStorage.setItem('Lista Salva', document.getElementsByClassName('cart__items')[0].innerHTML);
-  //localStorage.setItem('Total a Pagar', document.getElementsByClassName('total-price')[0].innerHTML);
 };
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+const addToCart = async (sku) => {
+  await request(`https://api.mercadolibre.com/items/${sku}`)
+  .then(res => addChild(document.getElementsByClassName('cart__items')[0],
+  createCartItemElement(convert(res))));
+  storage();
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -48,28 +62,13 @@ const addChild = (element, child) => element.appendChild(child);
 
 const request = url => fetch(url).then(resp => resp.json());
 
-const addToCart = async (sku) => {
-  await request(`https://api.mercadolibre.com/items/${sku}`)
-  .then(res => addChild(document.
-  getElementsByClassName('cart__items')[0], createCartItemElement(convert(res))));
-  storage();
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-
 window.onload = async () => {
   await request('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(res => res.results.map(pc => addChild(
     document.getElementsByClassName('items')[0], createProductItemElement(convert(pc)))));
-    document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
-    document.querySelectorAll('li').forEach(element => element.addEventListener('click', cartItemClickListener));
-    document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
-    document.getElementsByClassName('cart__items')[0].innerHTML = ''; storage(); });
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
+  document.querySelectorAll('li').forEach(element => element.addEventListener('click', cartItemClickListener));
+  document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
+      document.getElementsByClassName('cart__items')[0].innerHTML = ''; storage(); });
 
 }
