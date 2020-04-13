@@ -3,20 +3,20 @@ const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
 const removeAllItems = document.querySelector('.empty-cart');
 const totalPrice = document.createElement('p');
-totalPrice.setAttribute('class','total-price');
+totalPrice.setAttribute('class', 'total-price');
 const itemsAdd = [];
 
 async function priceCaculator(arr) {
   let price = 0;
-  arr.forEach(element => {
+  arr.forEach((element) => {
     const URL = `https://api.mercadolibre.com/items/${element}`;
-  fetch(URL, { method: 'get' })
+    fetch(URL, { method: 'get' })
   .then(resp => resp.json())
   .then((data) => {
-   price += data.price;
-   totalPrice.innerText = `Total is : ${price}`;
-  })
-  });  
+     price += data.price;
+     totalPrice.innerText = `Total is : ${price}`;
+  });
+  });
 }
 
 function cartItemClickListener(event) {
