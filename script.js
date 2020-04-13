@@ -89,7 +89,7 @@ function somaCompras(precoDoNovoItem) {
     //   acc += number;
     //   return acc;
     // }, 0);
-    return resultado.toFixed(2);
+    return resultado.toFixed(1);
   }
   return precoDoNovoItem;
 }
