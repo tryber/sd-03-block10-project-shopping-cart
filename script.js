@@ -26,6 +26,10 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+function item2(idReturned) {
+  return fetch(`https://api.mercadolibre.com/items/${idReturned}`);
+}
+
 function addEvent(product) {
   product.lastChild.addEventListener('click', () => {
     const itemID = product.firstChild.innerHTML;
@@ -85,8 +89,3 @@ async function doSubmit() {
 }
 
 doSubmit();
-
-function item2(idReturned) {
-  return fetch(`https://api.mercadolibre.com/items/${idReturned}`);
-}
-
