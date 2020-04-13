@@ -33,9 +33,10 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const removeItem = document.getElementsByClassName('cart__items')[0];
+  console.log(event.srcElement);
   removeItem.removeChild(event.srcElement);
-
-  // Atualiza LocalStorage
+  // Atualiza LocalStorage e total do carrinho
+  doSum();
   const itemsCart = document.getElementsByClassName('cart__items')[0];
   localStorage.setItem('cart', itemsCart.innerHTML);
 }
@@ -57,6 +58,7 @@ const clearCart = () => {
     cartList.className = 'cart__items';
     cart.removeChild(removeList);
     cart.appendChild(cartList);
+    doSum();
     localStorage.removeItem('cart');
   });
 };
@@ -73,6 +75,7 @@ const getButtons = (button) => {
       const obj = { sku: id, name: title, salePrice: price };
       itemsCart.appendChild(createCartItemElement(obj));
       clearCart();
+      doSum();
       localStorage.setItem('cart', itemsCart.innerHTML);
     });
   });
@@ -106,8 +109,42 @@ const loading = () => {
   paragraph.className = 'loading';
   itemsSec.appendChild(paragraph);
 };
+
+const clearTotal = () => {
+  const totalSum = document.getElementsByClassName('total-price');
+  
+  if(totalSum.length){
+    const totalSec = document.getElementsByClassName('total')[0];
+    totalSec.removeChild(totalSum[0]);
+  }
+};
+
+const total = async () => {
+  clearTotal();
+  const itemsCart = document.getElementsByClassName('cart__item');
+  let sum = 0;
+  for (let i = 0; i < itemsCart.length; i += 1) {
+    const itemsCartStr = itemsCart[i].innerText;
+    const startPrice = itemsCartStr.indexOf('PRICE:') + 8;
+    const endPrice = itemsCartStr.length;
+    const price = Number(itemsCartStr.slice(startPrice,endPrice));
+    sum = sum + price;
+  }
+  const totalSec = document.getElementsByClassName('total')[0];
+  const paragraph = document.createElement('p');
+  paragraph.className = 'total-price';
+  paragraph.innerText = `Total do Carrinho : ${sum.toFixed(2)}`;
+  totalSec.appendChild(paragraph);
+};
+
+const doSum = async () => {
+  let response = await total();
+};
+
 loading();
 recoveryCart();
+doSum();
+
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
 fetch(API_URL)
