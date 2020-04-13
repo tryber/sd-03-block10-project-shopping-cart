@@ -9,7 +9,7 @@ const loading = () => {
   loader.className = 'loading';
   container.appendChild(loader);
 };
-
+loading();
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -96,7 +96,6 @@ removeAll.addEventListener('click', () => {
   localStorage.clear();
 });
 window.onload = function onload() {
-  loading();
   const produtosJson = window.localStorage;
   for (let i = 0; i < produtosJson.length; i += 1) {
     const chave = produtosJson.key(i);
