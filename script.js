@@ -1,6 +1,24 @@
 // const products = [];
 const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
+const itemsAdd = [];
+
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+  const indexRemoved = Array.from(event.currentTarget.parentNode.children).indexOf(event.target);
+  // itemsAdd = arrayITensListCart.splice(indexRemoved, 1);
+  console.log(itemsAdd.splice(indexRemoved, 1));
+  event.currentTarget.parentNode.removeChild(event.target);
+  localStorage.setItem('listItemsAdd', JSON.stringify(itemsAdd));
+}
+
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
 
 // Retorna um unico produto filtrado pelo id.
 function loadJsonPerProduct(id) {
@@ -49,24 +67,6 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
-
-const itemsAdd = [];
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-  const indexRemoved = Array.from(event.currentTarget.parentNode.children).indexOf(event.target);
-  // itemsAdd = arrayITensListCart.splice(indexRemoved, 1);
-  console.log(itemsAdd.splice(indexRemoved, 1));
-  event.currentTarget.parentNode.removeChild(event.target);
-  localStorage.setItem('listItemsAdd', JSON.stringify(itemsAdd));
-}
-
-function createCartItemElement({ id: sku, title: name, price: salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
 }
 
 // Retorna todas a lista de produtos que será utilizada pela aplicação .
