@@ -83,6 +83,10 @@ const buttonReady = () => {
   for (let i = 0; i < botoes.length; i += 1) {
     getButtons(botoes[i]);
   }
+  // Remove a mensagem de loading
+  const itemsSec = document.getElementsByClassName('items')[0];
+  const loadMessage = document.getElementsByClassName('loading')[0];
+  itemsSec.removeChild(loadMessage);
 };
 
 const recoveryCart = () => {
@@ -95,6 +99,14 @@ const recoveryCart = () => {
   }
 };
 
+const loading = () => {
+  const itemsSec = document.getElementsByClassName('items')[0];
+  const paragraph = document.createElement('p');
+  paragraph.innerText = 'loading...';
+  paragraph.className = 'loading';
+  itemsSec.appendChild(paragraph);
+};
+loading();
 recoveryCart();
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
