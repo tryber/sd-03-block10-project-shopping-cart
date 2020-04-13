@@ -1,5 +1,3 @@
-window.onload = start;
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -33,6 +31,10 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
+async function mercadoLivreItems() {
+  const Items = await fetch()
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -42,28 +44,26 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 async function mercadoLivreJson() {
-  const api = await fetch("https://api.mercadolibre.com/sites/MLB/search?q=$computador");
+  const api = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador');
   return api.json();
-  
 }
 
 async function mercadoLivreResults(funMLJson) {
   const results = await funMLJson.results;
   const objItems = await results.map(
     (item) => ({
-      'sku': item.id,
-      'name': item.title,
-      'image': item.thumbnail,
-      'salePrice': item.price,
+      sku: item.id,
+      name: item.title,
+      image: item.thumbnail,
     })
-  );
+  )
   return objItems;
 }
 
 async function printProducts(funMLResults) {
   funMLResults.forEach(
     product => 
-      document.querySelector('.items').appendChild( createProductItemElement(product))
+      document.querySelector('.items').appendChild( createProductItemElement(product)),
   );
 }
 
@@ -72,3 +72,5 @@ async function start() {
   const objItems = await mercadoLivreResults(apiJson);
   const productsList = await printProducts(objItems);
 }
+
+window.onload = start;
