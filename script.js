@@ -1,3 +1,18 @@
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  button.onclick = () => {
+    adicionaNoCarrinho(sku);
+  }
+  section.appendChild(button);
+
+  return section;
+}
+
 function produtoParaProdutoResumido(produto) {
   return {
     sku: produto.id,
@@ -9,22 +24,22 @@ function produtoParaProdutoResumido(produto) {
 window.onload = function onload() {
   if (localStorage.getItem('banana') == null) {
     localStorage.setItem('banana', '[]');
-  }
+  };
 
   const myObject = {
     method: 'GET',
 
   };
   fetch(`https://api.mercadolibre.com/sites/MLB/search?q=computador`, myObject)
-    .then((response) => response.json())
-    .then((data) => {
+    .then(response => response.json())
+    .then(data => {
       const objetosMapeados = data.results.map(produtoParaProdutoResumido);
       const elementosCriados = objetosMapeados.map(createProductItemElement);
       const elementoItems = document.getElementsByClassName('items');
-      elementosCriados.forEach((elementoCriado) => elementoItems[0].appendChild(elementoCriado));
+      elementosCriados.forEach(elementoCriado => elementoItems[0].appendChild(elementoCriado));
     })
-    .catch((error) => {
-      console.log("A solicitação foi rejeitada.", error);
+    .catch(error => {
+      console.log('A solicitação foi rejeitada.', error);
     })
 };
 
@@ -35,8 +50,8 @@ function adicionaNoCarrinho(sku) {
 
     };
     fetch(API_URL_CARRINHO, myObjectCarrinho)
-      .then((response) => response.json())
-      .then((data) => { //informações do produto acessados pelo id específico retornando sku, name e salePrice
+      .then(response => response.json())
+      .then(data => { //informações do produto acessados pelo id específico retornando sku, name e salePrice
         const novoObjeto = {
           sku: data.id,
           name: data.title,
@@ -47,7 +62,7 @@ function adicionaNoCarrinho(sku) {
         let elementoPaiOl = document.getElementsByClassName('cart__items');
         let p = elementoPaiOl[0].appendChild(atribuindoObjetosMapeados);// atribuindo li ao ol
         console.log('p',p);
-      }).catch((error) => {
+      }).catch(error => {
         console.log("A solicitação para adicionar no carrinho foi rejeitada.", error);
       })
 };
@@ -89,21 +104,6 @@ function createCustomElement(element, className, innerText) {
   e.className = className;
   e.innerText = innerText;
   return e;
-}
-
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  button.onclick = () => {
-    adicionaNoCarrinho(sku);
-  }
-  section.appendChild(button);
-
-  return section;
 }
 
 function getSkuFromProductItem(item) {
