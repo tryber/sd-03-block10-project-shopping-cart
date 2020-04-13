@@ -26,7 +26,8 @@ function createProductItemElement({ sku, name, image }) {
     .then(resp => resp.json())
     .then((json) => {
       const item = document.getElementsByClassName('cart__items')[0];
-      item.appendChild(createCartItemElement({ sku: json.id, name: json.title, salePrice: json.price }));
+      item.appendChild(
+        createCartItemElement({ sku: json.id, name: json.title, salePrice: json.price }));
     });
   });
   section.appendChild(btn);
@@ -55,7 +56,8 @@ window.onload = function onload() {
     .then((json) => {
       json.results.forEach((products) => {
         document.getElementsByClassName('items')[0]
-        .appendChild(createProductItemElement({ sku: products.id, name: products.title, image: products.thumbnail }));
+        .appendChild(
+          createProductItemElement({ sku: products.id, name: products.title, image: products.thumbnail }));
       });
     });
 
