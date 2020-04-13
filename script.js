@@ -17,9 +17,9 @@ const createCustomElement = (element, className, innerText) => {
 const totalPrice = () => {
   const products = document.querySelectorAll('.cart__item');
   const priceAre = document.querySelector('.total-price');
-  priceAre.innerText = [...products]
-  .map(item => item.textContent.match(/([0-9.]){1,}$/))
-  .reduce((total, price) => total + parseFloat(price), 0);
+  priceAre.innerText = Math.round([...products]
+    .map(item => item.textContent.match(/([0-9.]){1,}$/))
+    .reduce((total, price) => total + parseFloat(price), 0).toFixed(2) * 100) / 100;
 };
 
 const addStorage = () => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
