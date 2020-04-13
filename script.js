@@ -113,13 +113,15 @@ function emptcart() {
   document.querySelector('#loading').remove();
 }
 
+function loading() {
+  document.querySelector('#loading').innerHTML = 'loading...';
+}
+
 fetch(API_URL, myObj)
   .then(response => response.json())
   .then(jsonResponse => montarObj(jsonResponse))
   .then(arr => criaElementosNaTela(arr))
+  .then(loading())
   .then(queryButtons)
   .then(emptcart());
 
-function loading() {
-  document.querySelector('#loading').innerHTML = 'loading...';
-}
