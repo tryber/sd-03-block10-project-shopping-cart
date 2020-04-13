@@ -1,4 +1,6 @@
-window.onload = function onload() {};
+window.onload = async () => {
+  getProductData();
+};
 
 const productModel = () => {
   return {
@@ -9,31 +11,23 @@ const productModel = () => {
   };
 };
 
-async function getProductData() {
+function getProductData() {
   const queryKey = 'computador';
   const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${queryKey}`;
   const myObject = { method: 'GET', headers: { Accept: 'application/json' } };
   fetch(API_URL, myObject)
     .then(response => response.json())
     .then(data => {
-      const dataBase = data
-      console.log(dataBase);
-    })
-    .then(dataBase => {
-      const productData = dataBase.results.map(result => {
-        return {
-          sku: result.id,
-          name: result.title,
-          price: result.price,
-          image: result.thumbnail,
-        };
+      console.log(data)
+      const products = document.querySelector('.items');
+      const productsData = data.results.forEach(({ id, title, thumbnail }) => {
+        products.appendChild(
+          createCartItemElement({ sku: id, name: title, image: thumbnail }),
+        );
       });
-      return productData;
+      return productsData;
     })
-    .then(() => console.log(productData));
-  // .then(data => {
-  //   return data.results.map(results => {}
-  // })
+    .catch(() => alert('Erro: Produtos não listados'));
 }
 
 function createProductImageElement(imageSource) {
