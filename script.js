@@ -1,4 +1,20 @@
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computer';
+const myObject = {
+  method: 'GET',
+  headers: { Accept: 'application/json' },
+};
+
+fetch(API_URL, myObject)
+  .then(data => data.json())
+  .then((data) => {
+    load.innerHTML = '';
+    document.querySelector('.loading').remove();
+    data.results.forEach((el) => {
+      const { id: sku, title: name, thumbnail: image } = el;
+      const newElement = createProductItemElement({ sku, name, image });
+      document.querySelector('.items').appendChild(newElement);
+    });
+  });
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
