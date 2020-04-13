@@ -59,9 +59,6 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-
-
-
 window.onload = function onload() {
   const listItems = async () => {
     const itemSection = document.getElementsByClassName('items')[0];
