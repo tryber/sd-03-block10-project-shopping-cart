@@ -48,7 +48,7 @@ fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', { method: 'g
 .then(info => info.json())
 .then((data) => {
   data.results.forEach((element) => {
-    cartIten.appendChild(createCartItemElement(element));
+    cartIten.appendChild(createProductItemElement(element));
   });
 })
 .catch(() => console.log('error'));
