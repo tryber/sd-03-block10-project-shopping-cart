@@ -3,11 +3,10 @@ const items = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
 
 
-const itemsAdd = [];
-const itemsForReloadCart = localStorage.getItem('listItemsAdd');
-itemsTemp = JSON.parse(itemsForReloadCart);
-itemsTemp.forEach(element => this.loadJsonPerProduct(element));
 
+const itemsForReloadCart = localStorage.getItem('listItemsAdd');
+let itemsTemp = JSON.parse(itemsForReloadCart);
+itemsTemp.forEach(element => loadJsonPerProduct(element)); 
 window.onload = function onload() {};
 
 function createProductImageElement(imageSource) {
@@ -38,7 +37,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-
+const itemsAdd = [];
 function cartItemClickListener(event) {
   // coloque seu código aqui
   const indexRemoved = Array.from(event.currentTarget.parentNode.children).indexOf(event.target);
