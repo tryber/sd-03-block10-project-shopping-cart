@@ -47,11 +47,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-cardTotal = async () => {
-  const cartItem = await document.querySelectorAll('.cart__item');
-  const price = await [...cartItem].map(e => e.textContent
-  .match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0);
-  document.getElementsByClassName('total-price')[0].innerHTML = `${price.toFixed(2)}`;
+cardTotal = () => {
+  const cartItem = document.querySelectorAll('.cart__item');
+  const price = [...cartItem].map(e => e.textContent
+  .match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0).toFixed(2);
+  document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
 };
 
 const DontRepeat = add => ({
