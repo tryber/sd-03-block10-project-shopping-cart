@@ -124,6 +124,7 @@ window.onload = function onload() {};
   try {
     await reloadCartList();
     await loadJson();
+    priceCaculator(JSON.parse(localStorage.getItem('listItemsAdd')));  
   } catch (error) {
     console.log('erro durante atualização:', error);
   }
