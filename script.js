@@ -1,6 +1,4 @@
-window.onload = function onload() {
-  getProductData();
-};
+window.onload = function onload() {};
 
 const productModel = () => {
   return {
