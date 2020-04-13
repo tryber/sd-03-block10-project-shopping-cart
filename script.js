@@ -1,7 +1,7 @@
 const itemsSection = document.querySelector('.items');
 const itemsCarrinho = document.querySelector('.cart__items');
 const removeAll = document.querySelector('.empty-cart');
-const container = document.querySelector('.container');;
+const container = document.querySelector('.container');
 const carregando = document.querySelector('.loading');
 const loader = document.createElement('div');
 const loading = () => {
