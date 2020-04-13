@@ -4,18 +4,6 @@ const myObject = {
   headers: { Accept: 'application/json' },
 };
 
-fetch(API_URL, myObject)
-  .then(data => data.json())
-  .then((data) => {
-    load.innerHTML = '';
-    document.querySelector('.loading').remove();
-    data.results.forEach((el) => {
-      const { id: sku, title: name, thumbnail: image } = el;
-      const newElement = createProductItemElement({ sku, name, image });
-      document.querySelector('.items').appendChild(newElement);
-    });
-  });
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -57,3 +45,15 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+fetch(API_URL, myObject)
+  .then(data => data.json())
+  .then((data) => {
+    load.innerHTML = '';
+    document.querySelector('.loading').remove();
+    data.results.forEach((el) => {
+      const { id: sku, title: name, thumbnail: image } = el;
+      const newElement = createProductItemElement({ sku, name, image });
+      document.querySelector('.items').appendChild(newElement);
+    });
+  });
