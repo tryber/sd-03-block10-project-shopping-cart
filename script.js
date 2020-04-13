@@ -13,10 +13,10 @@ const loading = () => {
 };
 loading();
 async function sumTotal(salePrice) {
-  return await (total += salePrice);
+  await (total += salePrice);
 }
 async function subTotal(salePrice) {
-  return await (total -= salePrice);
+  await (total -= salePrice);
 }
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -57,7 +57,6 @@ function createCartItemElement({ sku, name, salePrice }) {
     subTotal(salePrice);
     total = Math.round(total * 100) / 100;
     totalPrice.innerHTML = total;
-    console.log(total);
     localStorage.removeItem(`${sku}`);
   });
   return li;
@@ -75,7 +74,6 @@ function adicionarItem(dataJ) {
       sumTotal(salePrice);
       total = Math.round(total * 100) / 100;
       totalPrice.innerHTML = total;
-      console.log(total);
       const storageJson = JSON.stringify({ sku, name, salePrice });
       localStorage.setItem(`${sku}`, storageJson);
     });
@@ -110,6 +108,7 @@ removeAll.addEventListener('click', () => {
     li.remove();
   });
   localStorage.clear();
+  total = 0;
 });
 window.onload = function onload() {
   const produtosJson = window.localStorage;
