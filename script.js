@@ -5,6 +5,13 @@ const convert = add => ({
   image: add.thumbnail,
 });
 
+const priceTotal = async () => {
+  const Itens = document.querySelectorAll('.cart__item');
+  const price = [...Itens].map(item => item.textContent.match(/[\d.\d]+$/))
+    .reduce((ac, cv) => ac + parseFloat(cv), 0).toFixed(2);
+  document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
+};
+
 const storage = () => {
   priceTotal();
   localStorage.setItem('cart list', document.getElementsByClassName('cart__items')[0].innerHTML);
@@ -33,13 +40,6 @@ const addToCart = async (sku) => {
   .then(res => addChild(document.getElementsByClassName('cart__items')[0],
   createCartItemElement(convert(res))));
   storage();
-};
-
-const priceTotal = async () => {
-  const Itens =  document.querySelectorAll('.cart__item');
-  const price =  [...Itens].map(item => item.textContent.match(/[\d.\d]+$/))
-    .reduce((ac, cv) => ac + parseFloat(cv), 0).toFixed(2);
-  document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
 };
 
 function createProductImageElement(imageSource) {
