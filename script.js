@@ -31,9 +31,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
-async function mercadoLivreItems() {
-  const Items = await fetch()
-}
+async function mercadoLivreItems() {}
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -51,26 +49,26 @@ async function mercadoLivreJson() {
 async function mercadoLivreResults(funMLJson) {
   const results = await funMLJson.results;
   const objItems = await results.map(
-    (item) => ({
+    item => ({
       sku: item.id,
       name: item.title,
       image: item.thumbnail,
-    })
-  )
+    }),
+  );
   return objItems;
 }
 
 async function printProducts(funMLResults) {
   funMLResults.forEach(
-    product => 
-      document.querySelector('.items').appendChild( createProductItemElement(product)),
+    product =>
+    document.querySelector('.items').appendChild(createProductItemElement(product)),
   );
 }
 
 async function start() {
   const apiJson = await mercadoLivreJson();
   const objItems = await mercadoLivreResults(apiJson);
-  const productsList = await printProducts(objItems);
+  await printProducts(objItems);
 }
 
 window.onload = start;
