@@ -53,7 +53,7 @@ const total = async () => {
   const totalSec = document.getElementsByClassName('total')[0];
   const paragraph = document.createElement('p');
   paragraph.className = 'total-price';
-  paragraph.innerText = `Total do Carrinho : ${sum.toFixed(2)}`;
+  paragraph.innerText = `${sum.toFixed(2)}`;
   totalSec.appendChild(paragraph);
 };
 
