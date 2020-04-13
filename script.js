@@ -5,6 +5,7 @@ const removeAllItems = document.querySelector('.empty-cart');
 const totalPrice = document.createElement('p');
 const cart = document.getElementsByClassName('cart');
 totalPrice.setAttribute('class', 'total-price');
+totalPrice.innerText = `Total is : 0`; 
 const itemsAdd = [];
 
 async function priceCaculator(arr) {
@@ -15,7 +16,8 @@ async function priceCaculator(arr) {
   .then(resp => resp.json())
   .then((data) => {
     price += data.price;
-    totalPrice.innerText = `Total is : ${price}`;
+        totalPrice.innerText = `Total is : ${price}`;
+  
   });
   });
 }
@@ -28,6 +30,7 @@ function cartItemClickListener(event) {
   event.currentTarget.parentNode.removeChild(event.target);
   localStorage.setItem('listItemsAdd', JSON.stringify(itemsAdd));
   priceCaculator(JSON.parse(localStorage.getItem('listItemsAdd')));
+  totalPrice.innerText = `Total is : 0`; 
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -137,4 +140,6 @@ function getSkuFromProductItem(item) {
 removeAllItems.addEventListener('click', function () {
   cartItems.innerHTML = '';
   localStorage.removeItem('listItemsAdd');
+  totalPrice.innerText = `Total is : 0`;
+  priceCaculator(JSON.parse(localStorage.getItem('listItemsAdd')));
 });
