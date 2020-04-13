@@ -40,11 +40,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function item1 (typedSearch) {
+function item1 (typedSearch){
   return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=$${typedSearch}`);
 }
 
-/*function doSubmit() {
+/* function doSubmit() {
   const search = 'computer';
   item1(search)
     .then (response => response.json())
@@ -61,10 +61,10 @@ async function doSubmit() {
   const search = 'computer';
   const searchResults = await item1(search);
   const data = await searchResults.json();
-  data.results.forEach(element => {
-    const {id, title, thumbnail} = element;
+  data.results.forEach((element) => {
+    const { id, title, thumbnail } = element;
     const results = document.querySelector('.results');
-    results.appendChild(createProductItemElement({sku: id, name: title, image: thumbnail}));
+    results.appendChild(createProductItemElement({ sku: id, name: title, image: thumbnail }));
   });
 }
 
