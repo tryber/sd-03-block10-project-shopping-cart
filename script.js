@@ -6,8 +6,9 @@ const totalPrice = document.createElement('p');
 const cart = document.getElementsByClassName('cart');
 totalPrice.setAttribute('class', 'total-price');
 totalPrice.innerText = 'Total is : 0';
-const itemsAdd = [];
+let itemsAdd = [];
 
+// Calcula o preço dos produtos Recebendo um array de IDS
 async function priceCaculator(arr) {
   let price = 0;
   if (arr != null) {
@@ -144,5 +145,6 @@ removeAllItems.addEventListener('click', function () {
   cartItems.innerHTML = '';
   localStorage.removeItem('listItemsAdd');
   totalPrice.innerText = 'Total is : 0';
+  itemsAdd = [];
   priceCaculator(JSON.parse(localStorage.getItem('listItemsAdd')));
 });
