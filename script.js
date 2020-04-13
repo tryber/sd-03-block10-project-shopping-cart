@@ -49,6 +49,9 @@ const addNoCarrinho = () => {
     const resultados = dataJ.results;
     buttonsShop.forEach((button, index) => {
       button.addEventListener('click', () => {
+        fetch(`https://api.mercadolibre.com/items/${resultados[index].id}`)
+        .then(data => data.json())
+        .then((dataJ) => {
         const sku = resultados[index].id;
         const name = resultados[index].title;
         const salePrice = resultados[index].price;
@@ -57,6 +60,7 @@ const addNoCarrinho = () => {
         const storageJson = JSON.stringify({ sku, name, salePrice });
         localStorage.setItem(`${sku}`, storageJson);
         return dataJ;
+        });
       });
     });
   });
