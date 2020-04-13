@@ -22,19 +22,21 @@ const cartUpdating = () => {
   sum();
 };
 
-// const skuProduct = (item) => {
-//   return item.querySelector('span.item__sku').innerText;
-// }
+const skuProduct = (item) => {
+  return item.querySelector('span.item__sku').innerText;
+}
+
 // 3. Perform removal with cartItemClickListener(event)
 function cartItemClickListener(event) {
   event.target.remove();
   cartUpdating();
 }
+
 // createCartItemElement() to create the HTML components for an item in the cart.
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ sku, name, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `Id: ${sku} | Product: ${name} | Price: $${salePrice}`;
+  li.innerText = `Id: ${sku} | Product: ${name} | Price: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -46,7 +48,7 @@ const addElementToCart = async ({ sku }) => {
     document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement({
       sku: product.id,
       name: product.title,
-      salePrice: product.price,
+      price: product.price,
     }));
     cartUpdating();
   });
