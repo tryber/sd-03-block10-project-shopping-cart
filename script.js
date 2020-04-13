@@ -50,7 +50,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 cardTotal = () => {
   const cartItem = document.querySelectorAll('.cart__item');
   const price = [...cartItem].map(e => e.textContent
-  .match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0).toFixed(2);
+  .match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0);
   document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
 };
 
