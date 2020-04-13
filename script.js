@@ -67,18 +67,18 @@ const removerLocalStorage = (sku) => {
     if (item.sku !== sku) {
       return true;
     }
-    return;
+    return filtroSKU;
   });
   const transformandoEmString = JSON.stringify(filtroSKU);
   localStorage.setItem('banana', transformandoEmString);
-}
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-};
+}
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
@@ -96,12 +96,12 @@ function createProductItemElement({ sku, name, image }) {
   const button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   button.onclick = () => {
     adicionaNoCarrinho(sku);
-  }
+  };
   section.appendChild(button);
   onload(onload);
 
   return section;
-};
+}
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
@@ -118,9 +118,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: ${salePrice}`;
-  li.onclick = (event) => {
+  li.onclick = () => {
     cartItemClickListener(event);
     removerLocalStorage(sku);
-  }
+  };
   return li;
 }
