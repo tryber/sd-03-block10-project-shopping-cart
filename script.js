@@ -20,7 +20,7 @@ async function priceCaculator(arr) {
     price = Math.floor(price * 100) / 100;
     totalPrice.innerText = `Total is : ${price}`;
   });
-  });
+    });
   } else {
     console.log('valor nulo');
   }
