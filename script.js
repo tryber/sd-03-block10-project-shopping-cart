@@ -40,6 +40,16 @@ const itemsForReloadCart = localStorage.getItem('listItemsAdd');
 const itemsTemp = JSON.parse(itemsForReloadCart);
 itemsTemp.forEach(element => loadJsonPerProduct(element));
 
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
+  const section = document.createElement('section');
+  section.className = 'item';
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  return section;
+}
+
 // Retorna todas a lista de produtos que será utilizada pela aplicação .
 function loadJson() {
   const URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
@@ -63,7 +73,7 @@ function loadJson() {
 }
 
 window.onload = function onload() {
-   loadJson();
+  loadJson();
 };
 
 function createProductImageElement(imageSource) {
@@ -78,16 +88,6 @@ function createCustomElement(element, className, innerText) {
   e.className = className;
   e.innerText = innerText;
   return e;
-}
-
-function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
-  const section = document.createElement('section');
-  section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  return section;
 }
 
 function getSkuFromProductItem(item) {
