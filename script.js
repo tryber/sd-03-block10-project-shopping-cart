@@ -31,6 +31,17 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
 
+  const btn = (createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  btn.addEventListener('click', () => {
+     fetch(`https://api.mercadolibre.com/items/${sku}`)
+       .then(resp => resp.json())
+       .then(json => {
+         const item = document.getElementsByClassName('cart__items')[0];
+         item.appendChild(createCartItemElement( {sku: json.id, name: json.title, salePrice: json.price} ))
+       });
+    });
+  section.appendChild(btn);
+  return section;
 }
 
 function getSkuFromProductItem(item) {
