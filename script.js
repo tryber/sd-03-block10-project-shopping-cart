@@ -22,7 +22,7 @@ const cartUpdating = () => {
   sum();
 };
 
-const skuProduct = (item) => {
+function getSku(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
