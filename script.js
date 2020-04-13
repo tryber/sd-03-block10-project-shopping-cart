@@ -14,10 +14,19 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const totalPrice = () => {
+  const products = document.querySelectorAll('.cart__item');
+  const priceAre = document.querySelector('.total-price');
+  priceAre.innerText = [...products]
+  .map(item => item.textContent.match(/([0-9.]){1,}$/))
+  .reduce((total, price) => total + parseFloat(price), 0);
+};
+
 const addStorage = () => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  totalPrice();
   addStorage();
 };
 
@@ -39,6 +48,7 @@ const addItem = async ({ sku }) => {
       }),
   );
   await document.querySelector('.cart__items').appendChild(item);
+  await totalPrice();
   await addStorage();
 };
 
@@ -65,6 +75,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 const emptyCart = () => {
   const cartItems = document.querySelector('.cart__items');
   cartItems.innerHTML = '';
+  totalPrice();
   addStorage();
 };
 
@@ -94,4 +105,6 @@ window.onload = async () => {
   buttonEmpty.addEventListener('click', emptyCart);
   cartItems.innerHTML = localStorage.getItem('cart');
   items.forEach(item => item.addEventListener('click', cartItemClickListener));
+
+  await totalPrice();
 };
