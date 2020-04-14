@@ -1,6 +1,6 @@
 window.onload = function onload() {};
-const apiSearchUrl =
-  'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+const apiSearchUrl = 'https://api.mercadolibre.com/sites/MLB/search?q=';
+const query = 'computador';
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -47,7 +47,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 window.onload = function onload() {
-  fetch(apiSearchUrl)
+  fetch(apiSearchUrl + query)
     .then((data) => data.json())
     .then((obj) =>
       obj.results.forEach((item) =>
