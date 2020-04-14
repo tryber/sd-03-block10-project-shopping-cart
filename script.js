@@ -34,7 +34,7 @@ function roundNumber(value) {
   if (Number.isInteger(value)) {
     return value;
   }
-  let result = Number(Math.round(value * 100) / 100);
+  const result = Number(Math.round(value * 100) / 100);
   return result.toFixed(2);
 }
 
@@ -55,7 +55,7 @@ const total = async () => {
     const itemsCartStr = itemsCart[i].innerText;
     const startPrice = itemsCartStr.indexOf('PRICE:') + 8;
     const endPrice = itemsCartStr.length;
-    let price = Number(itemsCartStr.slice(startPrice, endPrice));
+    const price = Number(itemsCartStr.slice(startPrice, endPrice));
     sum += price;
   }
   sum = roundNumber(sum);
