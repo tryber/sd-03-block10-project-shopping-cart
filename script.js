@@ -10,8 +10,28 @@ function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
-  //if (element === 'button') addEvent(e);
   return e;
+}
+
+function refactor(obj, classOrId, func) {
+  const { id, title, thumbnail, price } = obj;
+  const results = document.querySelector(classOrId);
+  results.appendChild(func({ sku: id, name: title, salePrice: price, image: thumbnail }));
+}
+
+function item2(idReturned) {
+  return fetch(`https://api.mercadolibre.com/items/${idReturned}`);
+}
+
+function addEvent(product) {
+  product.lastChild.addEventListener('click', () => {
+    const itemID = product.firstChild.innerHTML
+    item2(itemID)
+      .then (response => response.json())
+      .then (data => {
+        refactor(data, '.cart__items', createCartItemElement);
+      })
+  });
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -25,12 +45,7 @@ function createProductItemElement({ sku, name, image }) {
 
   return section;
 }
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -38,6 +53,15 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+function cartItemClickListener(event) {
+  // coloque seu código aqui
+}
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
 function item1(typedSearch) {
   return fetch(`https://api.mercadolibre.com/sites/MLB/search?q=$${typedSearch}`);
 }
@@ -63,24 +87,3 @@ async function doSubmit() {
 }
 
 doSubmit();
-
-function item2(idReturned) {
-  return fetch(`https://api.mercadolibre.com/items/${idReturned}`);
-}
-
-function addEvent(product) {
-  product.lastChild.addEventListener('click', () => {
-    const itemID = product.firstChild.innerHTML
-    item2(itemID)
-      .then (response => response.json())
-      .then (data => {
-        refactor(data, '.cart__items', createCartItemElement);
-      })
-  });
-}
-
-function refactor(obj, classOrId, func) {
-  const { id, title, thumbnail, price } = obj;
-  const results = document.querySelector(classOrId);
-  results.appendChild(func({ sku: id, name: title, salePrice: price, image: thumbnail }));
-}
