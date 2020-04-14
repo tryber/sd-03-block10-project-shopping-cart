@@ -32,6 +32,12 @@ const myObj = { method: 'GET' };
 const sectionItem = document.querySelector('.items');
 const lStorage = () => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
 
+function cartItemClickListener(event) {
+  event.target.parentNode.removeChild(event.target);
+  document.querySelector('#total-price').innerHTML = allprice()
+  lStorage();
+}
+
 function montarObj(json) {
   const arrResults = [];
   json.results.forEach((el) => {
@@ -87,15 +93,6 @@ function montarObjCartItem(data) {
   return preco;
 }
 
-const fetchItemPorID = async (id) => {
-  const URL = `https://api.mercadolibre.com/items/${id}`;
-  const response = await fetch(URL);
-  const data = await response.json();
-  const obj = await montarObjCartItem(data);
-  const prec = allprice(obj);
-  document.querySelector('#total-price').innerText = prec;
-};
-
 const coletarIDsDoElementoClicado = (event) => {
   const acessarSection = event.target.parentNode;
   const idFirstElement = acessarSection.firstChild.innerText;
@@ -121,6 +118,15 @@ function loading() {
   document.querySelector('.loading').innerHTML = 'loading...';
 }
 
+const fetchItemPorID = async (id) => {
+  const URL = `https://api.mercadolibre.com/items/${id}`;
+  const response = await fetch(URL)
+  const data = await response.json()
+  const obj = await montarObjCartItem(data)
+  const prec = allprice(obj);
+  document.querySelector('#total-price').innerText = prec;
+};
+
 function allprice(obj) {
   if (document.querySelector('#total-price').innerText) {
     const arrProdutos = document.querySelectorAll('.cart__item');
@@ -136,12 +142,6 @@ function allprice(obj) {
     return transNumber(resultado);
   }
   return obj;
-}
-
-function cartItemClickListener(event) {
-  event.target.parentNode.removeChild(event.target);
-  document.querySelector('#total-price').innerHTML = allprice();
-  lStorage();
 }
 
 window.onload = function onload() {
