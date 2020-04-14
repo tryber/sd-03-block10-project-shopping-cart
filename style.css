@@ -59,7 +59,7 @@ body {
 }
 
 .item {
-  border: 2px solid blue;
+  border: 2px solid rgb( 57 , 78 , 154 );
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -83,8 +83,9 @@ body {
 }
 
 .item .item__add {
-  background-color: chartreuse;
+  background-color: rgb( 57 , 78 , 154 );
   border: 0;
+  color: aliceblue;
   cursor: pointer;
   margin: 0;
   padding: 5px;
@@ -92,7 +93,7 @@ body {
 
 .cart {
   align-items: center;
-  border: 3px solid blue;
+  border: 3px solid rgb( 57 , 78 , 154 );
   display: flex;
   flex-basis: 30%;
   flex-flow: column wrap;

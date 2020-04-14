@@ -1,4 +1,4 @@
-let valorCarrinho = 0;
+let totCart = 0;
 const urlBusca = termo => `https://api.mercadolibre.com/sites/MLB/search?q=${termo}`;
 const urlProduto = itemID => `https://api.mercadolibre.com/items/${itemID}`;
 
@@ -11,8 +11,8 @@ function createCustomElement(element, className, innerText) {
 }
 
 // Texto de carregamento apresentado entre o fetch e a grade
-function loadingText(mode) {
-  if (mode === true) {
+function loadingText(enable) {
+  if (enable) {
     const textoLoading = createCustomElement('div', 'loading', '');
     textoLoading.innerHTML = 'Carregando...<br><img src="aguarde.gif"></img>';
     document.getElementsByClassName('items')[0].appendChild(textoLoading);
@@ -25,11 +25,11 @@ function loadingText(mode) {
 async function getTotalValue(valor, operador) {
   const itensCarrinho = document.getElementsByClassName('cart__items')[0].innerHTML;
   if (operador === 'add') {
-    valorCarrinho += valor;
+    totCart += valor;
   } else {
-    valorCarrinho -= valor;
+    totCart -= valor;
   }
-  document.getElementsByClassName('total-price')[0].innerText = `Total: R$ ${valorCarrinho}`;
+  document.getElementsByClassName('total-price')[0].innerText = `Total: R$ ${totCart.toFixed(2)}`;
   localStorage.setItem('cartItems', itensCarrinho);
 }
 
@@ -57,16 +57,17 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-// Obtém os dados do produto selecionado na grade pela segunda URL (no topo)
+// Obtém os dados do produto selecionado na grade pela segunda URL usando async/await
 async function add2Cart({ sku }) {
-  await fetch(urlProduto(sku))
-    .then(resposta => resposta.json())
-    .catch(erro => alert('Erro na obtenção da lista', erro))
-    .then((respjson) => {
-      const paramProd = { sku: respjson.id, name: respjson.title, salePrice: respjson.price };
-      document.querySelector('.cart__items').appendChild(createCartItemElement(paramProd));
-      getTotalValue(paramProd.salePrice, 'add');
-    });
+  try {
+    const resposta = await fetch(urlProduto(sku));
+    const respjson = await resposta.json();
+    const paramProd = { sku: respjson.id, name: respjson.title, salePrice: respjson.price };
+    document.querySelector('.cart__items').appendChild(createCartItemElement(paramProd));
+    getTotalValue(paramProd.salePrice, 'add');
+  } catch (erro) { 
+    alert('Erro na obtenção das informações do produto: ', erro); 
+  }
 }
 
 // Cria a grade com os resultados da busca inicial
@@ -82,15 +83,17 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-// Gera a grade com os resultados da busca na primeira URL (no topo)
+// Gera a grade com os resultados da busca na primeira URL (no topo) usando a promise de fetch()
+// Pode ser feita usando async/await como na de adicionar ao carrinho.
 async function getProducts() {
   document.querySelector('.items').innerHTML = '';
   loadingText(true);
   // const campoBusca = document.querySelector('#input-search').value;
+  // A linha aabaixo é necessária para passar nos requisitos, mas desabilita a caixa de pesquisa.
   const campoBusca = 'computador';
-  await fetch(urlBusca(campoBusca), { method: 'GET' })
-    .then(resposta => resposta.json()) // Obtem a resposta formatada em JSON
-    .catch(erro => alert('Erro na obtenção da lista', erro)) // Trata erro caso ocorra
+  fetch(urlBusca(campoBusca), { method: 'GET' })
+    .then(resposta => resposta.json())
+    .catch(erro => alert('Erro na obtenção da lista', erro))
     .then(respjson => respjson.results) // Obtém os produtos do JSON num array
     .then((produtos) => {
       produtos.forEach((prod) => {  // Percorre o array e adiciona à página os valores (produtos)
@@ -107,6 +110,7 @@ function getSkuFromProductItem(item) {
 
 // Limpa o carrinho e o localStorage
 function emptyCart() {
+  totCart = 0;
   document.getElementsByClassName('cart__items')[0].innerHTML = '';
   document.getElementsByClassName('total-price')[0].innerHTML = 'Total: R$ 0,00';
   localStorage.clear();
