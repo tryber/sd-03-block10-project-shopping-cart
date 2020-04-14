@@ -31,7 +31,11 @@ function getSkuFromProductItem(item) {
 }
 
 function roundNumber(value) {
-  return parseFloat(Number(Math.round(value * 100) / 100));
+  if (Number.isInteger(value)) {
+    return value;
+  }
+  let result = Number(Math.round(value * 100) / 100);
+  return result.toFixed(2);
 }
 
 const clearTotal = () => {
@@ -52,9 +56,9 @@ const total = async () => {
     const startPrice = itemsCartStr.indexOf('PRICE:') + 8;
     const endPrice = itemsCartStr.length;
     let price = Number(itemsCartStr.slice(startPrice, endPrice));
-    price = roundNumber(price);
     sum += price;
   }
+  sum = roundNumber(sum);
   const totalSec = document.getElementsByClassName('total')[0];
   const paragraph = document.createElement('p');
   paragraph.className = 'total-price';
