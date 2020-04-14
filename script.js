@@ -43,6 +43,3 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-//Só pra fazer push. :)
-//q
