@@ -41,7 +41,7 @@ const updatePrices = (price) => {
     localStorage.setItem('cartPrice', Math.round(price * 100) / 100);
     screenPrice.innerText = localStorage.cartPrice;
   } else {
-    const atualizado = (JSON.parse(localStorage.getItem('cartPrice')) + price).toFixed(2);
+    const atualizado = Math.round((JSON.parse(localStorage.getItem('cartPrice')) + price) * 100) / 100;
     localStorage.setItem('cartPrice', atualizado);
     screenPrice.innerText = localStorage.cartPrice;
   }
