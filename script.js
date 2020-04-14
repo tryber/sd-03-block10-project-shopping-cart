@@ -65,8 +65,8 @@ async function add2Cart({ sku }) {
     const paramProd = { sku: respjson.id, name: respjson.title, salePrice: respjson.price };
     document.querySelector('.cart__items').appendChild(createCartItemElement(paramProd));
     getTotalValue(paramProd.salePrice, 'add');
-  } catch (erro) { 
-    alert('Erro na obtenção das informações do produto: ', erro); 
+  } catch (erro) {
+    alert('Erro na obtenção das informações do produto: ', erro);
   }
 }
 
