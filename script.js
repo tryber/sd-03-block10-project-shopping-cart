@@ -74,8 +74,6 @@ const getProductData = async () => {
     .catch(() => alert('Erro: Produtos não listados'));
 };
 
-const addToCart =
-
 window.onload = async () => {
   await getProductData();
 };
