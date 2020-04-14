@@ -45,3 +45,4 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 //Só pra fazer push. :)
+//q
