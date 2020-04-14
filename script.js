@@ -1,4 +1,4 @@
-// window.onload = function onload() { };
+window.onload = function onload() { };
 // const fetch = require('node-fetch');
 
 // const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
@@ -37,9 +37,9 @@ const emptyCart = () => {
 
 const updatePrices = (price) => {
   const screenPrice = document.getElementsByClassName('total-price')[0];
-  if (!localStorage.getItem('cartPrice')) {
+  if (!localStorage.cartPrice) {
     localStorage.setItem('cartPrice', Math.round(price * 100) / 100);
-    screenPrice.innerText = localStorage.cartPrice;
+    screenPrice.innerText = price;
   } else {
     const atualizado = Math.round((JSON.parse(localStorage.getItem('cartPrice')) + price) * 100) / 100;
     localStorage.setItem('cartPrice', atualizado);
@@ -114,7 +114,7 @@ const fetchar = async () => {
   emptyArr.forEach((el) => {
     produtos.appendChild(createProductItemElement(el));
   });
-  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cartItems');
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.cartItems;
   document.querySelectorAll('li')
     .forEach(el => el.addEventListener('click', cartItemClickListener));
 };
@@ -124,9 +124,17 @@ const fetchar = async () => {
 // }
 
 // Immediately-invoked await async function
+
+const emptyLoading = () => {
+  document.querySelector('.loading').remove()
+}
+
+
+
 (async () => {
   try {
     await fetchar();
+    await emptyLoading();
     await emptyCart();
     await updatePrices(0);
   } catch (error) {
