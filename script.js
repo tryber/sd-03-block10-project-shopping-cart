@@ -29,7 +29,7 @@ async function getTotalValue(valor, operador) {
   } else {
     totCart -= valor;
   }
-  document.getElementsByClassName('total-price')[0].innerText = totCart.toFixed(2);
+  document.getElementsByClassName('total-price')[0].innerText = ((totCart * 100) / 100);
   // `Total: R$ ${totCart.toFixed(2)}` não passou no evaluator ;-;
   localStorage.setItem('cartItems', itensCarrinho);
 }
@@ -38,7 +38,7 @@ async function getTotalValue(valor, operador) {
 function cartItemClickListener(event) {
   (event.target).parentNode.removeChild(event.target);
   getTotalValue((event.target).innerText.match(/[^$]*$/), 'sub');
-  // Procura por tudo que vier depois do $, que corresponde ao preço do produto
+  // Procura por tudo que vier depois do $, que é o preço do produto, e subtrai do total
 }
 
 // Usada para inserir as imagens nos respectivos produtos
@@ -90,7 +90,7 @@ async function getProducts() {
   document.querySelector('.items').innerHTML = '';
   loadingText(true);
   // const campoBusca = document.querySelector('#input-search').value;
-  // A linha aabaixo é necessária para passar nos requisitos, mas desabilita a caixa de pesquisa.
+  // A linha abaixo é necessária p/ passar nos requisitos, mas desabilita a caixa de pesquisa.
   const campoBusca = 'computador';
   fetch(urlBusca(campoBusca), { method: 'GET' })
     .then(resposta => resposta.json())
