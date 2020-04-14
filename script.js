@@ -106,12 +106,6 @@ function loading() {
   document.querySelector('.loading').innerHTML = 'loading...';
 }
 
-function cartItemClickListener(event) {
-  event.target.parentNode.removeChild(event.target);
-  document.querySelector('#total-price').innerHTML = allprice();
-  lStorage();
-}
-
 function allprice(obj) {
   if (document.querySelector('#total-price').innerText) {
     const arrProdutos = document.querySelectorAll('.cart__item');
@@ -143,6 +137,12 @@ const coletarIDsDoElementoClicado = (event) => {
   const idFirstElement = acessarSection.firstChild.innerText;
   fetchItemPorID(idFirstElement);
 };
+
+function cartItemClickListener(event) {
+  event.target.parentNode.removeChild(event.target);
+  document.querySelector('#total-price').innerHTML = allprice();
+  lStorage();
+}
 
 window.onload = function onload() {
   fetch(API_URL, myObj)
