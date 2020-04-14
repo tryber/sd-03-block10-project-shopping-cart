@@ -48,9 +48,9 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 window.onload = function onload() {
   fetch(apiSearchUrl + query)
-    .then((data) => data.json())
-    .then((obj) =>
-      obj.results.forEach((item) =>
+    .then(data => data.json())
+    .then(obj =>
+      obj.results.forEach(item =>
         document.getElementsByClassName('items')[0].appendChild(
           createProductItemElement({
             sku: item.id,
