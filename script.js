@@ -141,6 +141,7 @@ function queryButtons() {
   buttons.forEach((el) => {
     el.addEventListener('click', coletarIDsDoElementoClicado);
   });
+  lStorage();
 }
 
 window.onload = function onload() {
