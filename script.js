@@ -27,28 +27,6 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-async function cartItemJson() {
-  document.querySelectorAll('.item').forEach(
-    (element) => {
-      const itemId = element.querySelector('.item__sku').innerHTML;
-      const button = element.querySelector('.item__add');
-      button.addEventListener(
-        'click',
-        async () => {
-          const address = `https://api.mercadolibre.com/items/${itemId}`;
-          const item = await fetch(address);
-          const itemJson = await item.json();
-          const itemCart = await mercadoLivreResults({ results: [itemJson] });
-          itemCart.forEach(
-            product =>
-            document.querySelector('.cart__items').appendChild(createCartItemElement(product)),
-          );
-        },
-      );
-    },
-  );
-}
-
 function cartItemClickListener(event) {
   event.target.remove();
 }
@@ -77,6 +55,28 @@ async function mercadoLivreResults(funMLJson) {
     }),
   );
   return objItems;
+}
+
+async function cartItemJson() {
+  document.querySelectorAll('.item').forEach(
+    (element) => {
+      const itemId = element.querySelector('.item__sku').innerHTML;
+      const button = element.querySelector('.item__add');
+      button.addEventListener(
+        'click',
+        async () => {
+          const address = `https://api.mercadolibre.com/items/${itemId}`;
+          const item = await fetch(address);
+          const itemJson = await item.json();
+          const itemCart = await mercadoLivreResults({ results: [itemJson] });
+          itemCart.forEach(
+            product =>
+            document.querySelector('.cart__items').appendChild(createCartItemElement(product)),
+          );
+        },
+      );
+    },
+  );
 }
 
 async function printProducts(funMLResults) {
