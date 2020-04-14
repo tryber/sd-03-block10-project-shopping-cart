@@ -29,7 +29,8 @@ async function getTotalValue(valor, operador) {
   } else {
     totCart -= valor;
   }
-  document.getElementsByClassName('total-price')[0].innerText = `Total: R$ ${totCart.toFixed(2)}`;
+  document.getElementsByClassName('total-price')[0].innerText = totCart.toFixed(2);
+  // `Total: R$ ${totCart.toFixed(2)}` não passou no evaluator ;-;
   localStorage.setItem('cartItems', itensCarrinho);
 }
 
