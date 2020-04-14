@@ -12,6 +12,10 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+async function requestItemById(itemId) {
+  return `I was clicked and my id is ${itemId}!`;
+}
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -39,10 +43,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
-
-async function requestItemById(itemId) {
-  return `I was clicked and my id is ${itemId}!`;
 }
 
 window.onload = function onload() {
