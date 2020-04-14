@@ -12,25 +12,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const addToCart = async () => {
-  const itemSection = document.querySelector('section.item');
-  const itemID = getSkuFromProductItem(itemSection);
-  const API_ITEM_REQUEST = `https://api.mercadolibre.com/items/${itemID}`;
-  await fetch(API_ITEM_REQUEST)
-    .then(response => response.json())
-    .then(data => {
-      const cartList = document.querySelector('ol.cart__items');
-      cartList.appendChild(
-        createCartItemElement({
-          sku: data.id,
-          name: data.title,
-          salePrice: data.price.toFixed(2),
-        }),
-      );
-    })
-    .catch(() => alert('Erro: Produto não listado'));
-};
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -46,7 +27,7 @@ function createProductItemElement({ sku, name, image }) {
     const API_ITEM_REQUEST = `https://api.mercadolibre.com/items/${sku}`;
     await fetch(API_ITEM_REQUEST)
       .then(response => response.json())
-      .then(data => {
+      .then((data) => {
         console.log(API_ITEM_REQUEST);
         console.log(sku);
         console.log(data);
