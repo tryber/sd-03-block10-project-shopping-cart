@@ -126,10 +126,8 @@ const fetchar = async () => {
 // Immediately-invoked await async function
 
 const emptyLoading = () => {
-  document.querySelector('.loading').remove()
-}
-
-
+  document.querySelector('.loading').remove();
+};
 
 (async () => {
   try {
