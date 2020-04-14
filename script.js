@@ -32,6 +32,10 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
+  const eventButton = document.getElementsByTagName('button');
+  if(eventButton.className = 'cart__item'){
+
+  }
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -60,4 +64,5 @@ const getProductData = async () => {
 
 window.onload = () => {
   getProductData();
+
 };
