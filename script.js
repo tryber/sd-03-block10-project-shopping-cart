@@ -87,12 +87,6 @@ function montarObjCartItem(data) {
   return preco;
 }
 
-const coletarIDsDoElementoClicado = (event) => {
-  const acessarSection = event.target.parentNode;
-  const idFirstElement = acessarSection.firstChild.innerText;
-  fetchItemPorID(idFirstElement);
-};
-
 function queryButtons() {
   const buttons = document.querySelectorAll('.item__add');
   buttons.forEach((el) => {
@@ -118,15 +112,6 @@ function cartItemClickListener(event) {
   lStorage();
 }
 
-const fetchItemPorID = async (id) => {
-  const URL = `https://api.mercadolibre.com/items/${id}`;
-  const response = await fetch(URL)
-  const data = await response.json()
-  const obj = await montarObjCartItem(data);
-  const prec = allprice(obj);
-  document.querySelector('#total-price').innerText = prec;
-};
-
 function allprice(obj) {
   if (document.querySelector('#total-price').innerText) {
     const arrProdutos = document.querySelectorAll('.cart__item');
@@ -143,6 +128,21 @@ function allprice(obj) {
   }
   return obj;
 }
+
+const fetchItemPorID = async (id) => {
+  const URL = `https://api.mercadolibre.com/items/${id}`;
+  const response = await fetch(URL);
+  const data = await response.json();
+  const obj = await montarObjCartItem(data);
+  const prec = allprice(obj);
+  document.querySelector('#total-price').innerText = prec;
+};
+
+const coletarIDsDoElementoClicado = (event) => {
+  const acessarSection = event.target.parentNode;
+  const idFirstElement = acessarSection.firstChild.innerText;
+  fetchItemPorID(idFirstElement);
+};
 
 window.onload = function onload() {
   fetch(API_URL, myObj)
