@@ -64,12 +64,13 @@ const addToCart = () => {
     const itemSection = document.querySelector('section.item');
     const itemID = getSkuFromProductItem(itemSection);
     const API_ITEM_REQUEST = `https://api.mercadolibre.com/items/${itemID}`;
-    await fetch(API_ITEM_REQUEST)
-      .then(response => response.json)
+    const myObject = { method: 'GET', headers: { Accept: 'application/json' } };
+    await fetch(API_ITEM_REQUEST, myObject)
+      .then(response => response.json())
       .then(data => {
-        console.log(API_ITEM_REQUEST);
-        console.log(itemID)
         console.log(data);
+        console.log(API_ITEM_REQUEST);
+        console.log(itemID);
         const cartList = document.querySelector('ol.cart__items');
         cartList.appendChild(
           createCartItemElement({
