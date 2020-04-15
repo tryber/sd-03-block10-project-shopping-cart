@@ -69,51 +69,51 @@ const itemFilho = (data) => {
   ol.appendChild(li);
 };
 
-  function chamaId(id) {
-    const url = `https://api.mercadolibre.com/items/${id}`;
-    fetch(url)
-      .then(response => response.json())
-      .then(data => itemFilho(data));
-    newLocalStorage();
-  }
+function chamaId(id) {
+  const url = `https://api.mercadolibre.com/items/${id}`;
+  fetch(url)
+    .then(response => response.json())
+    .then(data => itemFilho(data));
+  newLocalStorage();
+}
 
-  function coletaBotao(event) {
-    const acessa = event.target.parentNode;
-    const priIdEl = acessa.firstChild.innerText;
-    chamaId(priIdEl);
-  }
+function coletaBotao(event) {
+  const acessa = event.target.parentNode;
+  const priIdEl = acessa.firstChild.innerText;
+  chamaId(priIdEl);
+}
 
-  function botaoAdd() {
-    const add = document.querySelectorAll('.item__add');
-    add.forEach((param) => {
-      param.addEventListener('click', coletaBotao);
-    });
-    document.querySelector('.loading').remove();
-  }
-
-  function load() {
-    document.querySelector('.loading').innerHTML = 'loading...';
-  }
-
-  fetch(API_URL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      const a = document.querySelector('.items');
-      data.results.forEach((procura) => {
-        const all = { sku: procura.id, name: procura.title, image: procura.thumbnail };
-        const product = createProductItemElement(all);
-        a.appendChild(product);
-      });
-    })
-    .then(load)
-    .then(botaoAdd);
-  const apagaAll = document.getElementById('empty-cart');
-  apagaAll.addEventListener('click', function () {
-    const lista = document.querySelector('.cart__items');
-    lista.innerHTML = '';
-    newLocalStorage();
-    return lista;
+function botaoAdd() {
+  const add = document.querySelectorAll('.item__add');
+  add.forEach((param) => {
+    param.addEventListener('click', coletaBotao);
   });
-  recuperaLS();
+  document.querySelector('.loading').remove();
+}
+
+function load() {
+  document.querySelector('.loading').innerHTML = 'loading...';
+}
+
+fetch(API_URL)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    const a = document.querySelector('.items');
+    data.results.forEach((procura) => {
+      const all = { sku: procura.id, name: procura.title, image: procura.thumbnail };
+      const product = createProductItemElement(all);
+      a.appendChild(product);
+    });
+  })
+  .then(load)
+  .then(botaoAdd);
+const apagaAll = document.getElementById('empty-cart');
+apagaAll.addEventListener('click', function () {
+  const lista = document.querySelector('.cart__items');
+  lista.innerHTML = '';
+  newLocalStorage();
+  return lista;
+});
+recuperaLS();
