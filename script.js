@@ -74,6 +74,10 @@ function botaoAdd() {
   });
 }
 
+function load() {
+  document.querySelector('.loading').innerHTML = 'loading...';
+}
+
 fetch(API_URL)
   .then(function (response) {
     return response.json();
@@ -90,11 +94,9 @@ fetch(API_URL)
       a.appendChild(product);
     });
   })
-  .then(botaoAdd);
+  .then(botaoAdd)
+  .then(load);
 
-function load() {
-  document.querySelector('.loading').innerHTML = 'loading...';
-}
 
 window.onload = function onload() {
   const apagaAll = document.getElementById('empty-cart');
@@ -104,5 +106,5 @@ window.onload = function onload() {
     lista.innerHTML = '';
     return lista;
   });
-  load();
+  document.querySelector('.loading').remove();
 };
