@@ -108,7 +108,7 @@ fetch(API_URL)
   .then(load)
   .then(botaoAdd)
   .then(newLocalStorage);
-  recuperaLS();
+recuperaLS();
 const apagaAll = document.getElementById('empty-cart');
 apagaAll.addEventListener('click', function () {
   const lista = document.querySelector('.cart__items');
