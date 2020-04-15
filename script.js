@@ -1,5 +1,4 @@
 window.onload = function onload() {
-
   const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
   function createProductImageElement(imageSource) {
@@ -115,7 +114,6 @@ window.onload = function onload() {
     })
     .then(load)
     .then(botaoAdd);
-
 
   const apagaAll = document.getElementById('empty-cart');
 
