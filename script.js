@@ -43,20 +43,20 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function newLocalStorage() {
+/* function newLocalStorage() {
   const itens = document.querySelector('.cart__items').innerHTML;
   localStorage.removeItem('carrinhoDeCompras');
   localStorage.setItem('carrinhoDeCompras', itens);
-}
+} */
 
-function recuperaLS() {
+/* function recuperaLS() {
   const bdados = localStorage.getItem('carrinhoDeCompras');
   const total = localStorage.getItem('totalCompras');
   document.querySelector('.cart__items').innerHTML = bdados;
   const arr = document.querySelectorAll('.cart__item');
   arr.forEach(el => el.addEventListener('click', cartItemClickListener));
   document.querySelector('#total-price').innerText = total;
-}
+} */
 
 const itemFilho = (data) => {
   const obj = {
@@ -74,7 +74,7 @@ function chamaId(id) {
   fetch(url)
     .then(response => response.json())
     .then(data => itemFilho(data));
-  newLocalStorage();
+  // newLocalStorage();
 }
 
 function coletaBotao(event) {
@@ -89,7 +89,7 @@ function botaoAdd() {
     param.addEventListener('click', coletaBotao);
   });
   document.querySelector('.loading').remove();
-  recuperaLS();
+  // recuperaLS();
 }
 
 function load() {
@@ -109,12 +109,12 @@ fetch(API_URL)
     });
   })
   .then(load)
-  .then(botaoAdd)
-  .then(newLocalStorage);
+  .then(botaoAdd);
+  // .then(newLocalStorage);
 const apagaAll = document.getElementById('empty-cart');
 apagaAll.addEventListener('click', function () {
   const lista = document.querySelector('.cart__items');
   lista.innerHTML = '';
   return lista;
 });
-recuperaLS();
+// recuperaLS();
