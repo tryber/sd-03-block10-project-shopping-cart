@@ -43,6 +43,21 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
+function newLocalStorage() {
+  const itens = document.querySelector('.cart__items').innerHTML;
+  localStorage.removeItem('carrinhoDeCompras');
+  localStorage.setItem('carrinhoDeCompras', itens);
+}
+
+function recuperaLS() {
+  const bdados = localStorage.getItem('carrinhoDeCompras');
+  const total = localStorage.getItem('totalCompras');
+  document.querySelector('.cart__items').innerHTML = bdados;
+  const arr = document.querySelectorAll('.cart__item');
+  arr.forEach(el => el.addEventListener('click', cartItemClickListener));
+  document.querySelector('#total-price').innerText = total;
+}
+
 const itemFilho = (data) => {
   const obj = {
     sku: data.id,
@@ -59,6 +74,7 @@ function chamaId(id) {
   fetch(url)
     .then(response => response.json())
     .then(data => itemFilho(data));
+  newLocalStorage();
 }
 
 function coletaBotao(event) {
@@ -98,13 +114,14 @@ fetch(API_URL)
   .then(load)
   .then(botaoAdd);
 
-
 window.onload = function onload() {
   const apagaAll = document.getElementById('empty-cart');
-
+  
   apagaAll.addEventListener('click', function () {
     const lista = document.querySelector('.cart__items');
     lista.innerHTML = '';
+    newLocalStorage();
     return lista;
   });
+  recuperaLS();
 };
