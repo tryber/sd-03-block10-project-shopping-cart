@@ -69,7 +69,6 @@ const itemFilho = (data) => {
   ol.appendChild(li);
 };
 
-window.onload = function onload() {
   function chamaId(id) {
     const url = `https://api.mercadolibre.com/items/${id}`;
     fetch(url)
@@ -103,7 +102,7 @@ window.onload = function onload() {
     .then(function (data) {
       const a = document.querySelector('.items');
       data.results.forEach((procura) => {
-        const all = { sku: procura.id, name: procura.title, image: procura.thumbnail, };
+        const all = { sku: procura.id, name: procura.title, image: procura.thumbnail };
         const product = createProductItemElement(all);
         a.appendChild(product);
       });
@@ -118,4 +117,3 @@ window.onload = function onload() {
     return lista;
   });
   recuperaLS();
-};
