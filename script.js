@@ -72,6 +72,7 @@ function botaoAdd() {
   add.forEach((param) => {
     param.addEventListener('click', coletaBotao);
   });
+  document.querySelector('.loading').remove();
 }
 
 function load() {
@@ -94,8 +95,8 @@ fetch(API_URL)
       a.appendChild(product);
     });
   })
-  .then(botaoAdd)
-  .then(load);
+  .then(load)
+  .then(botaoAdd);
 
 
 window.onload = function onload() {
@@ -106,5 +107,4 @@ window.onload = function onload() {
     lista.innerHTML = '';
     return lista;
   });
-  document.querySelector('.loading').remove();
 };
