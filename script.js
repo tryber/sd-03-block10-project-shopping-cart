@@ -79,7 +79,7 @@ function chamaId(id) {
 
 function coletaBotao(event) {
   const acessa = event.target.parentNode;
-  const priIdEl = acessa.firstChild.innerText;
+  const priIdEl = acessa.firstChild.innerHTML;
   chamaId(priIdEl);
 }
 
