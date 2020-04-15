@@ -93,11 +93,11 @@ fetch(API_URL)
   .then(botaoAdd);
 
 window.onload = function onload() {
-  const apagaAll = document.getElementById('empty-cart')
+  const apagaAll = document.getElementById('empty-cart');
 
   apagaAll.addEventListener('click', function () {
     const lista = document.querySelector('.cart__items');
     lista.innerHTML = '';
-    return lista
+    return lista;
   });
 };
