@@ -15,17 +15,19 @@ function createCustomElement(element, className, innerText) {
 const saveCartItems = () => {
   const cartListHTML = document.querySelector('li.cart__item').innerHTML;
   localStorage.setItem('saved__cart__items', cartListHTML);
+  console.log(localStorage);
 };
 
 const updateSavedCartItems = () => {
-document.querySelector('ol.cart__items')
-  .appendChild(createCartItemElement(localStorage.getItem('saved__cart__items')));
-}
+  document.querySelector('ol.cart__items').innerHTML = localStorage.getItem(
+    'saved__cart__items',
+  );
+};
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
-  event.target.saveCartItems();
+  saveCartItems();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -64,6 +66,7 @@ function createProductItemElement({ sku, name, image }) {
             salePrice: data.price.toFixed(2),
           }),
         );
+        saveCartItems();
       })
       .catch(() => alert('Erro: Produto não listado'));
   });
@@ -99,8 +102,5 @@ const emptyCar = () => {
 
 window.onload = async () => {
   await getProductData();
-  createProductItemElement();
-  createCartItemElement();
-  emptyCar();
-  saveCartItems()
+  updateSavedCartItems();
 };
