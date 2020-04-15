@@ -95,27 +95,25 @@ function load() {
   document.querySelector('.loading').innerHTML = 'loading...';
 }
 
-window.onload = function onload() {
-  fetch(API_URL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      const a = document.querySelector('.items');
-      data.results.forEach((procura) => {
-        const all = { sku: procura.id, name: procura.title, image: procura.thumbnail };
-        const product = createProductItemElement(all);
-        a.appendChild(product);
-      });
-    })
-    .then(load)
-    .then(botaoAdd);
-  const apagaAll = document.getElementById('empty-cart');
-  apagaAll.addEventListener('click', function () {
-    const lista = document.querySelector('.cart__items');
-    lista.innerHTML = '';
-    newLocalStorage();
-    return lista;
-  });
-  recuperaLS();
-};
+fetch(API_URL)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    const a = document.querySelector('.items');
+    data.results.forEach((procura) => {
+      const all = { sku: procura.id, name: procura.title, image: procura.thumbnail };
+      const product = createProductItemElement(all);
+      a.appendChild(product);
+    });
+  })
+  .then(load)
+  .then(botaoAdd)
+  .then(newLocalStorage);
+const apagaAll = document.getElementById('empty-cart');
+apagaAll.addEventListener('click', function () {
+  const lista = document.querySelector('.cart__items');
+  lista.innerHTML = '';
+  return lista;
+});
+recuperaLS();
