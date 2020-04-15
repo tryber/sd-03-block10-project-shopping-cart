@@ -11,8 +11,8 @@ function createProductImg(imageSource) {
 
 // 5. Add the total value using total-price class.
 const sum = () => {
-  const cartItems = document.querySelectorAll('.cart__item');
-  document.getElementsByClassName('total-price')[0].textContent = Math.round([...cartItems].map(p => p.textContent
+  const cartItem = document.querySelectorAll('.cart__item');
+  document.getElementsByClassName('total-price')[0].textContent = Math.round([...cartItem].map(p => p.textContent
     .match(/([0-9.]){1,}$/))
     .reduce((acc, price) => acc + parseFloat(price), 0) * 100) / 100;
 };
@@ -50,7 +50,7 @@ const addElementToCart = async ({ sku }) => {
       name: product.title,
       price: product.price,
     }));
-    await cartUpdating();
+    cartUpdating();
   });
 };
 
