@@ -1,4 +1,3 @@
-window.onload = function onload() { };
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
 function createProductImageElement(imageSource) {
@@ -92,3 +91,13 @@ fetch(API_URL)
     });
   })
   .then(botaoAdd);
+
+window.onload = function onload() {
+  const apagaAll = document.getElementById('empty-cart')
+
+  apagaAll.addEventListener('click', function () {
+    const lista = document.querySelector('.cart__items');
+    lista.innerHTML = '';
+    return lista
+  });
+};
