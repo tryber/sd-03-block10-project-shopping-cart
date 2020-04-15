@@ -92,9 +92,9 @@ fetch(API_URL)
   })
   .then(botaoAdd);
 
-function load () {
+function load() {
   document.querySelector('.loading').innerHTML = 'loading...';
-};
+}
 
 window.onload = function onload() {
   const apagaAll = document.getElementById('empty-cart');
