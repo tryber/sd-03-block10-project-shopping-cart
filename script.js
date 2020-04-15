@@ -94,7 +94,7 @@ fetch(API_URL)
 
 const load = () => {
   document.querySelector('.loading').innerHTML = 'loading...';
-}
+};
 
 window.onload = function onload() {
   const apagaAll = document.getElementById('empty-cart');
