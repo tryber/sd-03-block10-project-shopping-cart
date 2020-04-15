@@ -42,33 +42,34 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-window.onload = function onload() {
-  function newLocalStorage() {
-    const itens = document.querySelector('.cart__items').innerHTML;
-    localStorage.removeItem('carrinhoDeCompras');
-    localStorage.setItem('carrinhoDeCompras', itens);
-  }
 
-  function recuperaLS() {
-    const bdados = localStorage.getItem('carrinhoDeCompras');
-    const total = localStorage.getItem('totalCompras');
-    document.querySelector('.cart__items').innerHTML = bdados;
-    const arr = document.querySelectorAll('.cart__item');
-    arr.forEach(el => el.addEventListener('click', cartItemClickListener));
-    document.querySelector('#total-price').innerText = total;
-  }
+function newLocalStorage() {
+  const itens = document.querySelector('.cart__items').innerHTML;
+  localStorage.removeItem('carrinhoDeCompras');
+  localStorage.setItem('carrinhoDeCompras', itens);
+}
 
-  const itemFilho = (data) => {
-    const obj = {
-      sku: data.id,
-      name: data.title,
-      salePrice: data.price,
-    };
-    const li = createCartItemElement(obj);
-    const ol = document.querySelector('.cart__items');
-    ol.appendChild(li);
+function recuperaLS() {
+  const bdados = localStorage.getItem('carrinhoDeCompras');
+  const total = localStorage.getItem('totalCompras');
+  document.querySelector('.cart__items').innerHTML = bdados;
+  const arr = document.querySelectorAll('.cart__item');
+  arr.forEach(el => el.addEventListener('click', cartItemClickListener));
+  document.querySelector('#total-price').innerText = total;
+}
+
+const itemFilho = (data) => {
+  const obj = {
+    sku: data.id,
+    name: data.title,
+    salePrice: data.price,
   };
+  const li = createCartItemElement(obj);
+  const ol = document.querySelector('.cart__items');
+  ol.appendChild(li);
+};
 
+window.onload = function onload() {
   function chamaId(id) {
     const url = `https://api.mercadolibre.com/items/${id}`;
     fetch(url)
