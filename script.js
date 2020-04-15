@@ -92,7 +92,7 @@ fetch(API_URL)
   })
   .then(botaoAdd);
 
-const load = () => {
+function load () {
   document.querySelector('.loading').innerHTML = 'loading...';
 };
 
@@ -104,5 +104,5 @@ window.onload = function onload() {
     lista.innerHTML = '';
     return lista;
   });
-  load;
+  load();
 };
