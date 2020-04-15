@@ -118,4 +118,4 @@ window.onload = function onload() {
     return lista;
   });
   recuperaLS();
-}
+};
