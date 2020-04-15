@@ -33,7 +33,7 @@
 .item {
   border: 2px solid blue;
   border-radius: 5px;
-  box-shadow: 0 10px 20px rgba(0 , 0 , 0 , 0.19), 0 6px 6px rgba(0 , 0 , 0 , 0.23);
+  box-shadow: 0 10px 20px rgba( 0 , 0 , 0 , 0.19 ), 0 6px 6px rgba( 0 , 0 , 0 , 0.23 );
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -57,7 +57,7 @@
 }
 
 .item .item__add {
-  background-color: rgb(74, 93, 212);
+  background-color: rgb( 74 , 93 , 212 );
   border: 0;
   cursor: pointer;
   margin: 0;
@@ -71,7 +71,7 @@
 }
 
 .cart .cart__title {
-  box-shadow: 0 10px 20px rgba(0 , 0 , 0 , 0.19), 0 6px 6px rgba(0 , 0 , 0 , 0.23);
+  box-shadow: 0 10px 20px rgba( 0 , 0 , 0 , 0.19 ), 0 6px 6px rgba( 0 , 0 , 0 , 0.23 );
   flex-basis: 1;
   font-size: 20pt;
   font-weight: 600;
