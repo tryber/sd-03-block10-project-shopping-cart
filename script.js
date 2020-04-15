@@ -79,7 +79,7 @@ function chamaId(id) {
 
 function coletaBotao(event) {
   const acessa = event.target.parentNode;
-  const priIdEl = acessa.firstChild.innerHTML;
+  const priIdEl = acessa.firstChild.innerText;
   chamaId(priIdEl);
 }
 
@@ -89,6 +89,7 @@ function botaoAdd() {
     param.addEventListener('click', coletaBotao);
   });
   document.querySelector('.loading').remove();
+  recuperaLS();
 }
 
 function load() {
