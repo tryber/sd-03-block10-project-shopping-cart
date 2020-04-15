@@ -44,7 +44,7 @@ function createProductItemElement({ sku, name, image }) {
     const API_ITEM_REQUEST = `https://api.mercadolibre.com/items/${sku}`;
     await fetch(API_ITEM_REQUEST)
       .then(response => response.json())
-      .then(data => {
+      .then((data) => {
         const cartProductList = document.querySelector('ol.cart__items');
         cartProductList.appendChild(
           createCartItemElement({
@@ -66,7 +66,7 @@ const getProductData = async () => {
   const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${queryKey}`;
   await fetch(API_URL)
     .then(response => response.json())
-    .then(data =>
+    .then((data) =>
       data.results.forEach(({ id, title, thumbnail }) =>
         productsList.appendChild(
           createProductItemElement({ sku: id, name: title, image: thumbnail }),
