@@ -17,10 +17,10 @@ const saveCartItems = () => {
   localStorage.setItem('saved__cart__items', cartListHTML);
 };
 
-// const updateSavedCartItems = () => {
-// document.querySelector('ol.cart__items')
-//   .appendChild;
-// }
+const updateSavedCartItems = () => {
+document.querySelector('ol.cart__items')
+  .appendChild(createCartItemElement(localStorage.getItem('saved__cart__items')));
+}
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
