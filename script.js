@@ -116,7 +116,7 @@ fetch(API_URL)
 
 window.onload = function onload() {
   const apagaAll = document.getElementById('empty-cart');
-  
+
   apagaAll.addEventListener('click', function () {
     const lista = document.querySelector('.cart__items');
     lista.innerHTML = '';
