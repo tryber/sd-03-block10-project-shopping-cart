@@ -11,8 +11,8 @@ function createProductImg(imageSource) {
 
 // 5. Add the total value using total-price class.
 const sum = () => {
-  const cartItem = document.querySelectorAll('.cart__item');
-  document.getElementsByClassName('total-price')[0].textContent = Math.round([...cartItem].map(p => p.textContent
+  const cartItems = document.querySelectorAll('.cart__item');
+  document.getElementsByClassName('total-price')[0].textContent = Math.round([...cartItems].map(p => p.textContent
     .match(/([0-9.]){1,}$/))
     .reduce((acc, price) => acc + parseFloat(price), 0) * 100) / 100;
 };
@@ -36,7 +36,7 @@ function cartItemClickListener(event) {
 function createCartItemElement({ sku, name, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `Id: ${sku} | Product: ${name} | Price: $${price}`;
+  li.innerText = `Id: ${sku} , Product: ${name} , Price: $${price}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -50,7 +50,7 @@ const addElementToCart = async ({ sku }) => {
       name: product.title,
       price: product.price,
     }));
-    cartUpdating();
+    await cartUpdating();
   });
 };
 
@@ -74,6 +74,18 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(btnAddCart);
   return section;
 }
+
+// function createProductItemElement({ sku, name, image }) {
+//   const section = document.createElement('section');
+//   section.className = 'item';
+//   section.appendChild(createCustomElement('span', 'item__sku', sku));
+//   section.appendChild(createCustomElement('span', 'item__title', name));
+//   section.appendChild(createProductImageElement(image));
+//   const btnAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+//   btnAddCart.addEventListener('click', () => addElementToCart({ sku }));
+//   section.appendChild(btnAddCart);
+//   return section;
+// }
 
 // searching for the term "computador"
 // element returned from the function createProductItemElement(product).
