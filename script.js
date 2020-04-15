@@ -15,13 +15,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-fetch(url)
-  .then(response => response.json())
-  .then(data => data.results.forEach(e => document.getElementsByClassName('items')[0].appendChild(createProductItemElement({
-    sku: e.id,
-    name: e.title,
-    image: e.thumbnail,
-  }))));
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -50,3 +43,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+fetch(url)
+  .then(response => response.json())
+  .then(data => data.results.forEach(e => document.getElementsByClassName('items')[0].appendChild(createProductItemElement({
+    sku: e.id,
+    name: e.title,
+    image: e.thumbnail,
+  }))));
