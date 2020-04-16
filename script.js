@@ -15,6 +15,8 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   const parentNode = document.querySelector('.cart__items');
   removedItem = parentNode.removeChild(event.target);
+  localStorage.clear();
+  localStorage.setItem('cartItems', document.querySelector('.cart__items').innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -30,7 +32,8 @@ const addToCart = (sku) => {
   .then(response => response.json())
   .then(data => ({ sku: data.id, name: data.title, salePrice: data.price }))
   .then(product => createCartItemElement(product))
-  .then(object => document.querySelector('.cart__items').appendChild(object));
+  .then(object => document.querySelector('.cart__items').appendChild(object))
+  .then(() => localStorage.setItem('cartItems', document.querySelector('.cart__items').innerHTML));
 };
 
 function createProductItemElement({ sku, name, image }) {
@@ -61,6 +64,17 @@ const createProductList = () => {
       itemsSection.appendChild(createProductItemElement(obj))));
 };
 
+const loadSavedItems = () => {
+  const savedItems = localStorage.getItem('cartItems');
+  const cartList = document.querySelector('.cart__items');
+  if (savedItems) {
+    cartList.innerHTML = savedItems;
+  }
+  const cartItems = [...document.getElementsByClassName('cart__item')];
+  cartItems.forEach(element => element.addEventListener('click', cartItemClickListener));
+};
+
 window.onload = function onload() {
   createProductList();
+  loadSavedItems();
 };
