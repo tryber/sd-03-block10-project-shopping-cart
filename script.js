@@ -71,8 +71,8 @@ function chamaId(id) {
   const url = `https://api.mercadolibre.com/items/${id}`;
   fetch(url)
     .then(response => response.json())
-    .then(data => itemFilho(data));
-  newLocalStorage();
+    .then(data => itemFilho(data))
+    .then(newLocalStorage);
 }
 
 function coletaBotao(event) {
