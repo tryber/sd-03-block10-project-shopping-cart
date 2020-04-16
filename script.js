@@ -12,12 +12,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const cartItemClickListener = event => {
-  event.target.remove();
-  cartTotal();
-  saveCartItems();
-};
-
 const cartTotal = async () => {
   const totalValueElement = document.querySelector('.cart__total');
   const cartItems = document.querySelectorAll('.cart__item');
@@ -44,6 +38,12 @@ const saveCartItems = async () => {
     document.getElementsByClassName('cart__total')[0].innerHTML,
   );
   console.log(localStorage);
+};
+
+const cartItemClickListener = (event) => {
+  event.target.remove();
+  cartTotal();
+  saveCartItems();
 };
 
 const updateSavedCartItems = async () => {
