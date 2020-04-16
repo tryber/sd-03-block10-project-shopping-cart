@@ -21,7 +21,10 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  if (event.target) cartList[0].removeChild(event.target);
+  if (event.target) {
+    cartList[0].removeChild(event.target);
+    saveCartItems();
+  }
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -40,7 +43,8 @@ async function requestItemById(itemId) {
       name: data.title,
       salePrice: data.price,
     }))
-    .then(obj => cartList[0].appendChild(obj).addEventListener('click', cartItemClickListener(obj)));
+    .then(obj => cartList[0].appendChild(obj).addEventListener('click', cartItemClickListener(obj)))
+    .then(saveCartItems);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -58,11 +62,14 @@ function createProductItemElement({ sku, name, image }) {
 
 function eraseCart() {
   const itemList = document.querySelectorAll('li.cart__item');
-  if (itemList.length !== 0) { itemList.forEach(e => e.remove()); }
+  if (itemList.length !== 0) {
+    itemList.forEach(e => e.remove());
+    localStorage.clear();
+  }
 }
 
-window.onload = function onload() {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+async function fetchPage() {
+  await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(data => data.json())
     .then(obj => obj.results.forEach(item => document.getElementsByClassName('items')[0].appendChild(
       createProductItemElement({
@@ -70,5 +77,22 @@ window.onload = function onload() {
         name: item.title,
         image: item.thumbnail,
       }))));
+}
+
+function saveCartItems() {
+  localStorage.setItem(
+    'cartItemsSave',
+    document.getElementsByClassName('cart__items')[0].innerHTML
+  )
+}
+
+async function recoverCart() {
+  cartList[0].innerHTML = localStorage.getItem('cartItemsSave');
+  cartList[0].addEventListener('click', cartItemClickListener);
+}
+
+window.onload = function onload() {
+  fetchPage();
+  recoverCart();
   cartEmpty[0].addEventListener('click', eraseCart);
 };
