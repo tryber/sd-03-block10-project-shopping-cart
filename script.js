@@ -32,6 +32,10 @@ const saveCartItems = async () => {
     'saved__cart__items',
     document.getElementsByClassName('cart__items')[0].innerHTML,
   );
+  localStorage.setItem(
+    'saved__total__cart__value',
+    document.getElementsByClassName('cart__total')[0].innerHTML,
+  );
   console.log(localStorage);
 };
 
