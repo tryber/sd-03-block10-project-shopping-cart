@@ -93,6 +93,6 @@ async function recoverCart() {
 
 window.onload = function onload() {
   fetchPage();
-  recoverCart();
+  if (localStorage) recoverCart();
   cartEmpty[0].addEventListener('click', eraseCart);
 };
