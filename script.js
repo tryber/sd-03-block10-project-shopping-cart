@@ -52,7 +52,7 @@ const items = dados => ({
 
 adicionarItemAoCarrinho = async (sku) => {
   const loading = document.getElementsByClassName('cart__item')[0];
-  loading.innerHTML = `<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>`;
+loading.innerHTML = `${`<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>`}`;
   await fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(respo => respo.json())
     .then(products => document.getElementsByClassName('cart__items')[0]
