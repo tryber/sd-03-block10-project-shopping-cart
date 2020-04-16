@@ -115,7 +115,7 @@ const getProductData = async () => {
     .catch(() => alert('Erro: Produtos não listados'));
 };
 
-const emptyCar = async () => {
+const emptyCart = async () => {
   const emptyCarButton = document.querySelector('.empty-cart');
   emptyCarButton.addEventListener('click', () => {
     const cartList = document.querySelectorAll('li.cart__item');
@@ -130,5 +130,5 @@ const emptyCar = async () => {
 window.onload = async () => {
   await getProductData();
   await updateSavedCartItems();
-  emptyCar();
+  emptyCart();
 };
