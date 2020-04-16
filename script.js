@@ -97,7 +97,7 @@ const createProductItemElement = ({ sku, name, image }) => {
     saveCartItems();
   });
   return section;
-}
+};
 
 const getProductData = async () => {
   const productsList = document.querySelector('.items');
