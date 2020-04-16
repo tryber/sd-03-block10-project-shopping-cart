@@ -101,7 +101,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const loadingElement = () => {
   const loadingText = createCustomElement(
-    'div',
+    'span',
     'loading loading-lg text-uppercase text-center text-large',
     'loading...',
   );
@@ -116,8 +116,8 @@ const getProductData = async () => {
   const productsList = document.querySelector('.items');
   const queryKey = 'computador';
   const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${queryKey}`;
-  loadingElement();
-  fetch(API_URL)
+  loadingElement()
+  await fetch(API_URL)
     .then(response => response.json())
     .then(data =>
       data.results.forEach(({ id, title, thumbnail }) =>
