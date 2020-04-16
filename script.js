@@ -24,7 +24,6 @@ const cartTotal = async () => {
           0,
         ) * 100,
     ) / 100;
-  if (!cartItems.length) totalValueElement.innerHTML = 0;
   totalValueElement.innerHTML = totalValue;
 };
 
@@ -130,16 +129,15 @@ const getProductData = async () => {
     .catch(() => alert('Erro: Produtos não listados'));
 };
 
-const emptyCart = async () => {
+const emptyCart = () => {
   const emptyCarButton = document.querySelector('.empty-cart');
   emptyCarButton.addEventListener('click', () => {
     const cartList = document.querySelectorAll('li.cart__item');
-    if (cartList.length !== 0) {
-      cartList.forEach(element => element.parentNode.removeChild(element));
-    }
+    cartList.forEach(element => element.parentNode.removeChild(element));
+    localStorage.clear();
+    cartTotal();
+    saveCartItems();
   });
-  await cartTotal();
-  await saveCartItems();
 };
 
 window.onload = async () => {
