@@ -40,10 +40,10 @@ const saveCartItems = async () => {
   console.log(localStorage);
 };
 
-const cartItemClickListener = (event) => {
+const cartItemClickListener = async (event) => {
   event.target.remove();
-  cartTotal();
-  saveCartItems();
+  await cartTotal();
+  await saveCartItems();
 };
 
 const updateSavedCartItems = async () => {
@@ -64,7 +64,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-function createProductItemElement({ sku, name, image }) {
+const createProductItemElement = async ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
@@ -93,8 +93,8 @@ function createProductItemElement({ sku, name, image }) {
         );
       })
       .catch(() => alert('Erro: Produto não listado'));
-    cartTotal();
-    saveCartItems();
+    await cartTotal();
+    await saveCartItems();
   });
   return section;
 }
@@ -123,8 +123,8 @@ const emptyCart = async () => {
       cartList.forEach(element => element.parentNode.removeChild(element));
     }
   });
-  cartTotal();
-  saveCartItems();
+  await cartTotal();
+  await saveCartItems();
 };
 
 window.onload = async () => {
