@@ -30,7 +30,7 @@ const myObj = { method: 'GET' };
 
 const sectionItem = document.querySelector('.items');
 const lStorage = () => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
-const getls = () => document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart');
+const getls = () => {document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart')};
 
 function transNumber(num) {
   return (Math.round(num.toFixed(2) * 100) / 100);
@@ -55,9 +55,9 @@ function allprice(obj) {
 
 
 function cartItemClickListener(event) {
-  event.target.parentNode.removeChild();
+  event.target.parentNode.removeChild(event.target);
   document.querySelector('#total-price').innerHTML = allprice();
-  getls();
+  lStorage();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
