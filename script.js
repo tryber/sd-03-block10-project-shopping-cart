@@ -47,14 +47,14 @@ function newLocalStorage() {
   const itens = document.querySelector('.cart__items').innerHTML;
   localStorage.removeItem('carrinhoDeCompras');
   localStorage.setItem('carrinhoDeCompras', itens);
-};
+}
 
 function recuperaLS() {
   const bdados = localStorage.getItem('carrinhoDeCompras');
   document.querySelector('.cart__items').innerHTML = bdados;
   const arr = document.querySelectorAll('.cart__item');
   arr.forEach(el => el.addEventListener('click', cartItemClickListener));
-};
+}
 
 const itemFilho = (data) => {
   const obj = {
@@ -90,7 +90,7 @@ function botaoAdd() {
 }
 
 function load() {
-  return document.querySelector('.loading').innerHTML = 'loading...';
+  document.querySelector('.loading').innerHTML = 'loading...';
 }
 
 fetch(API_URL)
@@ -110,7 +110,6 @@ fetch(API_URL)
 
 window.onload = function onload() {
   const apagaAll = document.getElementById('empty-cart');
-  console.log(apagaAll)
   apagaAll.addEventListener('click', function () {
     const lista = document.querySelector('.cart__items');
     lista.innerHTML = '';
