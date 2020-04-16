@@ -1,4 +1,3 @@
-let value = 100;
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -51,14 +50,9 @@ const items = dados => ({
   image: dados.thumbnail,
 });
 
-const loading = () => {
-  const loading = document.getElementsByClassName('items')[0];
-  loading.innerHTML = `<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>`
-};
-
 adicionarItemAoCarrinho = async (sku) => {
   const loading = document.getElementsByClassName('cart__item')[0];
-  loading.innerHTML = `<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>`
+  loading.innerHTML = `<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>`;
   await fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(respo => respo.json())
     .then(products => document.getElementsByClassName('cart__items')[0]
@@ -69,7 +63,7 @@ adicionarItemAoCarrinho = async (sku) => {
 
 window.onload = async function onload() {
   const loading = document.getElementsByClassName('cart__item')[0];
-  loading.innerHTML = `<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>`
+  loading.innerHTML = `<div class='spinner-border text-primary' role='status"><span class='sr-only'>Loading...</span></div>`;
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(resp => resp.json())
     .then(json => json.results.forEach(products => document.getElementsByClassName('items')[0]

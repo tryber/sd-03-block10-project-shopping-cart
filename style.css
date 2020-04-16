@@ -80,15 +80,15 @@
   font-size: 50px;
 }
 
-.cabecalho{
+.cabecalho {
   align-items: center;
   background-color: cornflowerblue;
   display: flex;
   height: 100px;
   justify-content: center;
-  text-align: center; 
+  text-align: center;
 }
 
-.cart__item{
+.cart__item {
   text-align: center;
 }
