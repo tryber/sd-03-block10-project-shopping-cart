@@ -24,6 +24,7 @@ const cartTotal = () => {
           0,
         ) * 100,
     ) / 100;
+  if (!cartItems.length) totalValueElement.innerHTML = 0;
   totalValueElement.innerHTML = totalValue;
 };
 
@@ -46,13 +47,14 @@ const updateSavedCartItems = async () => {
   document
     .getElementsByClassName('cart__items')[0]
     .addEventListener('click', cartItemClickListener);
+    cartTotal();
 };
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
-  saveCartItems();
   cartTotal();
+  saveCartItems();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -92,8 +94,8 @@ function createProductItemElement({ sku, name, image }) {
         );
       })
       .catch(() => alert('Erro: Produto não listado'));
-    saveCartItems();
     cartTotal();
+    saveCartItems();
   });
   return section;
 }
@@ -122,6 +124,7 @@ const emptyCar = async () => {
       cartList.forEach(element => element.parentNode.removeChild(element));
     }
   });
+  cartTotal();
   saveCartItems();
 };
 
