@@ -97,7 +97,7 @@ const createProductItemElement = async ({ sku, name, image }) => {
     await saveCartItems();
   });
   return section;
-}
+};
 
 const getProductData = async () => {
   const productsList = document.querySelector('.items');
