@@ -62,8 +62,8 @@ adicionarItemAoCarrinho = async (sku) => {
 };
 
 window.onload = async function onload() {
-  const loading1 = document.getElementsByClassName('cart__item')[0];
-  loading1.innerHTML = '<div class= spinner-border text-primary role= status><span class= sr-only>Loading.</span></div>';
+  const loading1 = document.getElementsByClassName('loading')[0];
+  loading1.innerHTML = '<span class= loading class= sr-only>Loading...</span>';
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(resp => resp.json())
     .then(json => json.results.forEach(products => document.getElementsByClassName('items')[0]
