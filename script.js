@@ -1,3 +1,4 @@
+let value = 100;
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -26,7 +27,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
 
   return li;
 }
@@ -51,22 +51,34 @@ const items = dados => ({
   image: dados.thumbnail,
 });
 
-adicionarItemAoCarrinho = async (sku) => {
-  await fetch(`https://api.mercadolibre.com/items/${sku}`)
-    .then(respo => respo.json())
-    .then(products => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(items(products))));
-  await localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
+const loading = () => {
+  const loading = document.getElementsByClassName('items')[0];
+  loading.innerHTML = `<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>`
 };
 
-window.onload = function onload() {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+adicionarItemAoCarrinho = async (sku) => {
+  const loading = document.getElementsByClassName('cart__item')[0];
+  loading.innerHTML = `<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>`
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then(respo => respo.json())
+    .then(products => document.getElementsByClassName('cart__items')[0]
+      .appendChild(createCartItemElement(items(products))));
+  await localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
+  loading.innerHTML = '';
+};
+
+window.onload = async function onload() {
+  const loading = document.getElementsByClassName('cart__item')[0];
+  loading.innerHTML = `<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>`
+  await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(resp => resp.json())
     .then(json => json.results.forEach(products => document.getElementsByClassName('items')[0]
       .appendChild(createProductItemElement(items(products)))));
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart__items');
   document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
-    document.getElementsByClassName('cart__items')[0].innerHTML = ' ';
+    document.getElementsByClassName('cart__items')[0].innerHTML = '';
     localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
   });
+  loading.innerHTML = '';
 };
