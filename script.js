@@ -12,7 +12,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const saveCartItems = async () => {
+const saveCartItems = () => {
   localStorage.setItem(
     'saved__cart__items',
     document.getElementsByClassName('cart__items')[0].innerHTML,
@@ -20,7 +20,7 @@ const saveCartItems = async () => {
   console.log(localStorage);
 };
 
-const updateSavedCartItems = () => {
+const updateSavedCartItems = async () => {
   document.getElementsByClassName(
     'cart__items',
   )[0].innerHTML = localStorage.getItem('saved__cart__items');
@@ -104,8 +104,8 @@ const emptyCar = async () => {
   saveCartItems();
 };
 
-window.onload = () => {
-  getProductData();
-  updateSavedCartItems();
+window.onload = async () => {
+  await getProductData();
+  await updateSavedCartItems();
   emptyCar();
 };
