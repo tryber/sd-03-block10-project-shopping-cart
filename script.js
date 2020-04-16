@@ -99,11 +99,25 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
+const loadingElement = () => {
+  const loadingText = createCustomElement(
+    'div',
+    'loading loading-lg text-uppercase text-center text-large',
+    'loading...',
+  );
+  document.body.appendChild(loadingText);
+};
+
+const loadedData = () => {
+  document.body.removeChild(document.querySelector('.loading'));
+};
+
 const getProductData = async () => {
   const productsList = document.querySelector('.items');
   const queryKey = 'computador';
   const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${queryKey}`;
-  await fetch(API_URL)
+  loadingElement();
+  fetch(API_URL)
     .then(response => response.json())
     .then(data =>
       data.results.forEach(({ id, title, thumbnail }) =>
@@ -112,6 +126,7 @@ const getProductData = async () => {
         ),
       ),
     )
+    .then(() => loadedData())
     .catch(() => alert('Erro: Produtos não listados'));
 };
 
