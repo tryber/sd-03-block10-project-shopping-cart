@@ -12,7 +12,22 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const saveCartItems = () => {
+const cartTotal = () => {
+  const totalValueElement = document.querySelector('.cart__total');
+  const cartItems = document.querySelectorAll('.cart__item');
+  const totalValue =
+    Math.round(
+      [...cartItems]
+        .map(element => element.innerText.match(/([0-9.]){1,}$/))
+        .reduce(
+          (accumulator, element) => accumulator + parseFloat(element),
+          0,
+        ) * 100,
+    ) / 100;
+  totalValueElement.innerHTML = totalValue;
+};
+
+const saveCartItems = async () => {
   localStorage.setItem(
     'saved__cart__items',
     document.getElementsByClassName('cart__items')[0].innerHTML,
