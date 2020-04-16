@@ -50,12 +50,11 @@ const updateSavedCartItems = async () => {
   cartTotal();
 };
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+const cartItemClickListener = async (event) => {
   event.target.remove();
   cartTotal();
   saveCartItems();
-}
+};
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
