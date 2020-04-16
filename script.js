@@ -12,16 +12,18 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const saveCartItems = () => {
-  const cartListHTML = document.querySelector('li.cart__item').innerHTML;
-  localStorage.setItem('saved__cart__items', cartListHTML);
+const saveCartItems = async () => {
+  localStorage.setItem(
+    'saved__cart__items',
+    document.getElementsByClassName('cart__items')[0].innerHTML,
+  );
   console.log(localStorage);
 };
 
 const updateSavedCartItems = () => {
-  document.querySelector('ol.cart__items').innerHTML = localStorage.getItem(
-    'saved__cart__items',
-  );
+  document.getElementsByClassName(
+    'cart__items',
+  )[0].innerHTML = localStorage.getItem('saved__cart__items');
 };
 
 function cartItemClickListener(event) {
@@ -98,9 +100,11 @@ const emptyCar = () => {
       cartList.forEach(element => element.parentNode.removeChild(element));
     }
   });
+  saveCartItems();
 };
 
 window.onload = async () => {
   await getProductData();
   updateSavedCartItems();
+  emptyCar();
 };
