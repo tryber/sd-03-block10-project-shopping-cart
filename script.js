@@ -115,6 +115,7 @@ function emptyCart() {
   });
 }
 getResponse()
+  .then(() => document.querySelector('.loading').remove())
   .catch((error) => {
     console.log('Error');
     console.error(error);
