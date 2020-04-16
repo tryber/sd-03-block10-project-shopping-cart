@@ -88,7 +88,7 @@ const createProductItemElement = ({ sku, name, image }) => {
           createCartItemElement({
             sku: data.id,
             name: data.title,
-            salePrice: data.price.toFixed(2),
+            salePrice: data.price,
           }),
         );
       })
@@ -130,6 +130,6 @@ const emptyCart = async () => {
 window.onload = async () => {
   await getProductData();
   await updateSavedCartItems();
-  await emptyCart();
   await cartTotal();
+  emptyCart();
 };
