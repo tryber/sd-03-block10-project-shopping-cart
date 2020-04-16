@@ -130,5 +130,6 @@ const emptyCart = async () => {
 window.onload = async () => {
   await getProductData();
   await updateSavedCartItems();
-  emptyCart();
+  await emptyCart();
+  await cartTotal();
 };
