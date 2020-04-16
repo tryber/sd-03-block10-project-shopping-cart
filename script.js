@@ -18,7 +18,7 @@ function getSkuFromProductItem(item) {
 
 async function cartItemClickListener(event) {
   const newTotal = Math.round((Number(localStorage.getItem('Total')) -
-    parseFloat(event.target.innerHTML.match(/([0-9.]){1,}$/)))*100)/100;
+    parseFloat(event.target.innerHTML.match(/([0-9.]){1,}$/))) * 100) / 100;
   await event.target.remove();
   await localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
   document.getElementsByClassName('total')[0].innerHTML = `${newTotal}`;
@@ -28,7 +28,7 @@ async function cartItemClickListener(event) {
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   let total = Number(localStorage.getItem('Total'));
-  total = Math.round((total + salePrice)*100)/100;
+  total = Math.round((total + salePrice) * 100) / 100;
   li.className = 'item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
@@ -82,7 +82,7 @@ window.onload = async function onload() {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
     localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
     localStorage.setItem('Total', 0);
-    document.getElementsByClassName('total')[0].innerHTML = `0`;
+    document.getElementsByClassName('total')[0].innerHTML = '0';
   });
   if (!localStorage.getItem('Total')) {
     localStorage.setItem('Total', 0);
