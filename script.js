@@ -12,8 +12,9 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(event) {
-  event.target.remove();
+async function cartItemClickListener(event) {
+  await event.target.remove();
+  await localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -33,14 +34,15 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
 
   const btn = (createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  btn.addEventListener('click', () => {
-    fetch(`https://api.mercadolibre.com/items/${sku}`)
+  btn.addEventListener('click', async () => {
+    await fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(resp => resp.json())
     .then((json) => {
       const item = document.getElementsByClassName('cart__items')[0];
       item.appendChild(
         createCartItemElement({ sku: json.id, name: json.title, salePrice: json.price }));
     });
+    await localStorage.setItem('carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
   });
   section.appendChild(btn);
   return section;
@@ -61,10 +63,13 @@ window.onload = function onload() {
             { sku: products.id, name: products.title, image: products.thumbnail }));
       });
     });
+    document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('carrinho');
+    document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
 
-  const btnEmptyCart = document.getElementsByClassName('empty-cart')[0];
+    const btnEmptyCart = document.getElementsByClassName('empty-cart')[0];
 
-  btnEmptyCart.addEventListener('click', () => {
-    document.getElementsByClassName('cart__items')[0].innerHTML = '';
+    btnEmptyCart.addEventListener('click', () => {
+      document.getElementsByClassName('cart__items')[0].innerHTML = '';
+      localStorage.setItem('carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
   });
 };
