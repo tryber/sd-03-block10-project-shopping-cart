@@ -52,6 +52,7 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
   saveCartItems();
+  cartTotal();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -92,6 +93,7 @@ function createProductItemElement({ sku, name, image }) {
       })
       .catch(() => alert('Erro: Produto não listado'));
     saveCartItems();
+    cartTotal();
   });
   return section;
 }
