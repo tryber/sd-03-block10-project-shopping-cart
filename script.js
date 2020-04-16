@@ -58,7 +58,7 @@ function createProductItemElement({ sku, name, image }) {
     const API_ITEM_REQUEST = `https://api.mercadolibre.com/items/${sku}`;
     await fetch(API_ITEM_REQUEST)
       .then(response => response.json())
-      .then(data => {
+      .then((data) => {
         const cartProductList = document.querySelector('ol.cart__items');
         cartProductList.appendChild(
           createCartItemElement({
