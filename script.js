@@ -116,7 +116,7 @@ const getProductData = async () => {
   const productsList = document.querySelector('.items');
   const queryKey = 'computador';
   const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${queryKey}`;
-  loadingElement()
+  loadingElement();
   await fetch(API_URL)
     .then(response => response.json())
     .then(data =>
