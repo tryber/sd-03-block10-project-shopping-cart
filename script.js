@@ -25,12 +25,12 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-window.onload = function onload() { };
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 const myObj = { method: 'GET' };
 
 const sectionItem = document.querySelector('.items');
 const lStorage = () => localStorage.setItem('cart', document.querySelector('.cart__items').innerHTML);
+const getls = () => document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart');
 
 function transNumber(num) {
   return (Math.round(num.toFixed(2) * 100) / 100);
@@ -82,7 +82,6 @@ function montarObj(json) {
       image: el.thumbnail,
     });
   });
-  document.querySelector('.cart__items').innerHTML = localStorage.getItem('cart');
   document.querySelectorAll('li')
     .forEach((el) => {
       el.addEventListener('click', cartItemClickListener);
@@ -128,6 +127,7 @@ const fetchItemPorID = async (id) => {
   const obj = await montarObjCartItem(data);
   const prec = allprice(obj);
   document.querySelector('#total-price').innerText = prec;
+  lStorage()
 };
 
 const coletarIDsDoElementoClicado = (event) => {
@@ -149,6 +149,7 @@ window.onload = function onload() {
     .then(response => response.json())
     .then(jsonResponse => montarObj(jsonResponse))
     .then(arr => criaElementosNaTela(arr))
+    .then(getls)
     .then(loading())
     .then(queryButtons)
     .then(emptcart);
