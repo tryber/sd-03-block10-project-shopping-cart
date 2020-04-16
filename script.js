@@ -1,8 +1,6 @@
 const myObject = { method: 'GET', headers: new Headers() };
 
-// window.onload = function onload() { };
-
-function createProductImg(imageSource) {
+function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
@@ -10,33 +8,33 @@ function createProductImg(imageSource) {
 }
 
 // 5. Add the total value using total-price class.
-const sum = () => {
+const sumPrices = () => {
   const cartItem = document.querySelectorAll('.cart__item');
-  document.getElementsByClassName('total-price')[0].textContent = Math.round([...cartItem].map(p => p.textContent
+  document.getElementsByClassName('total-price')[0].textContent = Math.round([...cartItem].map(e => e.textContent
     .match(/([0-9.]){1,}$/))
     .reduce((acc, price) => acc + parseFloat(price), 0) * 100) / 100;
 };
 
-const cartUpdating = () => {
+const updateCart = () => {
   localStorage.setItem('itemCart', document.getElementsByClassName('cart__items')[0].innerHTML);
-  sum();
+  sumPrices();
 };
 
-function getSku(item) {
+function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
 // 3. Perform removal with cartItemClickListener(event)
 function cartItemClickListener(event) {
   event.target.remove();
-  cartUpdating();
+  updateCart();
 }
 
 // createCartItemElement() to create the HTML components for an item in the cart.
-function createCartItemElement({ sku, name, price }) {
+function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `Id: ${sku} , Product: ${name} , Price: $${price}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -48,17 +46,17 @@ const addElementToCart = async ({ sku }) => {
     document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement({
       sku: product.id,
       name: product.title,
-      price: product.price,
+      salePrice: product.price,
     }));
-    cartUpdating();
+    updateCart();
   });
 };
 
-function createProduct(el, className, innerText) {
-  const product = document.createElement(el);
-  product.className = className;
-  product.innerText = innerText;
-  return product;
+function createCustomElement(element, className, innerText) {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
 }
 
 // 2.Each product has a button with the name "Adicionar ao carrinho!"
@@ -66,26 +64,14 @@ function createProduct(el, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-  section.appendChild(createProduct('span', 'item__sku', sku));
-  section.appendChild(createProduct('span', 'item__title', name));
-  section.appendChild(createProductImg(image));
-  const btnAddCart = createProduct('button', 'item__add', 'Adicionar ao carrinho!');
+  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProductImageElement(image));
+  const btnAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   btnAddCart.addEventListener('click', () => addElementToCart({ sku }));
   section.appendChild(btnAddCart);
   return section;
 }
-
-// function createProductItemElement({ sku, name, image }) {
-//   const section = document.createElement('section');
-//   section.className = 'item';
-//   section.appendChild(createCustomElement('span', 'item__sku', sku));
-//   section.appendChild(createCustomElement('span', 'item__title', name));
-//   section.appendChild(createProductImageElement(image));
-//   const btnAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-//   btnAddCart.addEventListener('click', () => addElementToCart({ sku }));
-//   section.appendChild(btnAddCart);
-//   return section;
-// }
 
 // searching for the term "computador"
 // element returned from the function createProductItemElement(product).
@@ -121,5 +107,5 @@ window.onload = async function onload() {
   });
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('itemCart');
   document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
-  await sum();
+  await sumPrices();
 };
