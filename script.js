@@ -55,9 +55,9 @@ function allprice(obj) {
 
 
 function cartItemClickListener(event) {
-  event.target.parentNode.removeChild(event.target);
+  event.target.parentNode.removeChild();
   document.querySelector('#total-price').innerHTML = allprice();
-  lStorage();
+  getls();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -114,6 +114,7 @@ function emptcart() {
     document.querySelector('.cart__items').innerHTML = '';
   });
   document.querySelector('.loading').remove();
+  lStorage();
 }
 
 function loading() {
@@ -127,7 +128,7 @@ const fetchItemPorID = async (id) => {
   const obj = await montarObjCartItem(data);
   const prec = allprice(obj);
   document.querySelector('#total-price').innerText = prec;
-  lStorage()
+  lStorage();
 };
 
 const coletarIDsDoElementoClicado = (event) => {
@@ -149,7 +150,7 @@ window.onload = function onload() {
     .then(response => response.json())
     .then(jsonResponse => montarObj(jsonResponse))
     .then(arr => criaElementosNaTela(arr))
-    .then(getls)
+    .then(getls())
     .then(loading())
     .then(queryButtons)
     .then(emptcart);
