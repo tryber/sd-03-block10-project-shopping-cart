@@ -20,10 +20,13 @@ const saveCartItems = async () => {
   console.log(localStorage);
 };
 
-const updateSavedCartItems = async () => {
+const updateSavedCartItems = () => {
   document.getElementsByClassName(
     'cart__items',
   )[0].innerHTML = localStorage.getItem('saved__cart__items');
+  document
+    .getElementsByClassName('cart__items')[0]
+    .addEventListener('click', cartItemClickListener);
 };
 
 function cartItemClickListener(event) {
