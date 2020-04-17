@@ -12,7 +12,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const cartTotal = async () => {
+const cartTotal = () => {
   const totalValueElement = document.querySelector('.cart__total');
   const cartItems = document.querySelectorAll('.cart__item');
   const totalValue =
@@ -143,6 +143,5 @@ const emptyCart = () => {
 window.onload = async () => {
   await getProductData();
   await updateSavedCartItems();
-  await cartTotal();
   emptyCart();
 };
