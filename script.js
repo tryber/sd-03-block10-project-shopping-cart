@@ -77,9 +77,7 @@ function eraseCart() {
 
 
 function loadingElem() {
-  document.body.appendChild(
-    createCustomElement('span', 'loading', 'Loading...')
-  );
+  document.body.appendChild(createCustomElement('span', 'loading', 'Loading...'));
 }
 
 async function fetchPage() {
