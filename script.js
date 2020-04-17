@@ -70,6 +70,6 @@ window.onload = function onload() {
 
   btnEmptyCart.addEventListener('click', () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
-     localStorage.setItem('carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
+    localStorage.setItem('carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
   });
 };
