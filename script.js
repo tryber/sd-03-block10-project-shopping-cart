@@ -56,29 +56,29 @@ function getSkuFromProductItem(item) {
 async function cartItemClickListener(event, sku) {
   const localParsed = JSON.parse(localStorage.cart);
   const totalPrice = document.querySelector('.total-price');
-  const item = await localParsed.find(e => e.sku === sku);
+  const item = localParsed.find(e => e.sku === sku);
   totalPrice.innerHTML = (JSON.parse(totalPrice.innerHTML) - JSON.parse(item.salePrice)).toFixed(2);
 
   // console.log(item);
   // console.log(localParsed);
-  const index = await localParsed.findIndex(e => e.sku === item.sku);
+  const index = localParsed.findIndex(e => e.sku === item.sku);
   // console.log(index);
   // console.log('localStorage.cart:', localParsed);
   localParsed.splice(index, 1);
   // console.log(localParsed);
   localStorage.cart = JSON.stringify(localParsed);
-  await event.target.remove();
+  event.target.remove();
 }
 async function sumPrice(salePrice) {
   const totalPrice = document.querySelector('.total-price');
-  const sum = await (JSON.parse(totalPrice.innerHTML) + JSON.parse(salePrice)).toFixed(2);
+  const sum = (JSON.parse(totalPrice.innerHTML) + JSON.parse(salePrice)).toFixed(2);
   totalPrice.innerHTML = sum;
 }
-function createCartItemElement({ sku, name, salePrice }) {
+async function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  sumPrice(salePrice);
+  await sumPrice(salePrice);
   li.addEventListener('click', event => cartItemClickListener(event, sku));
   return document.querySelector('.cart__items').appendChild(li);
 }
@@ -109,7 +109,7 @@ async function getResponse() {
 }
 function emptyCart() {
   document.querySelector('.empty-cart').addEventListener('click', () => {
-    document.querySelector('.total-price').innerText = 0.00;
+    document.querySelector('.total-price').innerText = 0;
     document.querySelectorAll('li.cart__item').forEach(e => e.remove());
     localStorage.clear();
   });
