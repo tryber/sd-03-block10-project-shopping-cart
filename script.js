@@ -61,7 +61,7 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 window.onload = async function onload() {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+  await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(res => res.json())
     .then(json => json.results.forEach(products => document.getElementsByClassName('items')[0]
       .appendChild(createProductItemElement(updateList(products)))));
