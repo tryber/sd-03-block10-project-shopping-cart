@@ -87,7 +87,7 @@ const populateItems = (json) => {
 
 const searchEvent = async () => {
   document.getElementsByClassName('items')[0].innerHTML = '';
-  await addLoading();
+  await addLoading('items');
   await fetchAPI(`https://api.mercadolibre.com/sites/MLB/search?q=${document.getElementsByClassName('input')[0].value}`)
     .then((json) => {
       populateItems(json);
