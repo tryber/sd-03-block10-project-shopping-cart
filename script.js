@@ -53,21 +53,21 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event, sku) {
+async function cartItemClickListener(event, sku) {
   const localParsed = JSON.parse(localStorage.cart);
   const totalPrice = document.querySelector('.total-price');
-  const item = localParsed.find(e => e.sku === sku);
+  const item = await localParsed.find(e => e.sku === sku);
   totalPrice.innerHTML = (JSON.parse(totalPrice.innerHTML) - JSON.parse(item.salePrice)).toFixed(2);
 
   // console.log(item);
   // console.log(localParsed);
-  const index = localParsed.findIndex(e => e.sku === item.sku);
+  const index = await localParsed.findIndex(e => e.sku === item.sku);
   // console.log(index);
   // console.log('localStorage.cart:', localParsed);
   localParsed.splice(index, 1);
   // console.log(localParsed);
   localStorage.cart = JSON.stringify(localParsed);
-  event.target.remove();
+  await event.target.remove();
 }
 async function sumPrice(salePrice) {
   const totalPrice = document.querySelector('.total-price');
@@ -109,9 +109,9 @@ async function getResponse() {
 }
 function emptyCart() {
   document.querySelector('.empty-cart').addEventListener('click', () => {
+    document.querySelector('.total-price').innerText = 0.00;
     document.querySelectorAll('li.cart__item').forEach(e => e.remove());
     localStorage.clear();
-    document.querySelector('.total-price').innerText = 0.00;
   });
 }
 getResponse()
