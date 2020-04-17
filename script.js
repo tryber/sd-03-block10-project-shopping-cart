@@ -2,17 +2,27 @@
 //   sku: results.id,
 //   name: results.title,
 //   thumbnail: results.thumbnail,
+
 // }
+
 async function cartItemClickListener(event) {
+  const novoTotal = Math.round((Number(localStorage.getItem('Total'))
+   - parseFloat(event.target.innerHTML.match(/([0-9.]){1,}$/))) * 100) / 100;
   await event.target.remove();
   await localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
+  document.getElementsByClassName('total-price')[0].innerHTML = `${novoTotal}`;
+  localStorage.setItem('Total', novoTotal);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
+  let total = Number(localStorage.getItem('Total'));
+  total = Math.round((total + salePrice) * 100) / 100;
   li.className = 'item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+  document.getElementsByClassName('total-price')[0].innerHTML = `${total}`;
+  localStorage.setItem('Total', total);
   return li;
 }
 
@@ -74,7 +84,13 @@ window.onload = function onload() {
       document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
         document.getElementsByClassName('cart__items')[0].innerHTML = '';
         localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
+        localStorage.setItem('Total', 0);
+        document.getElementsByClassName('total-price')[0].innerHTML = '0';
       });
-      // loading.innerHTML = '';
     }));
+  if (!localStorage.getItem('Total')) {
+    localStorage.setItem('Total', 0);
+  }
+  document.getElementsByClassName('total-price')[0].innerHTML = this.localStorage.getItem('total');
+  // loading.innerHTML = '';
 };
