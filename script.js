@@ -41,8 +41,6 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   const addButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  // addButton.addEventListener('click', createCartItemElement(detailsToCart))
-  // Retorno do nome antigo do github
   section.appendChild(addButton);
 
   return section;
@@ -60,14 +58,8 @@ async function cartItemClickListener(event, sku) {
   const localParsed = JSON.parse(localStorage.cart);
   const item = localParsed.find(e => e.sku === sku);
   await sumPrice(-item.salePrice);
-
-  // console.log(item);
-  // console.log(localParsed);
   const index = localParsed.findIndex(e => e.sku === item.sku);
-  // console.log(index);
-  // console.log('localStorage.cart:', localParsed);
   localParsed.splice(index, 1);
-  // console.log(localParsed);
   localStorage.cart = JSON.stringify(localParsed);
   event.target.remove();
 }
@@ -98,9 +90,6 @@ async function getResponse() {
     await e.lastChild.addEventListener('click', () => {
       createCartItemElement(getDetails);
       createStorage(getDetails);
-      // console.log(totalPrice);
-      // const totalPrice = document.querySelector('.total-price');
-      // totalPrice.innerHTML = sum;
     });
   });
 }
@@ -118,12 +107,10 @@ getResponse()
     console.error(error);
   });
 async function loadOnCart() {
-  if (localStorage.cart) {
-    const storage = JSON.parse(localStorage.cart);
-    await storage.forEach(({ sku, name, salePrice }) => {
-      createCartItemElement({ sku, name, salePrice });
-    });
-  }
+  const storage = JSON.parse(localStorage.cart);
+  await storage.forEach(({ sku, name, salePrice }) => {
+    createCartItemElement({ sku, name, salePrice });
+  });
 }
 window.onload = function onload() {
   loadOnCart();
