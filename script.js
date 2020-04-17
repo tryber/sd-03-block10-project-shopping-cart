@@ -75,10 +75,10 @@ function createProductItemElement({ sku, name, image }) {
 // searching for the term "computador"
 // element returned from the function createProductItemElement(product).
 // 1. Product listing, endpoint "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
-// const myObject = { method: 'GET', headers: new Headers() };
+const myHeaders = { method: 'GET', headers: new Headers(), mode: 'cors', cache: 'default' };
 // async function apiCreateItem() {
 const apiCreateItem = async () => {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myHeaders)
   .then(response => response.json())
   .then((data) => {
     const items = document.querySelector('.items');
