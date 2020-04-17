@@ -77,7 +77,7 @@ function createProductItemElement({ sku, name, image }) {
 // 1. Product listing, endpoint "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
 const myHeaders = { method: 'GET', headers: new Headers() };
 const apiCreateItem = async () => {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myHeaders)
+  await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myHeaders)
   .then(response => response.json())
   .then((data) => {
     const items = document.querySelector('.items');
