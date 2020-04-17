@@ -77,14 +77,15 @@ function createProductItemElement({ sku, name, image }) {
 // 1. Product listing, endpoint "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
 // const myObject = { method: 'GET', headers: new Headers() };
 // async function apiCreateItem() {
-  const apiCreateItem = async () => {
+const apiCreateItem = async () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
   .then((data) => {
     const items = document.querySelector('.items');
 // array results
     data.results.map(function (res) {
-      return items.appendChild(createProductItemElement({ sku: res.id, name: res.title, image: res.thumbnail }));
+      return items.appendChild(createProductItemElement({ sku: res.id, name: res.title,
+        image: res.thumbnail }));
     });
   });
   document.getElementsByClassName('loading')[0].remove();
