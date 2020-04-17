@@ -68,7 +68,7 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-async function apiCreateItem() {
+async function criaItem1() {
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject)
   .then(response => response.json())
   .then((data) => {
@@ -88,7 +88,7 @@ async function apiCreateItem() {
 }
 
 window.onload = async function onload() {
-  await apiCreateItem();
+  await criaItem1();
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     localStorage.setItem('itemCart', '');
     localStorage.setItem('cartTotalPrice', 0);
