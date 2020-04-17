@@ -84,12 +84,14 @@ const apiCreateItem = async () => {
     const items = document.querySelector('.items');
 // array results
     data.results.map(function (res) {
-      return items.appendChild(createProductItemElement({ sku: res.id, name: res.title,
+      return items.appendChild(createProductItemElement({
+        sku: res.id,
+        name: res.title,
         image: res.thumbnail }));
     });
   });
   document.getElementsByClassName('loading')[0].remove();
-}
+};
 
 // 6.Button to clear the shopping cart.
 // 4. Load the shopping cart through localStorage when starting the page
