@@ -12,7 +12,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const cartTotal = () => {
+const cartTotal = async () => {
   const totalValueElement = document.querySelector('.cart__total');
   const cartItems = document.querySelectorAll('.cart__item');
   const totalValue =
@@ -52,7 +52,7 @@ const updateSavedCartItems = async () => {
   document
     .getElementsByClassName('cart__items')[0]
     .addEventListener('click', cartItemClickListener);
-  cartTotal();
+  await cartTotal();
 };
 
 function createCartItemElement({ sku, name, salePrice }) {
