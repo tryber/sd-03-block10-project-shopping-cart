@@ -82,7 +82,7 @@ window.onload = async function onload() {
     localStorage.setItem('Total', 0);
     document.getElementsByClassName('total-price')[0].innerHTML = '0';
   });
-  if (!localStorage.getitem('Total')) {
+  if (!localStorage.getItem('Total')) {
     localStorage.setItem('Total', 0);
   }
   document.getElementsByClassName('total-price')[0].innerHTML = this.localStorage.getItem('Total');
