@@ -2,6 +2,13 @@ const removeLoading = () => {
   document.getElementsByClassName('loading')[0].remove();
 };
 
+const createCustomElement = (element, className, innerText) => {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+};
+
 const addLoading = (item) => {
   document.getElementsByClassName(item)[0].appendChild(createCustomElement('p', 'loading', ''));
 };
@@ -11,13 +18,6 @@ const createProductImageElement = (imageSource) => {
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-};
-
-const createCustomElement = (element, className, innerText) => {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
 };
 
 const updateCart = () => {

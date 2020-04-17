@@ -110,14 +110,15 @@ h1 {
 .loading {
   animation: spin 1s linear infinite;
   border: 8px solid rgba( 224 , 122 , 95 , 1 );
-  border-left-color: rgb(221, 153, 135);
+  border-left-color: rgb( 221 , 153 , 135 );
   border-radius: 50%;
   height: 40px;
   width: 40px;
 }
 
 @keyframes spin {
-  to {transform: rotate(360deg);}
+
+  to { transform: rotate( 360deg ); }
 }
 
 .header {
