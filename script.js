@@ -80,5 +80,4 @@ window.onload = async () => {
   .catch(() => console.log('ERROR Listar listarProdutos'));
 
   carItem.innerHTML = localStorage.getItem('Cart_items');
-
 };
