@@ -1,4 +1,3 @@
-const myObject = { method: 'GET', headers: new Headers() };
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -76,20 +75,16 @@ function createProductItemElement({ sku, name, image }) {
 // searching for the term "computador"
 // element returned from the function createProductItemElement(product).
 // 1. Product listing, endpoint "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
-async function apiCreateItem() {
-  await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject)
+// const myObject = { method: 'GET', headers: new Headers() };
+// async function apiCreateItem() {
+  const apiCreateItem = async () => {
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
   .then(response => response.json())
   .then((data) => {
     const items = document.querySelector('.items');
 // array results
     data.results.map(function (res) {
-      return items.appendChild(createProductItemElement(
-        {
-          sku: res.id,
-          name: res.title,
-          image: res.thumbnail,
-        },
-        ));
+      return items.appendChild(createProductItemElement({ sku: res.id, name: res.title, image: res.thumbnail }));
     });
   });
   document.getElementsByClassName('loading')[0].remove();
