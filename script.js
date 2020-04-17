@@ -52,12 +52,15 @@ function createProductItemElement({ sku, name, image }) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-
+async function sumPrice(salePrice) {
+  const totalPrice = document.querySelector('.total-price');
+  const sum = Math.round((JSON.parse(totalPrice.innerHTML) + JSON.parse(salePrice)) * 100) / 100;
+  totalPrice.innerHTML = sum;
+}
 async function cartItemClickListener(event, sku) {
   const localParsed = JSON.parse(localStorage.cart);
-  const totalPrice = document.querySelector('.total-price');
   const item = localParsed.find(e => e.sku === sku);
-  totalPrice.innerHTML = (JSON.parse(totalPrice.innerHTML) - JSON.parse(item.salePrice)).toFixed(2);
+  await sumPrice(-item.salePrice);
 
   // console.log(item);
   // console.log(localParsed);
@@ -69,11 +72,7 @@ async function cartItemClickListener(event, sku) {
   localStorage.cart = JSON.stringify(localParsed);
   event.target.remove();
 }
-async function sumPrice(salePrice) {
-  const totalPrice = document.querySelector('.total-price');
-  const sum = (JSON.parse(totalPrice.innerHTML) + JSON.parse(salePrice)).toFixed(2);
-  totalPrice.innerHTML = sum;
-}
+
 async function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -102,7 +101,6 @@ async function getResponse() {
       createStorage(getDetails);
       // console.log(totalPrice);
       // const totalPrice = document.querySelector('.total-price');
-      // const sum = (JSON.parse(totalPrice.innerHTML) + JSON.parse(.salePrice)).toFixed(2);
       // totalPrice.innerHTML = sum;
     });
   });
