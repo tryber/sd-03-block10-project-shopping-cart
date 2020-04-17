@@ -12,17 +12,37 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+function cartItemClickListener(event) {
+  event.target.remove();
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+
+// const cart = (data) => {
+//   let obj = {
+  //     sku: data.id,
+//     name: data.title,
+//     salePrice: data.price,
+//   };
+//   const li = createCartItemElement(obj);
+//   const ol = document.querySelector('.cart__items');
+//   ol.appendChild(li);
+// };
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-  
-function createCartItemElement({ sku, name, salePrice }) {
-    const li = document.createElement('li');
-    li.className = 'item';
-    li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-    li.addEventListener('click', cartItemClickListener);
-    return li;
-}
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
@@ -44,31 +64,10 @@ function createCartItemElement({ sku, name, salePrice }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  event.target.remove();
-}
-
-
-
-// const cart = (data) => {
-//   let obj = {
-//     sku: data.id,
-//     name: data.title,
-//     salePrice: data.price,
-//   };
-//   const li = createCartItemElement(obj);
-//   const ol = document.querySelector('.cart__items');
-//   ol.appendChild(li);
-// };
-
 window.onload = function onload() {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-    .then(data => data.json())
-    .then((json) => {
+  .then(data => data.json())
+  .then((json) => {
       json.results.forEach((product) => {
         document.querySelector('.items')
           .appendChild(createProductItemElement(
