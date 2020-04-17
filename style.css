@@ -31,8 +31,9 @@
 }
 
 .item {
-  border: 2px solid blue;
+  border: 2px solid black;
   border-radius: 5px;
+  box-shadow: 0 10px 20px rgba( 0 , 0 , 0 , 0.19 ), 0 6px 6px rgba( 0 , 0 , 0 , 0.23 );
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -56,7 +57,7 @@
 }
 
 .item .item__add {
-  background-color: green;
+  background-color: rgb( 74 , 93 , 212 );
   border: 0;
   cursor: pointer;
   margin: 0;
@@ -70,7 +71,24 @@
 }
 
 .cart .cart__title {
+  border: 2px black solid;
+  box-shadow: 0 10px 20px rgba( 0 , 0 , 0 , 0.19 ), 0 6px 6px rgba( 0 , 0 , 0 , 0.23 );
   flex-basis: 1;
-  font-size: 16pt;
+  font-size: 20pt;
+  font-weight: 600;
+  margin: 0;
+  padding: 10px;
   text-align: center;
+}
+
+.cart__subtitle {
+  box-shadow: 0 10px 20px rgba( 0 , 0 , 0 , 0.19 ), 0 6px 6px rgba( 0 , 0 , 0 , 0.23 );
+  border: 2px black solid;
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.empty-cart {
+  box-shadow: 0 10px 20px rgba( 0 , 0 , 0 , 0.19 ), 0 6px 6px rgba( 0 , 0 , 0 , 0.23 );
+  margin-top: 10px;
 }
