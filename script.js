@@ -18,6 +18,7 @@ const updateCart = () =>
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
+  updateCart();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -37,8 +38,8 @@ const addElementCart = async (id) => {
     sku: data.id,
     name: data.title,
     salePrice: data.price,
-  }));  
-}
+  }));
+};
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
