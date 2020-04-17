@@ -4,19 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Carrinho de Compras</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap" rel="stylesheet">
   </head>
 
   <body>
+    <header class="search">
+        <h1>CARRINHO DE COMPRAS</h1>
+        <label for="">Busque seu produto: </label>
+        <input class="input" type="text">
+        <input class="input-btn" type="button" value="Buscar">
+    </header>
     <section class="container">
-      <section class="items"></section>
+      <section class="items">
+      </section>
       <section class="cart">
-        <span class="cart__title">Carrinho de compras</span>
-        <button class="empty-cart">Esvaziar carrinho</button>
+        <span class="cart__title">SEU PEDIDO</span>
         <ol class="cart__items"></ol>
+        <p class="total-prc">Total: R$<span class="total-price"></span></p>
+        <button class="empty-cart">Esvaziar carrinho</button>
       </section>
     </section>
+    <footer>
+      <p>
+        Desenvolvido por
+        <a href="https://github.com/henriquerezende">Henrique Rezende</a> para o
+        curso da Trybe
+      </p>
+    </footer>
+    <script src="script.js"></script>
   </body>
 </html>
