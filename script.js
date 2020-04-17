@@ -1,3 +1,11 @@
+const removeLoading = () => {
+  document.getElementsByClassName('loading')[0].remove();
+};
+
+const addLoading = (item) => {
+  document.getElementsByClassName(item)[0].appendChild(createCustomElement('p', 'loading', ''));
+};
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,28 +20,24 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const sumPrices = () => {
-  const cartItems = document.querySelectorAll('.cart__item');
-  document.getElementsByClassName('total-price')[0].textContent = Math.round([...cartItems]
-    .map(e => e.textContent
-      .match(/([0-9.]){1,}$/))
-    .reduce((acc, price) => acc + parseFloat(price), 0) * 100) / 100;
-};
-
 const updateCart = () => {
   localStorage.setItem('Cart-items', document.getElementsByClassName('cart__items')[0].innerHTML);
-  sumPrices();
+  const total = Math.round(localStorage.getItem('cart_total') * 100) / 100;
+  document.getElementsByClassName('total-price')[0].textContent = total;
 };
 
 const cartItemClickListener = (event) => {
   event.target.remove();
+  let total = parseFloat(localStorage.getItem('cart_total'));
+  total = parseFloat(total) - parseFloat(event.target.textContent.match(/([0-9.])+$/));
+  localStorage.setItem('cart_total', total);
   updateCart();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `Código: ${sku} \n ${name} \n Preço: R$${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 };
@@ -44,14 +48,19 @@ const appendElement = (parentClass, callback, obj) => document
   .getElementsByClassName(parentClass)[0]
   .appendChild(callback(obj));
 
-const addToCart = async ({ sku }) => {
-  await fetchAPI(`https://api.mercadolibre.com/items/${sku}`)
-    .then(product => appendElement('cart__items', createCartItemElement, {
-      sku: product.id,
-      name: product.title,
-      salePrice: product.price,
-    }));
-  await updateCart();
+const addToCart = ({ sku }) => {
+  addLoading('cart__items');
+  fetchAPI(`https://api.mercadolibre.com/items/${sku}`)
+    .then((product) => {
+      appendElement('cart__items', createCartItemElement, {
+        sku: product.id,
+        name: product.title,
+        salePrice: product.price,
+      });
+      localStorage.setItem('cart_total', product.price + parseFloat(localStorage.getItem('cart_total')));
+      removeLoading();
+      updateCart();
+    });
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -66,14 +75,6 @@ const createProductItemElement = ({ sku, name, image }) => {
   });
   section.appendChild(btnAddToCart);
   return section;
-};
-
-const removeLoading = () => {
-  document.getElementsByClassName('loading')[0].remove();
-};
-
-const addLoading = () => {
-  document.getElementsByClassName('items')[0].appendChild(createCustomElement('p', 'loading', 'LOADING...'));
 };
 
 const populateItems = (json) => {
@@ -95,7 +96,9 @@ const searchEvent = async () => {
 };
 
 window.onload = async () => {
-  addLoading();
+  addLoading('items');
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Cart-items');
+  if (!localStorage.getItem('cart_total')) localStorage.setItem('cart_total', 0);
   await fetchAPI('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then((json) => {
       populateItems(json);
@@ -103,12 +106,12 @@ window.onload = async () => {
     });
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
+    localStorage.setItem('cart_total', 0);
     updateCart();
   });
-  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Cart-items');
   document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
-  await sumPrices();
   document.getElementsByClassName('input-btn')[0].addEventListener('click', searchEvent);
+  updateCart();
   document.getElementsByClassName('input')[0].addEventListener('keydown', (event) => {
     if (event.keyCode === 13) searchEvent();
   });
