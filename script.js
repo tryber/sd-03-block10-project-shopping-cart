@@ -7,7 +7,7 @@
 
 async function cartItemClickListener(event) {
   const novoTotal = Math.round((Number(localStorage.getItem('Total'))
-   - parseFloat(event.target.innerHTML.match(/([0-9.]){1,}$/))) * 100) / 100;
+    - parseFloat(event.target.innerHTML.match(/([0-9.]){1,}$/))) * 100) / 100;
   await event.target.remove();
   await localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
   document.getElementsByClassName('total-price')[0].innerHTML = `${novoTotal}`;
