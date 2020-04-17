@@ -51,7 +51,7 @@ const addElementToCart = async ({ sku }) => {
   });
 };
 
-function createCustomElement(element, className, innerText) {
+function createProduct(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
@@ -63,10 +63,10 @@ function createCustomElement(element, className, innerText) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
-  section.appendChild(createCustomElement('span', 'item__title', name));
+  section.appendChild(createProduct('span', 'item__sku', sku));
+  section.appendChild(createProduct('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  const btnAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  const btnAddCart = createProduct('button', 'item__add', 'Adicionar ao carrinho!');
   btnAddCart.addEventListener('click', () => addElementToCart({ sku }));
   section.appendChild(btnAddCart);
   return section;
@@ -76,7 +76,6 @@ function createProductItemElement({ sku, name, image }) {
 // element returned from the function createProductItemElement(product).
 // 1. Product listing, endpoint "https://api.mercadolibre.com/sites/MLB/search?q=$QUERY"
 const myHeaders = { method: 'GET', headers: new Headers(), mode: 'cors', cache: 'default' };
-// async function apiCreateItem() {
 const apiCreateItem = async () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myHeaders)
   .then(response => response.json())
