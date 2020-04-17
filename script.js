@@ -61,6 +61,8 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 window.onload = async function onload() {
+  const spanLoading = document.getElementsByClassName('loading')[0];
+  spanLoading = '<div class=sr-only>Loading...</span></div>';
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(res => res.json())
     .then(json => json.results.forEach(products => document.getElementsByClassName('items')[0]
