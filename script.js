@@ -58,7 +58,7 @@ const updateSavedCartItems = async () => {
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${Math.round(salePrice)}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
@@ -87,7 +87,7 @@ const createProductItemElement = ({ sku, name, image }) => {
           createCartItemElement({
             sku: data.id,
             name: data.title,
-            salePrice: Math.round(data.price),
+            salePrice: data.price,
           }),
         );
       })
