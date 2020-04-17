@@ -71,7 +71,7 @@ window.onload = async function onload() {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
     localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
     localStorage.setItem('cart_total', 0);
-    document.getElementsByClassName('total_value')[0].innerHTML = `0`;
+    document.getElementsByClassName('total_value')[0].innerHTML = '0';
   });
   if (!localStorage.getItem('cart_total')) {
     localStorage.setItem('cart_total', 0);
