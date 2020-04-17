@@ -12,8 +12,8 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const cartTotal = async () => {
-  const totalValueElement = document.querySelector('.cart__total');
+const cartTotal = async() => {
+  const totalValueElement = document.querySelector('.total-price');
   const cartItems = document.querySelectorAll('.cart__item');
   const totalValue =
     Math.round(
@@ -34,7 +34,7 @@ const saveCartItems = async () => {
   );
   localStorage.setItem(
     'saved__total__cart__value',
-    document.getElementsByClassName('cart__total')[0].innerHTML,
+    document.getElementsByClassName('total-price')[0].innerHTML,
   );
   console.log(localStorage);
 };
