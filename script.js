@@ -87,7 +87,7 @@ const createProductItemElement = ({ sku, name, image }) => {
           createCartItemElement({
             sku: data.id,
             name: data.title,
-            salePrice: data.price,
+            salePrice: Math.round(data.price),
           }),
         );
       })
