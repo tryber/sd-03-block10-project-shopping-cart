@@ -26,7 +26,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
-  console.log(salePrice);
   let total = Number(localStorage.getItem('Total'));
   total = Math.round((total + salePrice) * 100) / 100;
   document.getElementsByClassName('total-price')[0].innerHTML = total;
@@ -83,4 +82,8 @@ window.onload = async function onload() {
     localStorage.setItem('Total', 0);
     document.getElementsByClassName('total-price')[0].innerHTML = '0';
   });
+  if (!localStorage.getitem('Total')) {
+    localStorage.setItem('Total', 0);
+  }
+  document.getElementsByClassName('total-price')[0].innerHTML = this.localStorage.getItem('Total');
 };
