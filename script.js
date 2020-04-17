@@ -30,8 +30,7 @@ async function getDetailsToCart(id) {
   const sku = respToJson.id;
   const name = respToJson.title;
   const salePrice = respToJson.price;
-  const treatedToCart = { sku, name, salePrice };
-  return treatedToCart;
+  return { sku, name, salePrice };
 }
 
 function createProductItemElement({ sku, name, image }) {
