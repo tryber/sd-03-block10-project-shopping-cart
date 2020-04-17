@@ -75,7 +75,6 @@ function eraseCart() {
   }
 }
 
-
 function loadingElem() {
   document.body.appendChild(createCustomElement('span', 'loading', 'Loading...'));
 }
@@ -90,7 +89,7 @@ async function fetchPage() {
         name: item.title,
         image: item.thumbnail,
       }))))
-    .then(document.body.removeChild(document.getElementsByClassName('loading')[0]));
+    .then(() => document.body.removeChild(document.getElementsByClassName('loading')[0]));
 }
 
 async function recoverCart() {
