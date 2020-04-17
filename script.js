@@ -17,7 +17,7 @@ const updateCart = () =>
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  updateCart();
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -37,8 +37,8 @@ const addElementCart = async (id) => {
     sku: data.id,
     name: data.title,
     salePrice: data.price,
-  }));
-};
+  }));  
+}
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -50,7 +50,6 @@ function createProductItemElement({ sku, name, image }) {
 
   const btnAddCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   btnAddCart.addEventListener('click', () => addElementCart(sku));
-
   section.appendChild(btnAddCart);
 
   return section;
