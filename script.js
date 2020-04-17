@@ -66,9 +66,9 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProduct('span', 'item__sku', sku));
   section.appendChild(createProduct('span', 'item__title', name));
   section.appendChild(createProductImg(image));
-  const btnAddCart = createProduct('button', 'item__add', 'Adicionar ao carrinho!');
-  btnAddCart.addEventListener('click', () => addElementToCart({ sku }));
-  section.appendChild(btnAddCart);
+  const btnAdd = createProduct('button', 'item__add', 'Adicionar ao carrinho!');
+  btnAdd.addEventListener('click', () => addElementToCart({ sku }));
+  section.appendChild(btnAdd);
   return section;
 }
 
