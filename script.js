@@ -1,7 +1,7 @@
 // const itens = element => {
-//   sku: element.results.id,
-//   name: element.results.title,
-//   thumbnail: element.results.thumbnail,
+//   sku: results.id,
+//   name: results.title,
+//   thumbnail: results.thumbnail,
 // }
 async function cartItemClickListener(event) {
   await event.target.remove();
@@ -30,9 +30,9 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// function getSkuFromProductItem(item) {
-//   return item.querySelector('span.item__sku').innerText;
-// }
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -42,8 +42,8 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   const btn = (createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-  btn.addEventListener('click', () => {
-    fetch(`https://api.mercadolibre.com/items/${sku}`)
+  btn.addEventListener('click', async () => {
+    await fetch(`https://api.mercadolibre.com/items/${sku}`)
       .then(resolve => resolve.json())
       .then(((produts) => {
         const item = document.getElementsByClassName('cart__items')[0];
@@ -53,13 +53,14 @@ function createProductItemElement({ sku, name, image }) {
           salePrice: produts.price,
         }));
       }));
-    localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
+    await localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
   });
   section.appendChild(btn);
   return section;
 }
 
 window.onload = function onload() {
+  const loading = document.getElementsByClassName('loading')[0];
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(respostaRecebida => respostaRecebida.json())
     .then(essaRespostaBusca => essaRespostaBusca.results.forEach((produts) => {
@@ -72,6 +73,8 @@ window.onload = function onload() {
       document.querySelectorAll('li').forEach(e => e.addEventListener('click', cartItemClickListener));
       document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
         document.getElementsByClassName('cart__items')[0].innerHTML = '';
+        localStorage.setItem('cart__items', document.getElementsByClassName('cart__items')[0].innerHTML);
       });
+      //loading.innerHTML = '';
     }));
 };
