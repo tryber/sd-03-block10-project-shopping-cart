@@ -1,5 +1,5 @@
 
-function createProductImageElement(imageSource) {
+function createProductImg(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
@@ -65,7 +65,7 @@ function createProductItemElement({ sku, name, image }) {
   section.className = 'item';
   section.appendChild(createProduct('span', 'item__sku', sku));
   section.appendChild(createProduct('span', 'item__title', name));
-  section.appendChild(createProductImageElement(image));
+  section.appendChild(createProductImg(image));
   const btnAddCart = createProduct('button', 'item__add', 'Adicionar ao carrinho!');
   btnAddCart.addEventListener('click', () => addElementToCart({ sku }));
   section.appendChild(btnAddCart);
