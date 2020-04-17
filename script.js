@@ -49,8 +49,8 @@ function createProductItemElement({ sku, name, image }) {
       const item = document.getElementsByClassName('cart__items')[0];
       item.appendChild(
         createCartItemElement({ sku: json.id, name: json.title, salePrice: json.price }));
-        console.log('valor do produto: $' + json.price);
-      });
+      console.log('valor do produto: $', json.price);
+    });
     await localStorage.setItem('carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
   });
   section.appendChild(btn);
