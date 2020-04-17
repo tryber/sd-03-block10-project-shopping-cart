@@ -69,7 +69,7 @@ window.onload = function onload() {
   const btnEmptyCart = document.getElementsByClassName('empty-cart')[0];
 
   btnEmptyCart.addEventListener('click', () => {
-      document.getElementsByClassName('cart__items')[0].innerHTML = '';
-      localStorage.setItem('carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
-    });
+    document.getElementsByClassName('cart__items')[0].innerHTML = '';
+     localStorage.setItem('carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
+  });
 };
