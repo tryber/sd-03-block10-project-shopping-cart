@@ -24,7 +24,7 @@ const cartTotal = async () => {
           0,
         ) * 100,
     ) / 100;
-  totalValueElement.innerHTML = totalValue;
+  totalValueElement.innerHTML = Math.round(totalValue);
 };
 
 const saveCartItems = async () => {
