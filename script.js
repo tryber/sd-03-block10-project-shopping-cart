@@ -30,7 +30,6 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const addElementCart = async (id) => {
   const listaAddCart = document.querySelector('.cart__items');
-  
   const response = await fetch(`https://api.mercadolibre.com/items/${id}`);
   const data = await response.json();
 
@@ -39,8 +38,7 @@ const addElementCart = async (id) => {
     name: data.title,
     salePrice: data.price,
   }));
-  
-}
+};
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
