@@ -29,7 +29,7 @@ function saveCartItems() {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   if (event.target) {
-    cartList[0].removeChild(event.target);
+    event.target.remove();
     saveCartItems();
   }
 }
