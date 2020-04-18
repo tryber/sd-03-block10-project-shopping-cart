@@ -21,8 +21,11 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-  .addEventListener('click', () => getSku(sku));
+  section
+    .appendChild(
+      createCustomElement('button', 'item__add', 'Adicionar ao carrinho!')
+    )
+    .addEventListener('click', () => getSku(sku));
 
   return section;
 }
@@ -32,7 +35,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -46,27 +49,36 @@ function createCartItemElement({ sku, name, salePrice }) {
 const cart = document.getElementsByClassName('cart__items');
 
 async function getSku(sku) {
-  return fetch (`https://api.mercadolibre.com/items/${sku}`)
+  return fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(response => response.json())
-    .then(data => createCartItemElement({
-      sku: data.id,
-      name: data.title,
-      salePrice: data.price,
-    }))
+    .then(data =>
+      createCartItemElement({
+        sku: data.id,
+        name: data.title,
+        salePrice: data.price,
+      })
+    )
     .then(e => cart[0].appendChild(e));
 }
 
 window.onload = async () => {
   await fetch(url)
     .then(response => response.json())
-    .then(data => data.results.forEach(e => document.getElementsByClassName('items')[0]
-      .appendChild(createProductItemElement({
-        sku: e.id,
-        name: e.title,
-        image: e.thumbnail,
-      }))));
+    .then(data =>
+      data.results.forEach(e =>
+        document.getElementsByClassName('items')[0].appendChild(
+          createProductItemElement({
+            sku: e.id,
+            name: e.title,
+            image: e.thumbnail,
+          })
+        )
+      )
+    );
 
-    document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
-    document.getElementsByClassName('cart__items')[0].innerHTML = '';
-  });
+  document
+    .getElementsByClassName('empty-cart')[0]
+    .addEventListener('click', () => {
+      document.getElementsByClassName('cart__items')[0].innerHTML = '';
+    });
 };
