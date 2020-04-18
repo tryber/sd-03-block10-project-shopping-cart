@@ -49,12 +49,9 @@ async function getSku(sku) {
         salePrice: data.price,
       }),
     )
-    .then(e => cart[0].appendChild(e))
-    .then(() => {
-      saveCartItems();
-      sumPrice();
-    });
+    .then(e => sumPrice(e));
 }
+
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -98,8 +95,12 @@ async function mostraApi() {
     });
 }
 
+function load() {
+  document.querySelector('.loading').remove();
+}
+
 window.onload = function onload() {
   mostraApi();
-  sumPrice()
-  .then(() => document.querySelector('.loading').remove());
+  sumPrice();
+  load();
 };
