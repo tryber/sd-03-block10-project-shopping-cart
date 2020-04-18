@@ -86,7 +86,6 @@ const getSkuFromProductItem = item =>
 
 window.onload = async () => {
   const itemsSection = document.querySelector('.items');
-  const items = document.querySelectorAll('.cart__item');
   const cartItems = document.querySelector('.cart__items');
   const buttonEmpty = document.querySelector('.empty-cart');
 
@@ -106,7 +105,7 @@ window.onload = async () => {
 
   buttonEmpty.addEventListener('click', emptyCart);
   cartItems.innerHTML = localStorage.getItem('cart');
-  items.forEach(item => item.addEventListener('click', cartItemClickListener));
+  document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
 
   await totalPrice();
 };
