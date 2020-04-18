@@ -14,23 +14,10 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-window.onload = function onload() {
-  const addItems = async () => {
-    const openApi = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador');
-    const awaitApi = await openApi.json();
-    const itemsHTML = document.getElementsByClassName('items')[0];
-    awaitApi.results.forEach((e) => {
-      const values = { sku: e.id, name: e.title, image: e.thumbnail };
-      itemsHTML.appendChild(createProductItemElement(values));
-    });
-  };
-  addItems();
-};
-
 const addToCart = async (sku) => {
   const getApi = await fetch(`https://api.mercadolibre.com/items/${sku}`);
   const apiWait = await getApi.json();
-  const carItens = createCartItemElement({
+  const carItens = await createCartItemElement({
     sku: apiWait.id,
     name: apiWait.title,
     salePrice: apiWait.price,
@@ -52,6 +39,19 @@ function createProductItemElement({ sku, name, image }) {
 
   return section;
 }
+
+window.onload = function onload() {
+  const addItems = async () => {
+    const openApi = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador');
+    const awaitApi = await openApi.json();
+    const itemsHTML = document.getElementsByClassName('items')[0];
+    awaitApi.results.forEach((e) => {
+      const values = { sku: e.id, name: e.title, image: e.thumbnail };
+      itemsHTML.appendChild(createProductItemElement(values));
+    });
+  };
+  addItems();
+};
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
