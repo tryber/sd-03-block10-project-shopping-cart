@@ -49,7 +49,11 @@ async function getSku(sku) {
         salePrice: data.price,
       }),
     )
-    .then(e => cart[0].appendChild(e));
+    .then(e => cart[0].appendChild(e))
+    .then(() => {
+      saveCartItems();
+      updateTotalPrice();
+    });
 }
 
 function createProductItemElement({ sku, name, image }) {
