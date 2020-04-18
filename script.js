@@ -32,7 +32,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 const cart = document.getElementsByClassName('cart__items');
 
-async function get(sku) {
+async function getSku(sku) {
   return fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(response => response.json())
     .then(data => createCartItemElement({
@@ -51,12 +51,12 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-    .addEventListener('click', () => get(sku));
+    .addEventListener('click', () => getSku(sku));
 
   return section;
 }
 
-const itens = async () => {
+const getItens = async () => {
   await fetch(url)
     .then(response => response.json())
     .then(data => data.results.forEach(e => document.getElementsByClassName('items')[0]
@@ -68,5 +68,5 @@ const itens = async () => {
 };
 
 window.onload = function onload() {
-  itens();
+  getItens();
 };
