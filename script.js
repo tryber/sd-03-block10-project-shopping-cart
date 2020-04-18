@@ -1,8 +1,4 @@
-const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computer';
-const myObject = {
-  method: 'GET',
-  headers: { Accept: 'application/json' },
-};
+const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computer';
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -25,7 +21,8 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+  .addEventListener('click', () => getSku(sku));
 
   return section;
 }
@@ -46,14 +43,30 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-fetch(API_URL, myObject)
-  .then(data => data.json())
-  .then((data) => {
-    // load.innerHTML = '';
-    // document.querySelector('.loading').remove();
-    data.results.forEach((el) => {
-      const { id: sku, title: name, thumbnail: image } = el;
-      const newElement = createProductItemElement({ sku, name, image });
-      document.querySelector('.items').appendChild(newElement);
-    });
+const cart = document.getElementsByClassName('cart__items');
+
+async function getSku(sku) {
+  return fetch (`https://api.mercadolibre.com/items/${sku}`)
+    .then(response => response.json())
+    .then(data => createCartItemElement({
+      sku: data.id,
+      name: data.title,
+      salePrice: data.price,
+    }))
+    .then(e => cart[0].appendChild(e));
+}
+
+window.onload = async () => {
+  await fetch(url)
+    .then(response => response.json())
+    .then(data => data.results.forEach(e => document.getElementsByClassName('items')[0]
+      .appendChild(createProductItemElement({
+        sku: e.id,
+        name: e.title,
+        image: e.thumbnail,
+      }))));
+
+    document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
+    document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
+};
