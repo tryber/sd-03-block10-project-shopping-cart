@@ -94,10 +94,5 @@ async function mostraApi() {
 }
 
 window.onload = function onload() {
-  mostraApi()
-    .then(() => document.querySelector('.loading').remove())
-    .catch(error => {
-      console.log('Error');
-      console.error(error);
-    });
+  mostraApi().then(() => document.querySelector('.loading').remove());
 };
