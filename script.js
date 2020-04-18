@@ -85,6 +85,19 @@ const loadSavedItems = () => {
   cartItems.forEach(element => element.addEventListener('click', cartItemClickListener));
 };
 
+const emptyCart = () => {
+  const cartItems = [...document.getElementsByClassName('cart__item')];
+  console.log(cartItems);
+  const parentNode = document.querySelector('.cart__items');
+  cartItems.forEach(element => parentNode.removeChild(element))
+  localStorage.clear();
+  localStorage.setItem('cartItems', document.querySelector('.cart__items').innerHTML);
+  priceUpdate();
+ }
+
+const emptyBtn = document.querySelector('.empty-cart');
+emptyBtn.addEventListener('click', emptyCart);
+
 window.onload = function onload() {
   createProductList();
   loadSavedItems();
