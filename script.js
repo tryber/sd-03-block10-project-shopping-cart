@@ -56,8 +56,8 @@ const decreasePrice = (sku) => {
   localParsed.splice(index, 1);
   localStorage.cart = JSON.stringify(localParsed);
 };
-async function cartItemClickListener(event, sku) {
-  await decreasePrice(sku);
+function cartItemClickListener(event, sku) {
+  decreasePrice(sku);
   event.target.remove();
 }
 
