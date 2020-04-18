@@ -52,10 +52,10 @@ function getSkuFromProductItem(item) {
 
 const clrBtn = document.getElementsByClassName('empty-cart')[0];
 
-clrBtn.addEventListener('click', () =>{
+clrBtn.addEventListener('click', () => {
   const list = document.getElementsByClassName('cart__items')[0];
   list.innerHTML = '';
-})
+});
 
 window.onload = function onload() {
   const itemList = async () => {
