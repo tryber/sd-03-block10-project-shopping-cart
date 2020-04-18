@@ -1,5 +1,4 @@
 const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-window.onload = function onload() {};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -15,16 +14,16 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
+  
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+  .addEventListener('click', () => get(sku));
+  
   return section;
 }
 
@@ -33,7 +32,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -44,10 +43,30 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-fetch(url)
+const cart = document.getElementsByClassName('cart__items');
+
+async function get(sku) {
+  return fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then(response => response.json())
+    .then(data => createCartItemElement({
+      sku: data.id,
+      name: data.title,
+      salePrice: data.price,
+    }))
+    .then(e => cart[0].appendChild(e));
+}
+
+const itens = async () => {
+  await fetch(url)
   .then(response => response.json())
-  .then(data => data.results.forEach(e => document.getElementsByClassName('items')[0].appendChild(createProductItemElement({
-    sku: e.id,
-    name: e.title,
-    image: e.thumbnail,
-  }))));
+  .then(data => data.results.forEach(e => document.getElementsByClassName('items')[0]
+    .appendChild(createProductItemElement({
+      sku: e.id,
+      name: e.title,
+      image: e.thumbnail,
+      }))));
+  };
+
+window.onload = function onload() {
+  itens();
+};
