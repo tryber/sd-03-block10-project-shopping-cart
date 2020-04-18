@@ -95,12 +95,12 @@ async function mostraApi() {
     });
 }
 
-function load() {
-  document.querySelector('.loading').remove();
-}
+// function load() {
+//   document.querySelector('.loading').remove();
+// }
 
 window.onload = function onload() {
   mostraApi();
   sumPrice();
-  load();
+    .then(() => document.querySelector('.loading').remove())
 };
