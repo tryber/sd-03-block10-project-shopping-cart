@@ -45,7 +45,7 @@ const cleanCart = () => {
   const listaAddCart = document.querySelector('.cart__items');
   listaAddCart.innerHTML = '';
   salvar();
-}
+};
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -85,7 +85,6 @@ window.onload = async () => {
     return data;
   })
   .catch(() => console.log('ERROR Listar listarProdutos'));
-  
   btnCleanCar.addEventListener('click', cleanCart);
   carItem.innerHTML = localStorage.getItem('Cart_items');
 };
