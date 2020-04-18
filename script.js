@@ -15,14 +15,6 @@ function createCustomElement(element, className, innerText) {
 }
 
 function createStorage({ sku, name, salePrice }) {
-  // if (!localStorage.cart) {
-  //   localStorage.setItem('cart', JSON.stringify([{ sku, name, salePrice }]));
-  // } else {
-  //   const localCart = JSON.parse(localStorage.cart);
-  //   localCart
-  //   const newCart = JSON.stringify(localCart);
-  //   localStorage.setItem('cart', newCart);
-  // }
   const cart = (localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : [];
   cart.push({ sku, name, salePrice });
   localStorage.setItem('cart', JSON.stringify(cart));
@@ -92,7 +84,7 @@ async function getResponse() {
   document.querySelectorAll('.item').forEach(async (e) => {
     const sku = getSkuFromProductItem(e);
     const getDetails = await getDetailsToCart(sku);
-    e.lastChild.addEventListener('click', () => {
+    await e.lastChild.addEventListener('click', () => {
       createCartItemElement(getDetails);
       createStorage(getDetails);
     });
@@ -105,12 +97,7 @@ function emptyCart() {
     localStorage.setItem('cart', '[]');
   });
 }
-getResponse()
-  .then(() => document.querySelector('.loading').remove())
-  .catch((error) => {
-    console.log('Error');
-    console.error(error);
-  });
+
 function loadOnCart() {
   const storage = localStorage.getItem('cart');
   const populateCart = local => local.forEach(e => createCartItemElement(e));
@@ -119,4 +106,10 @@ function loadOnCart() {
 window.onload = function onload() {
   loadOnCart();
   emptyCart();
+  getResponse()
+    .then(() => document.querySelector('.loading').remove())
+    .catch((error) => {
+      console.log('Error');
+      console.error(error);
+    });
 };
