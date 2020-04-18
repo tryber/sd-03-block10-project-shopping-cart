@@ -56,7 +56,7 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-const getItens = async () => {
+window.onload = async () => {
   await fetch(url)
     .then(response => response.json())
     .then(data => data.results.forEach(e => document.getElementsByClassName('items')[0]
@@ -65,8 +65,8 @@ const getItens = async () => {
         name: e.title,
         image: e.thumbnail,
       }))));
-};
 
-window.onload = function onload() {
-  getItens();
+  document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
+    document.getElementsByClassName('cart__items')[0].innerHTML = '';
+  });
 };
