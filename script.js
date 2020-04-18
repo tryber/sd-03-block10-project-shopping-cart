@@ -12,17 +12,14 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const totalPrice = document.getElementsByClassName('.total-price');
-let cartPrice = 0;
-
 const priceUpdate = async () => {
   const totalPrice = document.getElementsByClassName('total-price');
   const cartItemsHTMLcollection = document.getElementsByClassName('cart__item');
   const cartTotal = [...cartItemsHTMLcollection]
     .map(element => element.innerText.match(/([0-9.]){1,}$/))
-    .reduce((total, next) => total + parseFloat(next), 0);
-  totalPrice[0].innerHTML = cartTotal.toFixed(2);
-}
+    .reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue), 0);
+  totalPrice[0].innerHTML = `R$ ${cartTotal.toFixed(2)}`;
+};
 
 function cartItemClickListener(event) {
   const parentNode = document.querySelector('.cart__items');
@@ -47,7 +44,7 @@ const addToCart = (sku) => {
   .then(product => createCartItemElement(product))
   .then(object => document.querySelector('.cart__items').appendChild(object))
   .then(() => localStorage.setItem('cartItems', document.querySelector('.cart__items').innerHTML))
-  .then(() => priceUpdate())
+  .then(() => priceUpdate());
 };
 
 function createProductItemElement({ sku, name, image }) {
