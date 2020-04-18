@@ -20,7 +20,10 @@ function cartItemClickListener(event) {
 
 async function sumPrice(salePrice) {
   const totalPrice = document.querySelector('.total-price');
-  const sum = Math.round((JSON.parse(totalPrice.innerHTML) + JSON.parse(salePrice)) * 100) / 100;
+  const sum =
+    Math.round(
+      (JSON.parse(totalPrice.innerHTML) + JSON.parse(salePrice)) * 100,
+    ) / 100;
   totalPrice.innerHTML = sum;
 }
 
@@ -68,17 +71,7 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-// async function cartItemClickListener(event, sku) {
-//   const localParsed = JSON.parse(localStorage.cart);
-//   const item = localParsed.find(e => e.sku === sku);
-//   await sumPrice(-item.salePrice);
-//   const index = localParsed.findIndex(e => e.sku === item.sku);
-//   localParsed.splice(index, 1);
-//   localStorage.cart = JSON.stringify(localParsed);
-//   event.target.remove();
-// }
-
-window.onload = async () => {
+async function mostraApi() {
   await fetch(url)
     .then(response => response.json())
     .then(data =>
@@ -98,8 +91,12 @@ window.onload = async () => {
     .addEventListener('click', () => {
       document.getElementsByClassName('cart__items')[0].innerHTML = '';
     });
+}
+
+window.onload = function onload() {
+  mostraApi()
     .then(() => document.querySelector('.loading').remove())
-    .catch((error) => {
+    .catch(error => {
       console.log('Error');
       console.error(error);
     });
