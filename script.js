@@ -23,7 +23,7 @@ const addToCart = async (sku) => {
     salePrice: apiWait.price,
   });
   const cart = document.getElementsByClassName('cart__items')[0];
-  cart.appendChild(carItens);
+  await cart.appendChild(carItens);
 };
 
 function createProductItemElement({ sku, name, image }) {
