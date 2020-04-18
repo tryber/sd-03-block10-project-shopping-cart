@@ -14,6 +14,18 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const addToCart = async (sku) => {
+  const getApi = await fetch(`https://api.mercadolibre.com/items/${sku}`);
+  const apiWait = await getApi.json();
+  const carItens = createCartItemElement({
+    sku: apiWait.id,
+    name: apiWait.title,
+    salePrice: apiWait.price,
+  });
+  const cart = document.getElementsByClassName('cart__items')[0];
+  cart.appendChild(carItens);
+};
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -54,16 +66,3 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
-
-const addToCart = async (sku) => {
-  const getApi = await fetch(`https://api.mercadolibre.com/items/${sku}`);
-  const apiWait = await getApi.json();
-  const carItens = createCartItemElement({
-    sku: apiWait.id,
-    name: apiWait.title,
-    salePrice: apiWait.price,
-  });
-  const cart = document.getElementsByClassName('cart__items')[0];
-  cart.appendChild(carItens);
-};
-
