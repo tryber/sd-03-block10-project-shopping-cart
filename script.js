@@ -18,7 +18,7 @@ const priceUpdate = async () => {
   const cartTotal = [...cartItemsHTMLcollection]
     .map(element => element.innerText.match(/([0-9.]){1,}$/))
     .reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue), 0);
-  totalPrice[0].innerHTML = `R$ ${cartTotal.toFixed(2)}`;
+  totalPrice[0].innerHTML = `${cartTotal.toFixed(0)}`;
 };
 
 function cartItemClickListener(event) {
