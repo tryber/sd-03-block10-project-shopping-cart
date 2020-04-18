@@ -21,26 +21,13 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  const buttonCart = (createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  buttonCart.addEventListener('click', () => addToCart(sku));
+  section.appendChild(buttonCart);
 
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
 window.onload = function onload() {
   const addItems = async () => {
     const openApi = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador');
@@ -53,3 +40,29 @@ window.onload = function onload() {
   };
   addItems();
 };
+
+function getSkuFromProductItem(item) {
+  return item.querySelector('span.item__sku').innerText;
+}
+
+function cartItemClickListener(event) {
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
+
+
+const addToCart = async(sku) =>{
+  const getApi = await fetch(`https://api.mercadolibre.com/items/${sku}`)
+  const apiWait = await getApi.json()
+  const carItens = createCartItemElement({sku: apiWait.id, name: apiWait.title, salePrice: apiWait.price})
+  const cart = document.getElementsByClassName('cart__items')[0]
+  cart.appendChild(carItens)
+}
+addToCart()
+
