@@ -14,17 +14,18 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function cartItemClickListener(event) {
-  event.target.remove();
+async function sumPrice() {
+  const totalPriceElem = document.getElementsByClassName('total-price');
+  const cartItems = document.getElementsByClassName('cart__item');
+  const cartTotal = [...cartItems]
+    .map(element => element.innerText.match(/([0-9.]){1,}$/))
+    .reduce((total, next) => total + parseFloat(next), 0);
+  totalPriceElem[0].innerHTML = cartTotal;
 }
 
-async function sumPrice(salePrice) {
-  const totalPrice = document.querySelector('.total-price');
-  const sum =
-    Math.round(
-      (JSON.parse(totalPrice.innerHTML) + JSON.parse(salePrice)) * 100,
-    ) / 100;
-  totalPrice.innerHTML = sum;
+function cartItemClickListener(event) {
+  event.target.remove();
+  sumPrice();
 }
 
 async function createCartItemElement({ sku, name, salePrice }) {
