@@ -61,6 +61,31 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+async function sumPrice(salePrice) {
+  const totalPrice = document.querySelector('.total-price');
+  const sum = Math.round((JSON.parse(totalPrice.innerHTML) + JSON.parse(salePrice)) * 100) / 100;
+  totalPrice.innerHTML = sum;
+}
+
+// async function cartItemClickListener(event, sku) {
+//   const localParsed = JSON.parse(localStorage.cart);
+//   const item = localParsed.find(e => e.sku === sku);
+//   await sumPrice(-item.salePrice);
+//   const index = localParsed.findIndex(e => e.sku === item.sku);
+//   localParsed.splice(index, 1);
+//   localStorage.cart = JSON.stringify(localParsed);
+//   event.target.remove();
+// }
+
+async function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  await sumPrice(salePrice);
+  li.addEventListener('click', event => cartItemClickListener(event, sku));
+  document.querySelector('.cart__items').appendChild(li);
+}
+
 window.onload = async () => {
   await fetch(url)
     .then(response => response.json())
