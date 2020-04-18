@@ -70,6 +70,7 @@ window.onload = async () => {
   const listaDeitens = document.querySelector('.items');
   const carItem = document.querySelector('.cart__items');
   const btnCleanCar = document.querySelector('.empty-cart');
+  const loading = document.querySelector('.loading');
 
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador')
   .then(response => response.json())
@@ -82,6 +83,7 @@ window.onload = async () => {
         image: thumbnail,
       }));
     });
+    loading.remove();
     return data;
   })
   .catch(() => console.log('ERROR Listar listarProdutos'));
