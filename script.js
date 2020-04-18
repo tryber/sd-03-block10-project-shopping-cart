@@ -18,12 +18,14 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+
+async function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
+  await sumPrice(salePrice);
+  li.addEventListener('click', event => cartItemClickListener(event, sku));
+  document.querySelector('.cart__items').appendChild(li);
 }
 
 const cart = document.getElementsByClassName('cart__items');
@@ -76,15 +78,6 @@ async function sumPrice(salePrice) {
 //   localStorage.cart = JSON.stringify(localParsed);
 //   event.target.remove();
 // }
-
-async function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  await sumPrice(salePrice);
-  li.addEventListener('click', event => cartItemClickListener(event, sku));
-  document.querySelector('.cart__items').appendChild(li);
-}
 
 window.onload = async () => {
   await fetch(url)
