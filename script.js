@@ -21,11 +21,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  const buttonCart = createCustomElement(
-    'button',
-    'item__add',
-    'Adicionar ao carrinho!'
-  );
+  const buttonCart = createCustomElement('button','item__add','Adicionar ao carrinho!');
   buttonCart.addEventListener('click', () => addToCart(sku));
   section.appendChild(buttonCart);
 
@@ -34,9 +30,7 @@ function createProductItemElement({ sku, name, image }) {
 
 window.onload = function onload() {
   const addItems = async () => {
-    const openApi = await fetch(
-      'https://api.mercadolibre.com/sites/MLB/search?q=$computador'
-    );
+    const openApi = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=$computador');
     const awaitApi = await openApi.json();
     const itemsHTML = document.getElementsByClassName('items')[0];
     awaitApi.results.forEach((e) => {
