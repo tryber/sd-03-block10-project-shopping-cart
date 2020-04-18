@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -51,17 +52,20 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 async function sumPrice(salePrice) {
-  const totalPrice = document.querySelector('.total-price');
-  const sum = Math.round((JSON.parse(totalPrice.innerHTML) + JSON.parse(salePrice)) * 100) / 100;
+  const totalPrice = await document.querySelector('.total-price');
+  const sum = Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
   totalPrice.innerHTML = sum;
 }
-async function cartItemClickListener(event, sku) {
+const decreasePrice = (sku) => {
   const localParsed = JSON.parse(localStorage.cart);
-  const item = localParsed.find(e => e.sku === sku);
-  await sumPrice(-item.salePrice);
+  const item = localParsed.find(obj => obj.sku === sku);
+  sumPrice(-item.salePrice);
   const index = localParsed.findIndex(e => e.sku === item.sku);
   localParsed.splice(index, 1);
   localStorage.cart = JSON.stringify(localParsed);
+};
+async function cartItemClickListener(event, sku) {
+  await decreasePrice(sku);
   event.target.remove();
 }
 
@@ -109,9 +113,7 @@ getResponse()
   });
 function loadOnCart() {
   const storage = localStorage.getItem('cart');
-  const populateCart = (local) => {
-    local.forEach(e => createCartItemElement(e));
-  };
+  const populateCart = local => local.forEach(e => createCartItemElement(e));
   return storage ? populateCart(JSON.parse(storage)) : localStorage.setItem('cart', '[]');
 }
 window.onload = function onload() {
