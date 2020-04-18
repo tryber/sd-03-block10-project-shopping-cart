@@ -98,4 +98,9 @@ window.onload = async () => {
     .addEventListener('click', () => {
       document.getElementsByClassName('cart__items')[0].innerHTML = '';
     });
+    .then(() => document.querySelector('.loading').remove())
+    .catch((error) => {
+      console.log('Error');
+      console.error(error);
+    });
 };
