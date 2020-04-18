@@ -1,4 +1,4 @@
-const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computer';
+const url = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -15,12 +15,12 @@ function createCustomElement(element, className, innerText) {
 }
 
 async function sumPrice() {
-  const totalPriceElem = document.getElementsByClassName('total-price');
+  const totalPrice = document.getElementsByClassName('total-price');
   const cartItems = document.getElementsByClassName('cart__item');
   const cartTotal = [...cartItems]
     .map(element => element.innerText.match(/([0-9.]){1,}$/))
     .reduce((total, next) => total + parseFloat(next), 0);
-  totalPriceElem[0].innerHTML = cartTotal;
+  totalPrice[0].innerHTML = cartTotal;
 }
 
 function cartItemClickListener(event) {
