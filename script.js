@@ -43,9 +43,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  const addButton = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  section.appendChild(addButton);
-
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
   return section;
 }
 
@@ -100,7 +98,7 @@ function emptyCart() {
   document.querySelector('.empty-cart').addEventListener('click', () => {
     document.querySelector('.total-price').innerText = 0;
     document.querySelectorAll('li.cart__item').forEach(e => e.remove());
-    localStorage.setItem('cart', []);
+    localStorage.setItem('cart', '[]');
   });
 }
 getResponse()
@@ -112,9 +110,9 @@ getResponse()
 function loadOnCart() {
   const storage = localStorage.getItem('cart');
   const populateCart = (local) => {
-    local.forEach(({ sku, name, salePrice }) => createCartItemElement({ sku, name, salePrice }));
+    local.forEach((e) => createCartItemElement(e));
   };
-  return storage ? populateCart(JSON.parse(storage)) : localStorage.setItem('cart', []);
+  return storage ? populateCart(JSON.parse(storage)) : localStorage.setItem('cart', '[]');
 }
 window.onload = function onload() {
   loadOnCart();
