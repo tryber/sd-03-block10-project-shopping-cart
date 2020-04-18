@@ -52,7 +52,7 @@ async function getSku(sku) {
     .then(e => cart[0].appendChild(e))
     .then(() => {
       saveCartItems();
-      updateTotalPrice();
+      sumPrice();
     });
 }
 
@@ -99,5 +99,7 @@ async function mostraApi() {
 }
 
 window.onload = function onload() {
-  mostraApi().then(() => document.querySelector('.loading').remove());
+  mostraApi();
+  sumPrice()
+  .then(() => document.querySelector('.loading').remove());
 };
