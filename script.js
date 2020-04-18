@@ -80,13 +80,12 @@ async function getResponse() {
     const image = e.thumbnail;
     document.querySelector('.items').appendChild(createProductItemElement({ sku, name, image }));
   });
-
   document.querySelectorAll('.item').forEach(async (e) => {
     const sku = getSkuFromProductItem(e);
     const getDetails = await getDetailsToCart(sku);
-    await e.lastChild.addEventListener('click', () => {
-      createCartItemElement(getDetails);
-      createStorage(getDetails);
+    await e.lastChild.addEventListener('click', async () => {
+      await createCartItemElement(getDetails);
+      await createStorage(getDetails);
     });
   });
 }
@@ -108,8 +107,5 @@ window.onload = function onload() {
   emptyCart();
   getResponse()
     .then(() => document.querySelector('.loading').remove())
-    .catch((error) => {
-      console.log('Error');
-      console.error(error);
-    });
+    .catch((error) => console.error(error));
 };
