@@ -18,6 +18,11 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
+async function sumPrice(salePrice) {
+  const totalPrice = document.querySelector('.total-price');
+  const sum = Math.round((JSON.parse(totalPrice.innerHTML) + JSON.parse(salePrice)) * 100) / 100;
+  totalPrice.innerHTML = sum;
+}
 
 async function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -61,12 +66,6 @@ function createProductItemElement({ sku, name, image }) {
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
-
-async function sumPrice(salePrice) {
-  const totalPrice = document.querySelector('.total-price');
-  const sum = Math.round((JSON.parse(totalPrice.innerHTML) + JSON.parse(salePrice)) * 100) / 100;
-  totalPrice.innerHTML = sum;
 }
 
 // async function cartItemClickListener(event, sku) {
