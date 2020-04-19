@@ -9,7 +9,37 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-const cartItemClickListener = event => document.querySelector('.cart__items').removeChild(event.target);
+const cartTotal = async () => {
+  const totalValueElement = document.querySelector('.total-price');
+  const cartItems = document.querySelectorAll('.cart__item');
+  const totalValue =
+    Math.round(
+      [...cartItems]
+        .map(element => element.innerText.match(/([0-9.]){1,}$/))
+        .reduce(
+          (accumulator, element) => accumulator + parseFloat(element),
+          0,
+        ) * 100,
+    ) / 100;
+  totalValueElement.innerHTML = totalValue;
+};
+
+const saveCartItems = async () => {
+  localStorage.setItem(
+    'saved__cart__items',
+    document.getElementsByClassName('cart__items')[0].innerHTML,
+  );
+  localStorage.setItem(
+    'saved__total__cart__value',
+    document.getElementsByClassName('total-price')[0].innerHTML,
+  );
+};
+
+const cartItemClickListener = (event) => {
+  document.querySelector('.cart__items').removeChild(event.target);
+  cartTotal();
+  saveCartItems();
+};
 
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
