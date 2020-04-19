@@ -90,7 +90,7 @@ const search = async () => {
   await addLoading('items');
   await fetchAPI(`https://api.mercadolibre.com/sites/MLB/search?q=${document.getElementsByClassName('input')[0].value}`)
     .then((json) => {
-      populateItems(json);
+      pItems(json);
       removeLoading();
     });
 };
@@ -103,7 +103,7 @@ window.onload = async () => {
   if (!localStorage.getItem('cart_total')) localStorage.setItem('cart_total', 0);
   await fetchAPI('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then((json) => {
-      populateItems(json);
+      pItems(json);
       rmLoading();
     });
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
@@ -112,9 +112,9 @@ window.onload = async () => {
     updateCart();
   });
   document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
-  document.getElementsByClassName('input-btn')[0].addEventListener('click', searchEvent);
+  document.getElementsByClassName('input-btn')[0].addEventListener('click', search);
   updateCart();
   document.getElementsByClassName('input')[0].addEventListener('keydown', (event) => {
-    if (event.keyCode === 13) searchEvent();
+    if (event.keyCode === 13) search();
   });
 };
