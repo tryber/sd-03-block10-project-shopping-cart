@@ -58,9 +58,7 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const getSkuFromProductItem = (item) => {};
-
-
+const getSkuFromProductItem = () => {};
 
 const getProductData = async () => {
   fetch(apiSearchUrl + query)
