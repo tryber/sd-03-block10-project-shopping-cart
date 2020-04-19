@@ -1,22 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="script.js"></script>
-  </head>
+<html lang="pt-br">
 
-  <body>
-    <section class="container">
-      <section class="items"></section>
-      <section class="cart">
-        <span class="cart__title">Carrinho de compras</span>
-        <button class="empty-cart">Esvaziar carrinho</button>
-        <ol class="cart__items"></ol>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Mercadão</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js"></script>
+</head>
+
+<body>
+<header class="text-center text-uppercase">
+  <h1>Mercado das moscas</h1>
+</header>
+<section class="container">
+  <div class="columns">
+    <section class="items column col-9"></section>
+    <section class="cart column col-2">
+      <span class="cart__title text-primary text-uppercase bg-secondary">Shopping cart:</span>
+      <section class="cart__total__container">
+        <p class="cart__subtitle">Total: R$
+          <span class="total-price"></span>
+        </p>
+        <div class="p-centered">
+          <button class="empty-cart">Clean list</button>
+        </div>
       </section>
+      <ol class="cart__items c-hand"></ol>
     </section>
-  </body>
+  </div>
+</section>
+</body>
+
 </html>
