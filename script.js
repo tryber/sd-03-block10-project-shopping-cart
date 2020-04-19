@@ -73,8 +73,8 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(
     createCustomElement(
       'button',
-      'item__add btn btn-primary btn-sm',
-      'Adicionar ao carrinho!',
+      'item__add',
+      'Add to cart',
     ),
   );
   const itemSelector = section.querySelector('button.item__add');
