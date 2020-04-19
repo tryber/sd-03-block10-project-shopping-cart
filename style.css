@@ -1,3 +1,7 @@
+.loading {
+  font-size: 50px;
+}
+
 .top-bar {
   align-items: center;
   display: flex;

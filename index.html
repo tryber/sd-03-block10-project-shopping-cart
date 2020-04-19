@@ -7,19 +7,18 @@
     <title>Project Shopping Cart</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-
-  <header class="search">
-    <label for="">Buscar: </label>
-    <input class="input" type="text">
-    <input class="input-btn" type="button" value="Buscar">
-</header>
-<section class="container">
-  <section class="items">
-  </section>
-  <section class="cart">
-    <span class="cart__title">Pedido</span>
-    <ol class="cart__items"></ol>
-    <p class="total-prc">Valor Total: R$<span class="total-price"></span></p>
-    <button class="empty-cart">Esvaziar carrinho</button>
-  </section>
-</section>
+  <body>
+    <section class="container">
+      <section class="items">
+        <p class="loading">Loading...</p>
+      </section>
+      <section class="cart">
+        <span class="cart__title">Carrinho de compras</span>
+        <button class="empty-cart">Esvaziar carrinho</button>
+        <ol class="cart__items"></ol>
+        <p>Total: $<span class="total-price"></span></p>
+      </section>
+    </section>
+    <script src="script.js"></script>
+  </body>
+</html>
