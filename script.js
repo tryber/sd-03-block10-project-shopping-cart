@@ -9,7 +9,7 @@ const createCustomElement = (element, className, innerText) => {
   return elem;
 };
 
-const loading = (item) => {
+const addLoading = (item) => {
   document.getElementsByClassName(item)[0].appendChild(createCustomElement('p', 'loading', ''));
 };
 
@@ -42,25 +42,25 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const urlApi = api => fetch(api).then(response => response.json());
+const APIFetch = api => fetch(api).then(response => response.json());
 
-const appendCart = (parentClass, callback, obj) => document
-.getElementsByClassName(parentClass)[0]
-.appendChild(callback(obj));
+const appendItem = (parentClass, callback, obj) => document
+  .getElementsByClassName(parentClass)[0]
+  .appendChild(callback(obj));
 
-const addCartItem = ({ sku }) => {
-  loading('cart__items');
-  urlApi(`https://api.mercadolibre.com/items/${sku}`)
-  .then((product) => {
-    appendCart('cart__items', createCartItemElement, {
-      sku: product.id,
-      name: product.title,
-      salePrice: product.price,
+const addItemCart = ({ sku }) => {
+  addLoading('cart__items');
+  APIFetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then((product) => {
+      appendItem('cart__items', createCartItemElement, {
+        sku: product.id,
+        name: product.title,
+        salePrice: product.price,
+      });
+      localStorage.setItem('cart_total', product.price + parseFloat(localStorage.getItem('cart_total')));
+      rmLoading();
+      cartUp();
     });
-    localStorage.setItem('cart_total', product.price + parseFloat(localStorage.getItem('cart_total')));
-    rmLoading();
-    cartUp();
-  });
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -69,26 +69,26 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  const btnAddToCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
-  btnAddToCart.addEventListener('click', () => {
-    addCartItem({ sku });
+  const btnAddItemCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  btnAddItemCart.addEventListener('click', () => {
+    addItemCart({ sku });
   });
-  section.appendChild(btnAddToCart);
+  section.appendChild(btnAddItemCart);
   return section;
 };
 
 const pItems = (json) => {
-  json.results.forEach(item => appendCart('items', createProductItemElement, {
+  json.results.forEach(item => appendItem('items', createProductItemElement, {
     sku: item.id,
     name: item.title,
     image: item.thumbnail,
   }));
 };
 
-const search = async () => {
+const ESearch = async () => {
   document.getElementsByClassName('items')[0].innerHTML = '';
-  await loading('items');
-  await urlApi(`https://api.mercadolibre.com/sites/MLB/search?q=${document.getElementsByClassName('input')[0].value}`)
+  await addLoading('items');
+  await APIFetch(`https://api.mercadolibre.com/sites/MLB/search?q=${document.getElementsByClassName('input')[0].value}`)
     .then((json) => {
       pItems(json);
       rmLoading();
@@ -96,10 +96,10 @@ const search = async () => {
 };
 
 window.onload = async () => {
-  loading('items');
+  addLoading('items');
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Cart-items');
   if (!localStorage.getItem('cart_total')) localStorage.setItem('cart_total', 0);
-  await urlApi('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+  await APIFetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then((json) => {
       pItems(json);
       rmLoading();
@@ -110,9 +110,9 @@ window.onload = async () => {
     cartUp();
   });
   document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
-  document.getElementsByClassName('input-btn')[0].addEventListener('click', search);
+  document.getElementsByClassName('input-btn')[0].addEventListener('click', ESearch);
   cartUp();
   document.getElementsByClassName('input')[0].addEventListener('keydown', (event) => {
-    if (event.keyCode === 13) search();
+    if (event.keyCode === 13) ESearch();
   });
 };
