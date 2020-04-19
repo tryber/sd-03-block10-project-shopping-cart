@@ -5,8 +5,7 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-const createCustomElement = (element, className, innerText) =>
-{
+const createCustomElement = (element, className, innerText) =>{
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
@@ -46,13 +45,13 @@ function item2(idReturned) {
 const addProduct = async ({ sku }) => {
   const item = await item2(sku)
     .then(response => response.json())
-    .then((data) => 
+    .then(data =>
       createCartItemElement({
         sku: data.id,
         name: data.title,
         salePrice: data.price,
-      })
-    )
+      }),
+    );
   document.querySelector('.cart__items').appendChild(item);
   sumPrices();
   saveItens();
