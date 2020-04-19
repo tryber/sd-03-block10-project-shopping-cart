@@ -3,10 +3,10 @@ const rmLoading = () => {
 };
 
 const createCustomElement = (element, className, innerText) => {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
+  const elem = document.createElement(element);
+  elem.className = className;
+  elem.innerText = innerText;
+  return elem;
 };
 
 const loading = (item) => {
@@ -49,7 +49,7 @@ const appendCart = (parentClass, callback, obj) => document
 .appendChild(callback(obj));
 
 const addCartItem = ({ sku }) => {
-  addLoading('cart__items');
+  loading('cart__items');
   urlApi(`https://api.mercadolibre.com/items/${sku}`)
   .then((product) => {
     appendCart('cart__items', createCartItemElement, {
@@ -87,7 +87,7 @@ const pItems = (json) => {
 
 const search = async () => {
   document.getElementsByClassName('items')[0].innerHTML = '';
-  await addLoading('items');
+  await loading('items');
   await urlApi(`https://api.mercadolibre.com/sites/MLB/search?q=${document.getElementsByClassName('input')[0].value}`)
     .then((json) => {
       pItems(json);
