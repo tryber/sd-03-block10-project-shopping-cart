@@ -13,7 +13,7 @@ const loading = () => {
 };
 
 const notLoading = () => {
-  if (document.querySelector('.loading')){
+  if (document.querySelector('.loading')) {
     document.querySelector('.loading').remove();
   }
 };
