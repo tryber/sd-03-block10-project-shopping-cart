@@ -5,28 +5,13 @@ const createProductImageElement = (imageSource) => {
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-}
+};
 
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   return e;
-}
-
-const addItemToCart = ({ sku }) => {
-  addLoading('cart__items');
-  apiUrl(`https://api.mercadolibre.com/items/${sku}`)
-    .then((product) => {
-      appendElement('cart__items', createCartItemElement, {
-        sku: product.id,
-        name: product.title,
-        salePrice: product.price,
-      });
-      localStorage.setItem('cart_total', product.price + parseFloat(localStorage.getItem('cart_total')));
-      removeLoading();
-      updateCart();
-    });
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -43,13 +28,30 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const getSkuFromProductItem = (item) => {
-  return item.querySelector('span.item__sku').innerText;
-}
+const addItemToCart = ({ sku }) => {
+  addLoading('cart__items');
+  apiUrl(`https://api.mercadolibre.com/items/${sku}`)
+    .then((product) => {
+      appendElement('cart__items', createCartItemElement, {
+        sku: product.id,
+        name: product.title,
+        salePrice: product.price,
+      });
+      localStorage.setItem('cart_total', product.price + parseFloat(localStorage.getItem('cart_total')));
+      removeLoading();
+      updateCart();
+    });
+};
+
+const getSkuFromProductItem = item => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-}
+  event.target.remove();
+  let totalCart = parseFloat(localStorage.getItem('cart_total'));
+  totalCart = parseFloat(totalCart) - parseFloat(event.target.textContent.match(/([0-9.])+$/));
+  localStorage.setItem('cart_total', totalCart);
+  updateCart();
+};
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
@@ -57,4 +59,4 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
+};
