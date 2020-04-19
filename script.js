@@ -74,4 +74,3 @@ window.onload = function onload() {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
 };
-
