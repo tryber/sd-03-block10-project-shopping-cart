@@ -8,7 +8,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 const loading = () => {
-  document.querySelector('.cart__items').appendChild(
+  document.querySelector('.container').appendChild(
   createCustomElement('p', 'loading', 'loading...'));
 };
 
@@ -76,7 +76,6 @@ clrBtn.addEventListener('click', () => {
 });
 
 const loadCart = () => {
-  notLoading();
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart-items');
 };
 
