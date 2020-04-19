@@ -26,6 +26,24 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 }
 
+const getProductData = async () => {
+  const productsList = document.querySelector('.items');
+  const queryKey = 'computador';
+  const API_URL = `https://api.mercadolibre.com/sites/MLB/search?q=${queryKey}`;
+  loadingElement();
+  await fetch(API_URL)
+    .then(response => response.json())
+    .then(data =>
+      data.results.forEach(({ id, title, thumbnail }) =>
+        productsList.appendChild(
+          createProductItemElement({ sku: id, name: title, image: thumbnail }),
+        ),
+      ),
+    )
+    .then(() => loadedData())
+    .catch(() => alert('Erro: Produtos não listados'));
+};
+
 const getSkuFromProductItem = (item) => {
   return item.querySelector('span.item__sku').innerText;
 }
