@@ -13,9 +13,10 @@ const loading = () => {
 };
 
 const notLoading = () => {
-  if(document.querySelector('.loading'))
-  document.querySelector('.loading').remove();
-}
+  if (document.querySelector('.loading')){
+    document.querySelector('.loading').remove();
+  }
+};
 const storedCart = () => localStorage.setItem('cart-items',
 document.getElementsByClassName('cart__items')[0].innerHTML);
 
@@ -75,8 +76,8 @@ clrBtn.addEventListener('click', () => {
 });
 
 const loadCart = () => {
-  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart-items');
   notLoading();
+  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart-items');
 };
 
 window.onload = function onload() {
