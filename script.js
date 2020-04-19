@@ -1,5 +1,6 @@
-
-window.onload = function onload() { };
+window.onload = function onload() {
+  document.querySelector('.cart__items').innerHTML = localStorage.getItem('último carrinho');
+ };
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -26,10 +27,13 @@ function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
+  let button = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
+  button.addEventListener('click', () => getId(sku));
+
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
+  section.appendChild(button);
 
   return section;
 }
@@ -38,9 +42,24 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.remove();
+
+  localStorage.setItem('último carrinho', document.querySelector('.cart__items').innerHTML);
 }
+
+
+async function getId (itemID) {
+  const apiButton = `https://api.mercadolibre.com/items/${itemID}`;
+
+  await fetch(apiButton)
+  .then(response => response.json()
+  .then(element => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement({ sku: element.id, name: element.title, salePrice: element.price }))));
+
+  localStorage.setItem('último carrinho', document.querySelector('.cart__items').innerHTML);
+};
+
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -49,3 +68,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+function clearCart() {
+  document.querySelector('.cart__items').innerHTML = '';
+
+  localStorage.setItem('último carrinho', document.querySelector('.cart__items').innerHTML);
+};
+
+document.querySelector('.empty-cart').addEventListener('click', clearCart);
