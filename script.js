@@ -5,7 +5,7 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-const createCustomElement = (element, className, innerText) =>{
+const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
