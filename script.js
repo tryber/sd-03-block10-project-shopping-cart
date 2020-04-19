@@ -65,12 +65,12 @@ clrBtn.addEventListener('click', () => {
 
 const loadCart = () => {
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart-items');
-}
+};
 
 window.onload = function onload() {
   loadCart();
-  document.getElementsByClassName('cart__items')[0].childNodes.forEach( e => 
-    e.addEventListener('click', cartItemClickListener ));
+  document.getElementsByClassName('cart__items')[0].childNodes.forEach(e =>
+    e.addEventListener('click', cartItemClickListener));
   const itemList = async () => {
     const apiJson = await fetchAPI('https://api.mercadolibre.com/sites/MLB/search?q=$computador');
     const items = this.document.getElementsByClassName('items')[0];
