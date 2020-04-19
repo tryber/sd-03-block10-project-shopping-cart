@@ -99,6 +99,5 @@ async function mostraApi() {
 // }
 
 window.onload = function onload() {
-  mostraApi();
-  sumPrice().then(() => document.querySelector('.loading').remove());
+  mostraApi().then(() => document.querySelector('.loading').remove());
 };
