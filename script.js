@@ -28,9 +28,9 @@ const cartUp = () => {
 
 const cartItemClickListener = (event) => {
   event.target.remove();
-  let totalCart = parseFloat(localStorage.getItem('cart_total'));
-  totalCart = parseFloat(totalCart) - parseFloat(event.target.textContent.match(/([0-9.])+$/));
-  localStorage.setItem('cart_total', totalCart);
+  let total = parseFloat(localStorage.getItem('cart_total'));
+  total = parseFloat(total) - parseFloat(event.target.textContent.match(/([0-9.])+$/));
+  localStorage.setItem('cart_total', total);
   cartUp();
 };
 
