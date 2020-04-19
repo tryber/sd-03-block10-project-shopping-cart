@@ -51,7 +51,7 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
+,function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
