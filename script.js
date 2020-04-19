@@ -71,8 +71,8 @@ const createProductItemElement = ({ sku, name, image }) => {
   section.appendChild(createProductImageElement(image));
   const btnAddToCart = createCustomElement('button', 'item__add', 'Adicionar ao carrinho!');
   btnAddToCart.addEventListener('click', () => {
-  addCartItem({ sku });
-});
+    addCartItem({ sku });
+  });
   section.appendChild(btnAddToCart);
   return section;
 };
