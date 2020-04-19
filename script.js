@@ -1,3 +1,4 @@
+
 window.onload = function onload() { };
 
 function createProductImageElement(imageSource) {
@@ -14,7 +15,13 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-// 01 Listagem de produtos
+const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
+
+fetch(API_URL)
+.then(response => response.json()
+.then(data => data.results.forEach(element => document.getElementsByClassName('items')[0].appendChild(createProductItemElement({ sku: element.id, name: element.title, image: element.thumbnail })))));
+
+
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
