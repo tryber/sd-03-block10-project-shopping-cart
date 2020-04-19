@@ -77,7 +77,25 @@ const createProductItemElement = ({ sku, name, image }) => {
   return section;
 };
 
-const getSkuFromProductItem = item => item.querySelector('span.item__sku').innerText;
+const pItems = (json) => {
+  json.results.forEach(item => appendElement('items', createProductItemElement, {
+    sku: item.id,
+    name: item.title,
+    image: item.thumbnail,
+  }));
+};
+
+const search = async () => {
+  document.getElementsByClassName('items')[0].innerHTML = '';
+  await addLoading('items');
+  await fetchAPI(`https://api.mercadolibre.com/sites/MLB/search?q=${document.getElementsByClassName('input')[0].value}`)
+    .then((json) => {
+      populateItems(json);
+      removeLoading();
+    });
+};
+
+// const getSkuFromProductItem = item => item.querySelector('span.item__sku').innerText;
 
 window.onload = async () => {
   loading('items');
