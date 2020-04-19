@@ -74,3 +74,9 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.results {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
