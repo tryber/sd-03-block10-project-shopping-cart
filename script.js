@@ -16,7 +16,7 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
-const createProductItemElement = ({sku, name, image}) => {
+const createProductItemElement = ({ sku, name, image }) => {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -54,7 +54,7 @@ const cartItemClickListener = event => {
   document.querySelector('.cart__items').removeChild(event.target);
 };
 
-const createCartItemElement = ({sku, name, salePrice}) => {
+const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -64,8 +64,8 @@ const createCartItemElement = ({sku, name, salePrice}) => {
 
 const getProductData = async () => {
   fetch(apiSearchUrl + query)
-    .then((data) => data.json())
-    .then((obj) =>
+    .then(data => data.json())
+    .then(obj =>
       obj.results.forEach(item =>
         document.getElementsByClassName('items')[0].appendChild(
           createProductItemElement({
