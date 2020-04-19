@@ -50,8 +50,15 @@ const cartItemClickListener = (event) => {
   let totalCart = parseFloat(localStorage.getItem('cart_total'));
   totalCart = parseFloat(totalCart) - parseFloat(event.target.textContent.match(/([0-9.])+$/));
   localStorage.setItem('cart_total', totalCart);
-  updateCart();
+  cartUp();
 };
+
+const cartUp = () => {
+  localStorage.setItem('Cart-items', document.getElementsByClassName('cart__items')[0].innerHTML);
+  const total = Math.round(localStorage.getItem('cart_total') * 100) / 100;
+  document.getElementsByClassName('total-price')[0].textContent = total;
+};
+
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
