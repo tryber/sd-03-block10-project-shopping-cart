@@ -52,7 +52,6 @@ async function getSku(sku) {
     .then(e => sumPrice(e));
 }
 
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -101,6 +100,5 @@ async function mostraApi() {
 
 window.onload = function onload() {
   mostraApi();
-  sumPrice()
-    .then(() => document.querySelector('.loading').remove())
+  sumPrice().then(() => document.querySelector('.loading').remove());
 };
