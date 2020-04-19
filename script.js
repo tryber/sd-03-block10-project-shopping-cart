@@ -23,12 +23,12 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createProductImageElement(image));
   section.appendChild(
     createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
-  );
+  ).addEventListener('click', () => addCart(sku));;
 
   return section;
 }
 
-function getSkuFromProductItem(item) {
+async function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
@@ -36,22 +36,48 @@ function cartItemClickListener(event) {
   // coloque seu código aqui
 }
 
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
+  li.addEventListener('click', event => cartItemClickListener(event, sku));
+  document.querySelector('.cart__items').appendChild(li);
 }
 
-fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', {
-  headers: { accept: 'application/json' },
-})
-  .then(data => data.json())
-  .then((data) => {
-    data.results.forEach((el) => {
-      const { id: sku, title: name, thumbnail: image } = el;
-      const newElement = createProductItemElement({ sku, name, image });
-      document.querySelector('.items').appendChild(newElement);
+function addCart(sku) {
+  return fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then(response => response.json())
+    .then(data =>
+      createCartItemElement({
+        sku: data.id,
+        name: data.title,
+        salePrice: data.price,
+      }),
+    )
+}
+
+window.onload = function onload() {
+  StartApi()
+};
+
+async function StartApi() {
+    await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+      .then(response => response.json())
+      .then(data =>
+        data.results.forEach(e =>
+          document.getElementsByClassName('items')[0].appendChild(
+            createProductItemElement({
+              sku: e.id,
+              name: e.title,
+              image: e.thumbnail,
+            }),
+          ),
+        ),
+      );
+      document
+    .getElementsByClassName('empty-cart')[0]
+    .addEventListener('click', () => {
+      document.getElementsByClassName('cart__items')[0].innerHTML = '';
     });
-  });
+}
