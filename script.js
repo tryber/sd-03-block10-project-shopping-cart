@@ -95,8 +95,6 @@ const search = async () => {
     });
 };
 
-// const getSkuFromProductItem = item => item.querySelector('span.item__sku').innerText;
-
 window.onload = async () => {
   loading('items');
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Cart-items');
