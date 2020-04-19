@@ -1,9 +1,16 @@
 const fetchAPI = url => fetch(url).then(response => response.json());
 
+function createCustomElement(element, className, innerText) {
+  const e = document.createElement(element);
+  e.className = className;
+  e.innerText = innerText;
+  return e;
+}
+
 const loading = () => {
   document.querySelector('.cart__items').appendChild(
-  createCustomElement('p', 'loading', 'loading...'))
-}
+  createCustomElement('p', 'loading', 'loading...'));
+};
 
 const notLoading = () => document.querySelector('.loading').remove();
 
@@ -20,13 +27,6 @@ function createProductImageElement(imageSource) {
 function cartItemClickListener(event) {
   event.target.remove();
   storedCart();
-}
-
-function createCustomElement(element, className, innerText) {
-  const e = document.createElement(element);
-  e.className = className;
-  e.innerText = innerText;
-  return e;
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
