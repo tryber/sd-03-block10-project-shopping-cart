@@ -9,9 +9,7 @@ const createProductImageElement = (imageSource) => {
   return img;
 };
 
-const cartItemClickListener = (event) => {
-  document.querySelector('.cart__items').removeChild(event.target);
-};
+const cartItemClickListener = event => document.querySelector('.cart__items').removeChild(event.target);
 
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
