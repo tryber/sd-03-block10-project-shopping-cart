@@ -89,4 +89,5 @@ window.onload = function onload() {
 window.onload = function onload() {
   apiCreateItem();
 }
-};
+});
+}
