@@ -1,3 +1,7 @@
+const rmLoading = () => {
+  document.getElementsByClassName('loading')[0].remove();
+};
+
 const createCustomElement = (element, className, innerText) => {
   const e = document.createElement(element);
   e.className = className;
@@ -5,19 +9,15 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const loading = (item) => {
+  document.getElementsByClassName(item)[0].appendChild(createCustomElement('p', 'loading', ''));
+};
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
   img.src = imageSource;
   return img;
-};
-
-const loading = (item) => {
-  document.getElementsByClassName(item)[0].appendChild(createCustomElement('p', 'loading', ''));
-};
-
-const rmLoading = () => {
-  document.getElementsByClassName('loading')[0].remove();
 };
 
 const cartUp = () => {
@@ -58,7 +58,7 @@ const addCartItem = ({ sku }) => {
       salePrice: product.price,
     });
     localStorage.setItem('cart_total', product.price + parseFloat(localStorage.getItem('cart_total')));
-    removeLoading();
+    rmLoading();
     cartUp();
   });
 };
@@ -78,7 +78,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 };
 
 const pItems = (json) => {
-  json.results.forEach(item => appendElement('items', createProductItemElement, {
+  json.results.forEach(item => appendCart('items', createProductItemElement, {
     sku: item.id,
     name: item.title,
     image: item.thumbnail,
@@ -88,10 +88,10 @@ const pItems = (json) => {
 const search = async () => {
   document.getElementsByClassName('items')[0].innerHTML = '';
   await addLoading('items');
-  await fetchAPI(`https://api.mercadolibre.com/sites/MLB/search?q=${document.getElementsByClassName('input')[0].value}`)
+  await urlApi(`https://api.mercadolibre.com/sites/MLB/search?q=${document.getElementsByClassName('input')[0].value}`)
     .then((json) => {
       pItems(json);
-      removeLoading();
+      rmLoading();
     });
 };
 
@@ -101,7 +101,7 @@ window.onload = async () => {
   loading('items');
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Cart-items');
   if (!localStorage.getItem('cart_total')) localStorage.setItem('cart_total', 0);
-  await fetchAPI('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+  await urlApi('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then((json) => {
       pItems(json);
       rmLoading();
@@ -109,11 +109,11 @@ window.onload = async () => {
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
     localStorage.setItem('cart_total', 0);
-    updateCart();
+    cartUp();
   });
   document.querySelectorAll('li').forEach(li => li.addEventListener('click', cartItemClickListener));
   document.getElementsByClassName('input-btn')[0].addEventListener('click', search);
-  updateCart();
+  cartUp();
   document.getElementsByClassName('input')[0].addEventListener('keydown', (event) => {
     if (event.keyCode === 13) search();
   });
