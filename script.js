@@ -12,8 +12,10 @@ const loading = () => {
   createCustomElement('p', 'loading', 'loading...'));
 };
 
-const notLoading = () => document.querySelector('.loading').remove();
-
+const notLoading = () => {
+  if(document.querySelector('.loading'))
+  document.querySelector('.loading').remove();
+}
 const storedCart = () => localStorage.setItem('cart-items',
 document.getElementsByClassName('cart__items')[0].innerHTML);
 
@@ -74,6 +76,7 @@ clrBtn.addEventListener('click', () => {
 
 const loadCart = () => {
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('cart-items');
+  notLoading();
 };
 
 window.onload = function onload() {
