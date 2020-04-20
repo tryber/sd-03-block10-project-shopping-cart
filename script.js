@@ -71,7 +71,7 @@ async function getResponse() {
     document.querySelector('.items').appendChild(createProductItemElement({ sku, name, image }));
   });
   document.querySelectorAll('.item').forEach(async (e) => {
-    const sku = getSkuFromProductItem(e);
+    const sku = await getSkuFromProductItem(e);
     const getDetails = await getDetailsToCart(sku);
     await e.lastChild.addEventListener('click', () => {
       createCartItemElement(getDetails);
