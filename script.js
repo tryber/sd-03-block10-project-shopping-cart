@@ -1,4 +1,4 @@
-update = () => localStorage.setItem('Lista Salva', document.getElementsByClassName('Cart__items')[0].innerHTML);
+atualiza = () => localStorage.setItem('Lista Salva', document.getElementsByClassName('Cart__items')[0].innerHTML);
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -31,7 +31,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.remove();
+  atualiza();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
