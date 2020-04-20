@@ -96,10 +96,10 @@ function emptyCart() {
   });
 }
 
-function loadOnCart() {
+async function loadOnCart() {
   const storage = localStorage.getItem('cart');
   const populateCart = local => local.forEach(e => createCartItemElement(e));
-  return storage ? populateCart(JSON.parse(storage)) : localStorage.setItem('cart', '[]');
+  return await storage ? populateCart(JSON.parse(storage)) : localStorage.setItem('cart', '[]');
 }
 window.onload = function onload() {
   loadOnCart();
