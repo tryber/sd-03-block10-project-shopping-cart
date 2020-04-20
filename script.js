@@ -85,8 +85,6 @@ async function StartApi() {
     .getElementsByClassName('empty-cart')[0]
     .addEventListener('click', () => {
       (document.getElementsByClassName('cart__items')[0].innerHTML = '');
-      (totalPrice = document.getElementsByClassName('total-price'));
-      totalPrice[0].innerHTML = '0';
     });
 }
 
