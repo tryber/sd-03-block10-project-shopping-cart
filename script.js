@@ -1,4 +1,4 @@
-update = () => {
+atualiza = () => {
   localStorage.setItem('Lista Salva', document.getElementsByClassName('cart__items')[0].innerHTML);
   localStorage.setItem('Total a Pagar', document.getElementsByClassName('total-price')[0].innerHTML);
 };
@@ -23,8 +23,7 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-          .addEventListener('click', () => addToCart(sku));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!')).addEventListener('click', () => addToCart(sku));
   return section;
 }
 
@@ -34,8 +33,8 @@ function getSkuFromProductItem(item) {
 
 cartItemClickListener = async (event) => {
   await event.remove();
-  await cardTotal();
-  await update();
+  await addTotal();
+  await atualiza();
 };
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -43,47 +42,42 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => cartItemClickListener(li));
-  cardTotal(update());
+  addTotal(atualiza());
   return li;
 }
 
-cardTotal = () => {
+addTotal = () => {
   const cartItem = document.querySelectorAll('.cart__item');
-  const price = Math.round([...cartItem].map(e => e.textContent
-  .match(/([0-9.]){1,}$/))
-  .reduce((acc, priceItem) => acc + parseFloat(priceItem), 0) * 100) / 100;
+  const price = Math.round([...cartItem].map(e => e.textContent.match(/([0-9.]){1,}$/)).reduce((acc, priceItem) => acc + parseFloat(priceItem), 0) * 100) / 100;
   document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
 };
 
-const DontRepeat = add => ({
-  sku: add.id,
-  name: add.title,
-  salePrice: add.price,
-  image: add.thumbnail,
+const naoRepeat = op => ({
+  sku: op.id,
+  name: op.title,
+  salePrice: op.price,
+  image: op.thumbnail,
 });
 
 addToCart = async (sku) => {
-  await fetch(`https://api.mercadolibre.com/items/${sku}`)
-  .then(response => response.json())
-  .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(add))));
-  await cardTotal();
-  await update();
+  await fetch(`https://api.mercadolibre.com/items/${sku}`).then(aux => aux.json()).then(op => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(naoRepeat(op)))));
+  await addTotal();
+  await atualiza();
 };
 
-disableLoad = () => document.getElementsByClassName('loading')[0].remove();
+desativar = () => document.getElementsByClassName('loading')[0].remove();
 
 window.onload = async () => {
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-    .then(response => response.json())
-    .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0]
-          .appendChild(createProductItemElement(DontRepeat(e)))));
+    .then(aux => aux.json())
+    .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0].appendChild(createProductItemElement(naoRepeat(e)))));
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
   document.getElementsByClassName('total-price')[0].innerHTML = localStorage.getItem('Total a Pagar');
   document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', () => cartItemClickListener(inner)));
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
-  await disableLoad();
-  await cardTotal();
-  await update();
+  await desativar();
+  await addTotal();
+  await atualiza();
 };
