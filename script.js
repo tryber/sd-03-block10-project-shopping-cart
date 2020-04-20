@@ -81,7 +81,5 @@ window.onload = function onload() {
     });
   };
   listItems();
-  const cartItem = document.querySelector('.cart_items');
-  cartItem.innerHTML = localStorage.getItem('cart');
   document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
 };
