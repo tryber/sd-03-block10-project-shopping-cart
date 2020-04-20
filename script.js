@@ -11,6 +11,24 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+// Dado um ID, a function adiciona o produto com esse ID no cart
+async function getId(itemID) {
+  const apiButton = `https://api.mercadolibre.com/items/${itemID}`;
+
+  await fetch(apiButton)
+  .then(response => response.json()
+  .then(element => document.querySelector('.cart__items').appendChild(createCartItemElement({ sku: element.id, name: element.title, salePrice: element.price }))));
+
+  localStorage.setItem('último carrinho', document.querySelector('.cart__items').innerHTML);
+}
+
+function createCartItemElement({ sku, name, salePrice }) {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.addEventListener('click', cartItemClickListener);
+  return li;
+}
 
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
@@ -34,14 +52,7 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
-//Remove o loading e carrega os itens em forma visual
+// Remove o loading e carrega os itens em forma visual
 const URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
 fetch(URL)
@@ -51,16 +62,6 @@ fetch(URL)
   document.querySelector('.items').appendChild(createProductItemElement(items));
 }))
 .then(document.querySelector('.loading').remove()));
-//Dado um ID, a function adiciona o produto com esse ID no cart
-async function getId(itemID) {
-  const apiButton = `https://api.mercadolibre.com/items/${itemID}`;
-
-  await fetch(apiButton)
-  .then(response => response.json()
-  .then(element => document.querySelector('.cart__items').appendChild(createCartItemElement({ sku: element.id, name: element.title, salePrice: element.price }))));
-
-  localStorage.setItem('último carrinho', document.querySelector('.cart__items').innerHTML);
-}
 
 window.onload = function onload() {
 
