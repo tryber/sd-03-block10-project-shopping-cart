@@ -1,4 +1,4 @@
-update = () => {
+atualiza = () => {
   localStorage.setItem('Lista Salva', document.getElementsByClassName('cart__items')[0].innerHTML);
   localStorage.setItem('Total a Pagar', document.getElementsByClassName('total-price')[0].innerHTML);
 };
@@ -36,7 +36,7 @@ function getSkuFromProductItem(item) {
 cartItemClickListener = async (event) => {
   await event.remove();
   await cardTotal();
-  await update();
+  await atualiza();
 };
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -44,7 +44,7 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => cartItemClickListener(li));
-  cardTotal(update());
+  cardTotal(atualiza());
   return li;
 }
 
@@ -68,7 +68,7 @@ addToCart = async (sku) => {
   .then(response => response.json())
   .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(add))));
   await cardTotal();
-  await update();
+  await atualiza();
 };
 
 window.onload = async () => {
@@ -83,5 +83,5 @@ window.onload = async () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
   await cardTotal();
-  await update();
+  await atualiza();
 };
