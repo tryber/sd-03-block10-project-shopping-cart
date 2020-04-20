@@ -39,7 +39,7 @@ async function getId(itemID) {
 
   await fetch(apiButton)
   .then(response => response.json()
-  .then(element => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement({ sku: element.id, name: element.title, salePrice: element.price }))));
+  .then(element => document.querySelector('.cart__items').appendChild(createCartItemElement({ sku: element.id, name: element.title, salePrice: element.price }))));
 
   localStorage.setItem('último carrinho', document.querySelector('.cart__items').innerHTML);
 }
@@ -65,7 +65,10 @@ const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
 fetch(API_URL)
 .then(response => response.json()
-.then(data => data.results.forEach(element => document.getElementsByClassName('items')[0].appendChild(createProductItemElement({ sku: element.id, name: element.title, image: element.thumbnail }))))
+.then(data => data.results.forEach(element => {
+  const keysItems = { sku: element.id, name: element.title, image: element.thumbnail };
+  document.querySelector('.items').appendChild(createProductItemElement(keysItems))
+}))
 .then(document.querySelector('.loading').innerHTML = ''));
 
 
