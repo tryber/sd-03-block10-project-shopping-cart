@@ -12,8 +12,8 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-async function sumPrice() {
-  const totalPrice = await document.getElementsByClassName('total-price');
+async function sumPrice(salePrice) {
+  const totalPrice = document.getElementsByClassName('total-price');
   const cartItems = document.getElementsByClassName('cart__item');
   const cartTotal = [...cartItems]
     .map(element => element.innerText.match(/([0-9.]){1,}$/))
@@ -85,8 +85,8 @@ async function StartApi() {
   document
     .getElementsByClassName('empty-cart')[0]
     .addEventListener('click', () => {
-      (document.getElementsByClassName('cart__items')[0].innerHTML = '');
-      (totalPrice = document.getElementsByClassName('total-price'));
+      document.getElementsByClassName('cart__items')[0].innerHTML = '';
+      totalPrice = document.getElementsByClassName('total-price');
       totalPrice[0].innerHTML = '0';
     });
 }
