@@ -37,7 +37,7 @@ function getSkuFromProductItem(item) {
 }
 async function sumPrice(salePrice) {
   const totalPrice = await document.querySelector('.total-price');
-  const sum = await Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
+  const sum = Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
   totalPrice.innerHTML = sum;
 }
 const decreasePrice = async (sku) => {
