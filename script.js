@@ -73,9 +73,9 @@ async function getResponse() {
   document.querySelectorAll('.item').forEach(async (e) => {
     const sku = getSkuFromProductItem(e);
     const getDetails = await getDetailsToCart(sku);
-    await e.lastChild.addEventListener('click', async () => {
-      await createCartItemElement(getDetails);
-      await createStorage(getDetails);
+    await e.lastChild.addEventListener('click', () => {
+      createCartItemElement(getDetails);
+      createStorage(getDetails);
     });
   });
 }
