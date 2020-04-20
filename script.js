@@ -29,6 +29,7 @@ async function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  await sumPrice(salePrice)
   li.addEventListener('click', event => cartItemClickListener(event, sku));
   document.querySelector('.cart__items').appendChild(li);
 }
