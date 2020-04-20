@@ -98,5 +98,6 @@ window.onload = function onload() {
   listItems();
   btnEmpty.addEventListener('click', emptyCart);
   cartItems.innerHTML = localStorage.getItem('cart');
+  document.querySelector('.loading').remove();
   document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
 };
