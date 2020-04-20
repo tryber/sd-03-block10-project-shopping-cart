@@ -21,8 +21,8 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
+          .addEventListener('click', () => addToCart(sku));
   return section;
 }
 
@@ -32,7 +32,7 @@ function getSkuFromProductItem(item) {
 
 function cartItemClickListener(event) {
   event.remove();
-  atualiza();
+  update();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -43,23 +43,25 @@ function createCartItemElement({ sku, name, salePrice }) {
   atualiza();
   return li;
 }
-
-const naorepete = test => ({
-  sku: test.id,
-  name: test.title,
-  salePrice: test.price,
-  image: test.thumbnail,
+const DontRepeat = op => ({
+  sku: op.id,
+  name: op.title,
+  salePrice: op.price,
+  image: op.thumbnail,
 });
 
-addToCart = sku => fetch(`https://api.mercadolibre.com/items/${sku}`)
+addToCart = async (sku) => {
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(aux => aux.json())
-  .then(test => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(naorepete(test))));
+  .then(op => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(op))));
+  await atualiza();
+};
 
 window.onload = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(aux => aux.json())
     .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0]
-      .appendChild(createProductItemElement(naorepete(e)))));
+          .appendChild(createProductItemElement(DontRepeat(e)))));
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
   document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', () => cartItemClickListener(inner)));
 };
