@@ -50,6 +50,6 @@ fetch(URL)
 }))
 .then(document.querySelector('.loading').remove()));
 
-window.onload = function onload() { 
+window.onload = function onload() {
 
 };
