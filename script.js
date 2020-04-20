@@ -18,7 +18,7 @@ const price = () => {
   prices.innerText = products ? Math.round(
     [...products]
     .map(item => item.textContent.match(/([0-9.]){1,}$/))
-    .reduce((total, price) => total + parseFloat(price), 0)
+    .reduce((total, i) => total + parseFloat(i), 0)
     .toFixed(2) * 100) / 100 : 0;
 };
 
@@ -84,5 +84,5 @@ window.onload = function onload() {
     this.localStorage.clear();
   });
   document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
-price();
+  price();
 };
