@@ -1,4 +1,7 @@
-atualiza = () => localStorage.setItem('Lista Salva', document.getElementsByClassName('cart__items')[0].innerHTML);
+atualiza = () => {
+  localStorage.setItem('Lista Salva', document.getElementsByClassName('cart__items')[0].innerHTML);
+  localStorage.setItem('Total a Pagar', document.getElementsByTagName('total-price')[0].innerHTML);
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
