@@ -62,28 +62,33 @@ function getSkuFromProductItem(item) {
 
 window.onload = async function onload() {
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-    .then(res => res.json())
-    .then((json) => {
-      json.results.forEach((products) => {
-        document.getElementsByClassName('items')[0]
-        .appendChild(
-          createProductItemElement(
-            { sku: products.id, name: products.title, image: products.thumbnail }));
+  .then(res => res.json())
+  .then((json) => {
+    json.results.forEach((products) => {
+      document.getElementsByClassName('items')[0]
+      .appendChild(
+        createProductItemElement(
+          { sku: products.id, name: products.title, image: products.thumbnail }));
+        });
       });
-    });
-  document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('carrinho');
-  document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
+      document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('carrinho');
+      document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
 
-  const btnEmptyCart = document.getElementsByClassName('empty-cart')[0];
+      const btnEmptyCart = document.getElementsByClassName('empty-cart')[0];
 
-  btnEmptyCart.addEventListener('click', () => {
-    document.getElementsByClassName('cart__items')[0].innerHTML = '';
-    localStorage.setItem('carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
-    localStorage.setItem('Total', 0);
-    document.getElementsByClassName('total-price')[0].innerHTML = '0';
-  });
-  if (!localStorage.getItem('Total')) {
-    localStorage.setItem('Total', 0);
-  }
-  document.getElementsByClassName('total-price')[0].innerHTML = this.localStorage.getItem('Total');
+      btnEmptyCart.addEventListener('click', () => {
+        document.getElementsByClassName('cart__items')[0].innerHTML = '';
+        localStorage.setItem('carrinho', document.getElementsByClassName('cart__items')[0].innerHTML);
+        localStorage.setItem('Total', 0);
+        document.getElementsByClassName('total-price')[0].innerHTML = '0';
+      });
+      if (!localStorage.getItem('Total')) {
+        localStorage.setItem('Total', 0);
+      }
+      document.getElementsByClassName('total-price')[0].innerHTML = this.localStorage.getItem('Total');
+
+      const loading = document.getElementsByClassName('loading')[0];
+      loading.innerHTML = '<span class="loading">Laoding...</span>';
+      loading.innerHTML = '';
+
 };
