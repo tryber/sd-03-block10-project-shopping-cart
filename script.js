@@ -15,7 +15,7 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
-  localStorage.setItem('último carrinho', document.querySelector('.cart__items').innerHTML);
+  localStorage.setItem('carrinho', document.querySelector('.cart__items').innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -34,7 +34,7 @@ async function getId(itemID) {
   .then(response => response.json()
   .then(element => document.querySelector('.cart__items').appendChild(createCartItemElement({ sku: element.id, name: element.title, salePrice: element.price }))));
 
-  localStorage.setItem('último carrinho', document.querySelector('.cart__items').innerHTML);
+  localStorage.setItem('carrinho', document.querySelector('.cart__items').innerHTML);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -67,9 +67,10 @@ fetch(URL)
 .then(document.querySelector('.loading').remove()));
 
 window.onload = function onload() {
-  document.querySelector('.cart__items').innerHTML = localStorage.getItem('último carrinho');
+  document.querySelector('.cart__items').innerHTML = localStorage.getItem('carrinho');
   document.querySelector('.empty-cart').addEventListener('click', () => {
     document.querySelector('.cart__items').innerHTML = '';
     this.localStorage.clear();
   });
+  document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
 };
