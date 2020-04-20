@@ -60,7 +60,9 @@ const naoRepeat = op => ({
 });
 
 addToCart = async (sku) => {
-  await fetch(`https://api.mercadolibre.com/items/${sku}`).then(aux => aux.json()).then(op => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(naoRepeat(op)))));
+  await fetch(`https://api.mercadolibre.com/items/${sku}`)
+    .then(aux => aux.json())
+    .then(op => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(naoRepeat(op))));
   await addTotal();
   await atualiza();
 };
