@@ -64,7 +64,7 @@ async function getResponse() {
   const response = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   const respToJson = await response.json();
   const treatedResp = respToJson.results;
-  treatedResp.forEach((e) => {
+  await treatedResp.forEach((e) => {
     const sku = e.id;
     const name = e.title;
     const image = e.thumbnail;
