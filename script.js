@@ -54,8 +54,7 @@ addToCart = sku => fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(test => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(naorepete(test))));
 
 window.onload = function onload() {
-  const URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
-  this.fetch(URL)
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(aux => aux.json())
     .then(obj => obj.results.map(x => document.getElementsByClassName('items')[0].appendChild(createProductItemElement(naorepete(x)))));
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
