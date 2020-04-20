@@ -13,7 +13,7 @@ function createCustomElement(element, className, innerText) {
 }
 
 async function sumPrice() {
-  const totalPrice = document.getElementsByClassName('total-price');
+  const totalPrice = await document.getElementsByClassName('total-price');
   const cartItems = document.getElementsByClassName('cart__item');
   const cartTotal = [...cartItems]
     .map(element => element.innerText.match(/([0-9.]){1,}$/))
