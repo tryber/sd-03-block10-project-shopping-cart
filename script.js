@@ -11,7 +11,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 function createStorage({ sku, name, salePrice }) {
-  const cart = (localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : [];
+  const cart = (localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : '[]';
   cart.push({ sku, name, salePrice });
   localStorage.setItem('cart', JSON.stringify(cart));
 }
@@ -95,7 +95,7 @@ async function loadOnCart() {
 window.onload = async function onload() {
   await loadOnCart();
   emptyCart();
-  await getResponse()
+  getResponse()
     .then(() => document.querySelector('.loading').remove())
     .catch(error => console.error(error));
 };
