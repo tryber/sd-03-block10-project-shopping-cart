@@ -1,4 +1,5 @@
 
+// url da api
 const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 const myObj = { method: 'GET' };
 
