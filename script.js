@@ -1,6 +1,6 @@
-atualiza = () => {
+update = () => {
   localStorage.setItem('Lista Salva', document.getElementsByClassName('cart__items')[0].innerHTML);
-  localStorage.setItem('Total a Pagar', document.getElementsByTagName('total-price')[0].innerHTML);
+  localStorage.setItem('Total a Pagar', document.getElementsByClassName('total-price')[0].innerHTML);
 };
 
 function createProductImageElement(imageSource) {
@@ -35,20 +35,20 @@ function getSkuFromProductItem(item) {
 
 cartItemClickListener = async (event) => {
   await event.remove();
-  await addTotal();
+  await cardTotal();
   await update();
-}
+};
 
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => cartItemClickListener(li));
-  addTotal(atualiza());
+  cardTotal(update());
   return li;
 }
 
-addTotal = () => {
+cardTotal = () => {
   const cartItem = document.querySelectorAll('.cart__item');
   const price = Math.round([...cartItem].map(e => e.textContent
   .match(/([0-9.]){1,}$/))
@@ -56,32 +56,32 @@ addTotal = () => {
   document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
 };
 
-const DontRepeat = op => ({
-  sku: op.id,
-  name: op.title,
-  salePrice: op.price,
-  image: op.thumbnail,
+const DontRepeat = add => ({
+  sku: add.id,
+  name: add.title,
+  salePrice: add.price,
+  image: add.thumbnail,
 });
 
 addToCart = async (sku) => {
   await fetch(`https://api.mercadolibre.com/items/${sku}`)
-  .then(aux => aux.json())
-  .then(op => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(op))));
-  await addTotal();
-  await atualiza();
+  .then(response => response.json())
+  .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(add))));
+  await cardTotal();
+  await update();
 };
 
 window.onload = async () => {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-    .then(aux => aux.json())
+  await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+    .then(response => response.json())
     .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0]
           .appendChild(createProductItemElement(DontRepeat(e)))));
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
-  document.getElementsByTagName('total-price')[0].innerHTML = localStorage.getItem('Total a Pagar');
+  document.getElementsByClassName('total-price')[0].innerHTML = localStorage.getItem('Total a Pagar');
   document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', () => cartItemClickListener(inner)));
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
-    document.getElementsByTagName('cart__items')[0].innerHTML = '';
+    document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
-  await addTotal();
-  await atualiza();
+  await cardTotal();
+  await update();
 };
