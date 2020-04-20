@@ -65,9 +65,9 @@ const API_URL = 'https://api.mercadolibre.com/sites/MLB/search?q=computador';
 
 fetch(API_URL)
 .then(response => response.json()
-.then(data => data.results.forEach(element => {
+.then(data => data.results.forEach((element) => {
   const keysItems = { sku: element.id, name: element.title, image: element.thumbnail };
-  document.querySelector('.items').appendChild(createProductItemElement(keysItems))
+  document.querySelector('.items').appendChild(createProductItemElement(keysItems));
 }))
 .then(document.querySelector('.loading').innerHTML = ''));
 
