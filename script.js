@@ -35,7 +35,7 @@ function getSkuFromProductItem(item) {
 
 cartItemClickListener = async (event) => {
   await event.remove();
-  await cardTotal();
+  await addTotal();
   await atualiza();
 };
 
@@ -44,11 +44,11 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => cartItemClickListener(li));
-  cardTotal(atualiza());
+  addTotal(atualiza());
   return li;
 }
 
-cardTotal = () => {
+addTotal = () => {
   const cartItem = document.querySelectorAll('.cart__item');
   const price = Math.round([...cartItem].map(e => e.textContent
   .match(/([0-9.]){1,}$/))
@@ -56,18 +56,18 @@ cardTotal = () => {
   document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
 };
 
-const DontRepeat = add => ({
-  sku: add.id,
-  name: add.title,
-  salePrice: add.price,
-  image: add.thumbnail,
+const DontRepeat = aux => ({
+  sku: aux.id,
+  name: aux.title,
+  salePrice: aux.price,
+  image: aux.thumbnail,
 });
 
 addToCart = async (sku) => {
   await fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(response => response.json())
-  .then(add => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(add))));
-  await cardTotal();
+  .then(aux => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(DontRepeat(aux))));
+  await addTotal();
   await atualiza();
 };
 
@@ -82,6 +82,6 @@ window.onload = async () => {
   document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
     document.getElementsByClassName('cart__items')[0].innerHTML = '';
   });
-  await cardTotal();
+  await addTotal();
   await atualiza();
 };
