@@ -67,9 +67,6 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function apiCreateItem() {
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject);
-}
 async function apiCreateItem() {
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador', myObject)
   .then(response => response.json())
