@@ -32,7 +32,6 @@ async function getDetailsToCart(id) {
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
@@ -56,8 +55,8 @@ const decreasePrice = (sku) => {
   localParsed.splice(index, 1);
   localStorage.cart = JSON.stringify(localParsed);
 };
-function cartItemClickListener(event, sku) {
-  decreasePrice(sku);
+async function cartItemClickListener(event, sku) {
+  await decreasePrice(sku);
   event.target.remove();
 }
 
