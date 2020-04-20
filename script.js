@@ -68,8 +68,8 @@ fetch(URL)
 
 window.onload = function onload() {
   document.querySelector('.cart__items').innerHTML = localStorage.getItem('último carrinho');
-  document.querySelector('.empty-cart').addEventListener('click',() => {
+  document.querySelector('.empty-cart').addEventListener('click', () => {
     document.querySelector('.cart__items').innerHTML = '';
     this.localStorage.clear();
-  })
+  });
 };
