@@ -93,7 +93,7 @@ async function loadOnCart() {
   return await storage ? populateCart(JSON.parse(storage)) : localStorage.setItem('cart', '[]');
 }
 window.onload = async function onload() {
-  await loadOnCart();
+  loadOnCart();
   emptyCart();
   getResponse()
     .then(() => document.querySelector('.loading').remove())
