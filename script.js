@@ -1,4 +1,4 @@
-atualiza = () => localStorage.setItem('Lista Salva', document.getElementsByClassName('Cart__items')[0].innerHTML);
+atualiza = () => localStorage.setItem('Lista Salva', document.getElementsByClassName('cart__items')[0].innerHTML);
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -39,7 +39,8 @@ function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', () => cartItemClickListener(li));
+  atualiza();
   return li;
 }
 
@@ -54,10 +55,11 @@ addToCart = sku => fetch(`https://api.mercadolibre.com/items/${sku}`)
   .then(aux => aux.json())
   .then(test => document.getElementsByClassName('cart__items')[0].appendChild(createCartItemElement(naorepete(test))));
 
-window.onload = function onload() {
+window.onload = () => {
   fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(aux => aux.json())
-    .then(obj => obj.results.map(x => document.getElementsByClassName('items')[0].appendChild(createProductItemElement(naorepete(x)))));
+    .then(obj => obj.results.map(e => document.getElementsByClassName('items')[0]
+      .appendChild(createProductItemElement(naorepete(e)))));
   document.getElementsByClassName('cart__items')[0].innerHTML = localStorage.getItem('Lista Salva');
   document.querySelectorAll('li').forEach(inner => inner.addEventListener('click', () => cartItemClickListener(inner)));
 };
