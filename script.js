@@ -12,7 +12,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function sumPrice() {
+async function sumPrice() {
   const totalPrice = document.getElementsByClassName('total-price');
   const cartItems = document.getElementsByClassName('cart__item');
   const cartTotal = [...cartItems]
