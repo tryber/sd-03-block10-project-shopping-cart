@@ -33,7 +33,7 @@ async function createCartItemElement({ sku, name, salePrice }) {
   document.querySelector('.cart__items').appendChild(li);
 }
 
-function addCart(sku) {
+async function addCart(sku) {
   return fetch(`https://api.mercadolibre.com/items/${sku}`)
     .then(response => response.json())
     .then(data =>
