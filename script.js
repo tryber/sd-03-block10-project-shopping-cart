@@ -14,6 +14,8 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+let totalPrice = 0;
+
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -26,12 +28,9 @@ function createCartItemElement({ id, title, price }) {
   return li;
 }
 
-let totalPrice = 0;
-
 function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
-
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
