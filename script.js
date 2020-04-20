@@ -20,8 +20,8 @@ function getSkuFromProductItem(item) {
 
 const totalPrice = () => {
   const product = document.querySelectorAll('.cart__item');
-  const price = document.querySelector('.total-price');
-  price.innerText = Math.round(
+  const prices = document.querySelector('.total-price');
+  prices.innerText = Math.round(
     [...product]
     .map(item => item.textContent.match(/([0-9.]){1,}$/))
     .reduce((total, price) => total + parseFloat(price), 0)
