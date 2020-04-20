@@ -33,9 +33,10 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  event.remove();
-  update();
+cartItemClickListener = async (event) => {
+  await event.remove();
+  await addTotal();
+  await update();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -43,9 +44,12 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', () => cartItemClickListener(li));
-  atualiza();
+  addTotal(atualiza());
   return li;
 }
+
+addTotal = (){};
+
 const DontRepeat = op => ({
   sku: op.id,
   name: op.title,
