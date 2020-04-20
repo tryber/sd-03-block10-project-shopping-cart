@@ -69,7 +69,7 @@ fetch(API_URL)
   const keysItems = { sku: element.id, name: element.title, image: element.thumbnail };
   document.querySelector('.items').appendChild(createProductItemElement(keysItems));
 }))
-.then(document.querySelector('.loading').innerHTML = ''));
+.then(document.querySelector('.loading').remove()));
 
 
 function getSkuFromProductItem(item) {
