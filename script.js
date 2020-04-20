@@ -100,4 +100,5 @@ window.onload = function onload() {
   cartItems.innerHTML = localStorage.getItem('cart');
   document.querySelector('.loading').remove();
   document.querySelectorAll('li').forEach(item => item.addEventListener('click', cartItemClickListener));
+  await totalPrice();
 };
