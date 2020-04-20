@@ -49,8 +49,8 @@ const decreasePrice = (sku) => {
   localStorage.cart = JSON.stringify(localParsed);
 };
 async function cartItemClickListener(event, sku) {
-  event.target.remove();
   await decreasePrice(sku);
+  event.target.remove();
 }
 async function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -73,9 +73,9 @@ async function getResponse() {
   document.querySelectorAll('.item').forEach(async (e) => {
     const sku = getSkuFromProductItem(e);
     const getDetails = await getDetailsToCart(sku);
-    await e.lastChild.addEventListener('click', async () => {
-      await createCartItemElement(getDetails);
-      await createStorage(getDetails);
+    await e.lastChild.addEventListener('click', () => {
+      createCartItemElement(getDetails);
+      createStorage(getDetails);
     });
   });
 }
