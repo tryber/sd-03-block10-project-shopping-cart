@@ -64,13 +64,13 @@ async function getResponse() {
   const response = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   const respToJson = await response.json();
   const treatedResp = respToJson.results;
-  await treatedResp.forEach((e) => {
+  treatedResp.forEach((e) => {
     const sku = e.id;
     const name = e.title;
     const image = e.thumbnail;
     document.querySelector('.items').appendChild(createProductItemElement({ sku, name, image }));
   });
-  document.querySelectorAll('.item').forEach(async (e) => {
+  await document.querySelectorAll('.item').forEach(async (e) => {
     const sku = await getSkuFromProductItem(e);
     const getDetails = await getDetailsToCart(sku);
     await e.lastChild.addEventListener('click', () => {
