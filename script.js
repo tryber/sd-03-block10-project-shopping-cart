@@ -12,6 +12,15 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function sumPrice() {
+  const totalPrice = document.getElementsByClassName('total-price');
+  const cartItems = document.getElementsByClassName('cart__item');
+  const cartTotal = [...cartItems]
+    .map(element => element.innerText.match(/([0-9.]){1,}$/))
+    .reduce((total, next) => total + parseFloat(next), 0);
+  totalPrice[0].innerHTML = cartTotal;
+}
+
 function cartItemClickListener(event) {
   event.target.remove();
 }
@@ -33,7 +42,7 @@ function addCart(sku) {
         name: data.title,
         salePrice: data.price,
       }),
-    );
+    ).then(e => sumPrice(e));
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -43,11 +52,8 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section
-    .appendChild(
-      createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
-    )
-    .addEventListener('click', () => addCart(sku));
+  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'), )
+  .addEventListener('click', () => addCart(sku), salvarCarrinho());
 
   return section;
 }
@@ -73,9 +79,22 @@ async function StartApi() {
   document
     .getElementsByClassName('empty-cart')[0]
     .addEventListener('click', () => {
-      document.getElementsByClassName('cart__items')[0].innerHTML = '';
+      document.getElementsByClassName('cart__items')[0].innerHTML = '', 
+      totalPrice = document.getElementsByClassName('total-price');
+      totalPrice[0].innerHTML = '0';;
     });
 }
+
+function salvarCarrinho(){
+  const listcar = document.querySelector('cart');
+  localStorage.setItem('carrinholista', 1)
+}
+
+function carregarCarrinho(){
+  let carrinho =  localStorage.getItem('carrinholista')
+}
+
 window.onload = function onload() {
-  StartApi();
+  StartApi().then(() => document.querySelector('.loading').remove());
+  carregarCarrinho();
 };
