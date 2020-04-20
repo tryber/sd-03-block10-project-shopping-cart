@@ -40,11 +40,11 @@ async function sumPrice(salePrice) {
   const sum = Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
   totalPrice.innerHTML = sum;
 }
-const decreasePrice = async (sku) => {
+const decreasePrice = (sku) => {
   const localParsed = JSON.parse(localStorage.cart);
   const item = localParsed.find(obj => obj.sku === sku);
   const index = localParsed.findIndex(e => e.sku === item.sku);
-  await sumPrice(-item.salePrice);
+  sumPrice(-item.salePrice);
   localParsed.splice(index, 1);
   localStorage.cart = JSON.stringify(localParsed);
 };
