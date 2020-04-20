@@ -57,7 +57,7 @@ function createProductItemElement({ sku, name, image }) {
     .appendChild(
       createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
     )
-    .addEventListener('click', () => addCart(sku), salvarCarrinho());
+    .addEventListener('click', () => addCart(sku));
 
   return section;
 }
@@ -89,13 +89,8 @@ async function StartApi() {
     });
 }
 
-function salvarCarrinho() {
-  const listcar = document.querySelector('cart');
-  localStorage.setItem('carrinholista', 1);
-}
-
 function carregarCarrinho() {
-  let carrinho = localStorage.getItem('carrinholista');
+  const carrinho = localStorage.getItem('carrinholista');
 }
 
 window.onload = function onload() {
