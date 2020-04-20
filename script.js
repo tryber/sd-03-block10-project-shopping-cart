@@ -23,7 +23,7 @@ async function sumPrice() {
 
 function cartItemClickListener(event) {
   event.target.remove();
-  sumPrice()
+  sumPrice();
 }
 
 async function createCartItemElement({ sku, name, salePrice }) {
