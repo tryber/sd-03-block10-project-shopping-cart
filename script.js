@@ -46,9 +46,9 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-addTotal = () => {
-  const cartItem = document.querySelectorAll('.cart__item');
-  const price = Math.round([...cartItem].map(e => e.textContent.match(/([0-9.]){1,}$/)).reduce((acc, priceItem) => acc + parseFloat(priceItem), 0) * 100) / 100;
+addTotal = async () => {
+  const cartItem = await document.querySelectorAll('.cart__item');
+  const price = await [...cartItem].map(e => e.textContent.match(/[0-9.0-9]+$/)).reduce((acc, add) => acc + parseFloat(add), 0).toFixed(2);
   document.getElementsByClassName('total-price')[0].innerHTML = `${price}`;
 };
 
