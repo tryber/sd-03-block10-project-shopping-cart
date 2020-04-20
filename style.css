@@ -74,3 +74,16 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.empty-cart {
+  cursor: pointer;
+}
+
+.henrique {
+  text-align: center;
+  text-decoration: none;
+}
+
+.linkedin:hover {
+  text-decoration: none;
+}
