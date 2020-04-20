@@ -96,5 +96,5 @@ window.onload = function onload() {
   emptyCart();
   getResponse()
     .then(() => document.querySelector('.loading').remove())
-    .catch((error) => console.error(error));
+    .catch(error => console.error(error));
 };
