@@ -15,6 +15,7 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
+  localStorage.setItem('último carrinho', document.querySelector('.cart__items').innerHTML);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -66,5 +67,9 @@ fetch(URL)
 .then(document.querySelector('.loading').remove()));
 
 window.onload = function onload() {
-
+  document.querySelector('.cart__items').innerHTML = localStorage.getItem('último carrinho');
+  document.querySelector('.empty-cart').addEventListener('click',() => {
+    document.querySelector('.cart__items').innerHTML = '';
+    this.localStorage.clear();
+  })
 };
