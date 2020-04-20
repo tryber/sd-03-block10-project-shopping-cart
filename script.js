@@ -60,6 +60,14 @@ async function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', event => cartItemClickListener(event, sku));
   document.querySelector('.cart__items').appendChild(li);
 }
+const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
+  const sku = await getSkuFromProductItem(e);
+  const getDetails = await getDetailsToCart(sku);
+  await e.lastChild.addEventListener('click', () => {
+    createCartItemElement(getDetails);
+    createStorage(getDetails);
+  });
+});
 async function getResponse() {
   const response = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   const respToJson = await response.json();
@@ -70,14 +78,7 @@ async function getResponse() {
     const image = e.thumbnail;
     document.querySelector('.items').appendChild(createProductItemElement({ sku, name, image }));
   });
-  await document.querySelectorAll('.item').forEach(async (e) => {
-    const sku = await getSkuFromProductItem(e);
-    const getDetails = await getDetailsToCart(sku);
-    await e.lastChild.addEventListener('click', () => {
-      createCartItemElement(getDetails);
-      createStorage(getDetails);
-    });
-  });
+  addListenerToButtons();
 }
 function emptyCart() {
   document.querySelector('.empty-cart').addEventListener('click', () => {
@@ -91,10 +92,10 @@ async function loadOnCart() {
   const populateCart = local => local.forEach(e => createCartItemElement(e));
   return await storage ? populateCart(JSON.parse(storage)) : localStorage.setItem('cart', '[]');
 }
-window.onload = function onload() {
-  loadOnCart();
+window.onload = async function onload() {
+  await loadOnCart();
   emptyCart();
-  getResponse()
+  await getResponse()
     .then(() => document.querySelector('.loading').remove())
     .catch(error => console.error(error));
 };
