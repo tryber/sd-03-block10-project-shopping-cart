@@ -37,19 +37,19 @@ function getSkuFromProductItem(item) {
 }
 async function sumPrice(salePrice) {
   const totalPrice = await document.querySelector('.total-price');
-  const sum = Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
+  const sum = await Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
   totalPrice.innerHTML = sum;
 }
-const decreasePrice = (sku) => {
+const decreasePrice = async (sku) => {
   const localParsed = JSON.parse(localStorage.cart);
   const item = localParsed.find(obj => obj.sku === sku);
   const index = localParsed.findIndex(e => e.sku === item.sku);
-  sumPrice(-item.salePrice);
+  await sumPrice(-item.salePrice);
   localParsed.splice(index, 1);
   localStorage.cart = JSON.stringify(localParsed);
 };
-async function cartItemClickListener(event, sku) {
-  await decreasePrice(sku);
+function cartItemClickListener(event, sku) {
+  decreasePrice(sku);
   event.target.remove();
 }
 async function createCartItemElement({ sku, name, salePrice }) {
@@ -73,9 +73,9 @@ async function getResponse() {
   document.querySelectorAll('.item').forEach(async (e) => {
     const sku = getSkuFromProductItem(e);
     const getDetails = await getDetailsToCart(sku);
-    await e.lastChild.addEventListener('click', () => {
-      createCartItemElement(getDetails);
-      createStorage(getDetails);
+    await e.lastChild.addEventListener('click', async () => {
+      await createCartItemElement(getDetails);
+      await createStorage(getDetails);
     });
   });
 }
