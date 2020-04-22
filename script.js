@@ -48,8 +48,9 @@ const decreasePrice = (sku) => {
   localParsed.splice(index, 1);
   localStorage.cart = JSON.stringify(localParsed);
 };
-function cartItemClickListener(event, sku) {
-  decreasePrice(sku);
+function cartItemClickListener(event) {
+  const scrap = event.target.innerText.match((/MLB.{10}/i))
+  decreasePrice(scrap[0]);
   event.target.remove();
 }
 async function createCartItemElement({ sku, name, salePrice }) {
@@ -57,7 +58,7 @@ async function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   await sumPrice(salePrice);
-  li.addEventListener('click', event => cartItemClickListener(event, sku));
+  li.addEventListener('click', cartItemClickListener);
   document.querySelector('.cart__items').appendChild(li);
 }
 const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
