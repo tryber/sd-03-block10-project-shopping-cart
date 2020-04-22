@@ -49,7 +49,7 @@ const decreasePrice = (sku) => {
   localStorage.cart = JSON.stringify(localParsed);
 };
 function cartItemClickListener(event) {
-  const scrap = event.target.innerText.match((/MLB.{10}/i))
+  const scrap = event.target.innerText.match((/MLB.{10}/i));
   decreasePrice(scrap[0]);
   event.target.remove();
 }
