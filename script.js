@@ -40,17 +40,14 @@ async function sumPrice(salePrice) {
   const sum = Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
   totalPrice.innerHTML = sum;
 }
-const decreasePrice = (sku) => {
+function cartItemClickListener(event) {
+  const scrap = event.target.innerText.match((/MLB.{10}/i));
   const localParsed = JSON.parse(localStorage.cart);
-  const item = localParsed.find(obj => obj.sku === sku);
+  const item = localParsed.find(obj => obj.sku === scrap[0]);
   const index = localParsed.findIndex(e => e.sku === item.sku);
   sumPrice(-item.salePrice);
   localParsed.splice(index, 1);
   localStorage.cart = JSON.stringify(localParsed);
-};
-function cartItemClickListener(event) {
-  const scrap = event.target.innerText.match((/MLB.{10}/i));
-  decreasePrice(scrap[0]);
   event.target.remove();
 }
 async function createCartItemElement({ sku, name, salePrice }) {
