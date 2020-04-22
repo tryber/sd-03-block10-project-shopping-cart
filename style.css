@@ -30,7 +30,24 @@
   justify-content: center;
 }
 
+@keyframes change {
+
+  5% {
+    border: 2px solid blue;
+  }
+
+  50% {
+    border: 2px solid red;
+  }
+
+  100% {
+    border: 2px solid blue;
+  }
+}
+
 .item {
+  animation: change infinite;
+  animation-duration: 4s;
   border: 2px solid blue;
   border-radius: 5px;
   box-sizing: border-box;
@@ -51,13 +68,27 @@
   text-align: center;
 }
 
+@keyframes aparecer {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .item .item__image {
   width: 100%;
+  animation: aparecer;
+  animation-duration: 2s;
 }
 
 .item .item__add {
   background-color: green;
   border: 0;
+  border-radius: 5px;
   cursor: pointer;
   margin: 0;
   padding: 5px;
