@@ -81,7 +81,7 @@ function emptyCart() {
 }
 async function loadOnCart() {
   const storage = localStorage.getItem('cart');
-  const populateCart = async (storage) => {
+  const populateCart = async () => {
     const cartList = document.querySelector('.cart__items');
     cartList.innerHTML = storage;
     const items = [...document.getElementsByClassName('cart__item')];
@@ -90,7 +90,7 @@ async function loadOnCart() {
       sumPrice(JSON.parse(e.innerText.match(/([0-9.]){1,}$/)[0]));
     });
   };
-  await storage ? populateCart(storage) : localStorage.clear();
+  return await storage ? populateCart(storage) : localStorage.clear();
 }
 
 window.onload = async function onload() {
