@@ -28,7 +28,7 @@ function sumPrice(salePrice) {
   totalPrice.innerHTML = sum;
 }
 function createStorage() {
-  const price = document. querySelector('.total-price').innerHTML;
+  const price = document.querySelector('.total-price').innerHTML;
   const cart = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart', cart);
   localStorage.setItem('total-price', price);
@@ -56,8 +56,7 @@ async function getDetailsToCart(id) {
   const salePrice = respToJson.price;
   return { sku, name, salePrice };
 }
-const addListenerToButtons = () => 
-  document.querySelectorAll('.item').forEach(async (e) => {
+const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
   const sku = await getSkuFromProductItem(e);
   const getDetails = await getDetailsToCart(sku);
   e.lastChild.addEventListener('click', async () => {
@@ -89,10 +88,8 @@ async function loadOnCart() {
     const cartList = document.querySelector('.cart__items');
     cartList.innerHTML = storage;
     const items = [...document.getElementsByClassName('cart__item')];
-    items.forEach(async (e) => 
-      e.addEventListener('click', cartItemClickListener));
-    document.querySelector('.total-price').innerHTML = localStorage.getItem('total-price')
-    console.log(localStorage.getItem('total-price'))
+    items.forEach(async e => e.addEventListener('click', cartItemClickListener));
+    document.querySelector('.total-price').innerHTML = localStorage.getItem('total-price');
   };
   return await storage ? populateCart(storage) : localStorage.clear();
 }
