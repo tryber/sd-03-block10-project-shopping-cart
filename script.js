@@ -79,7 +79,7 @@ function emptyCart() {
   document.querySelector('.empty-cart').addEventListener('click', () => {
     document.querySelector('.total-price').innerText = 0;
     document.querySelector('.cart__items').innerHTML = '';
-    localStorage.clear()
+    localStorage.clear();
   });
 }
 function loadOnCart() {
