@@ -99,5 +99,4 @@ getResponse()
 window.onload = async function onload() {
   loadOnCart();
   emptyCart();
-
 };
