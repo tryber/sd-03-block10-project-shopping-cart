@@ -22,9 +22,9 @@ function createProductItemElement({ sku, name, image }) {
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-function sumPrice(salePrice) {
+async function sumPrice(salePrice) {
   const totalPrice = document.querySelector('.total-price');
-  const sum = Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
+  const sum = await Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
   totalPrice.innerHTML = sum;
 }
 function createStorage() {
@@ -46,7 +46,6 @@ async function createCartItemElement({ sku, name, salePrice }) {
   await sumPrice(salePrice);
   li.addEventListener('click', cartItemClickListener);
   document.querySelector('.cart__items').appendChild(li);
-  createStorage();
 }
 async function getDetailsToCart(id) {
   const response = await fetch(`https://api.mercadolibre.com/items/${id}`);
@@ -61,6 +60,7 @@ const addListenerToButtons = () => document.querySelectorAll('.item').forEach(as
   const getDetails = await getDetailsToCart(sku);
   e.lastChild.addEventListener('click', async () => {
     await createCartItemElement(getDetails);
+    createStorage();
   });
 });
 async function getResponse() {
@@ -79,19 +79,19 @@ function emptyCart() {
   document.querySelector('.empty-cart').addEventListener('click', () => {
     document.querySelector('.total-price').innerText = 0;
     document.querySelector('.cart__items').innerHTML = '';
-    localStorage.clear();
+    localStorage.clear()
   });
 }
-async function loadOnCart() {
+function loadOnCart() {
   const storage = localStorage.getItem('cart');
   const populateCart = async () => {
     const cartList = document.querySelector('.cart__items');
     cartList.innerHTML = storage;
     const items = [...document.getElementsByClassName('cart__item')];
-    items.forEach(async e => e.addEventListener('click', cartItemClickListener));
     document.querySelector('.total-price').innerHTML = localStorage.getItem('total-price');
+    items.forEach(e => e.addEventListener('click', cartItemClickListener));
   };
-  return await storage ? populateCart(storage) : localStorage.clear();
+  return storage ? populateCart(storage) : localStorage.clear();
 }
 getResponse()
   .then(() => document.querySelector('.loading').remove())
