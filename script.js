@@ -93,10 +93,10 @@ function loadOnCart() {
   };
   return storage ? populateCart(storage) : localStorage.clear();
 }
-getResponse()
-  .then(() => document.querySelector('.loading').remove())
-  .catch(error => console.error(error));
 window.onload = async function onload() {
   loadOnCart();
   emptyCart();
+  await getResponse()
+  .then(() => document.querySelector('.loading').remove())
+  .catch(error => console.error(error));
 };
