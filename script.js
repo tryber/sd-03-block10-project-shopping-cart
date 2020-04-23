@@ -10,11 +10,6 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
-function createStorage({ sku, name, salePrice }) {
-  const cart = (localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : '[]';
-  cart.push({ sku, name, salePrice });
-  localStorage.setItem('cart', JSON.stringify(cart));
-}
 async function getDetailsToCart(id) {
   const response = await fetch(`https://api.mercadolibre.com/items/${id}`);
   const respToJson = await response.json();
@@ -41,13 +36,8 @@ async function sumPrice(salePrice) {
   totalPrice.innerHTML = sum;
 }
 function cartItemClickListener(event) {
-  const scrap = event.target.innerText.match((/MLB.{10}/i));
-  const localParsed = JSON.parse(localStorage.cart);
-  const item = localParsed.find(obj => obj.sku === scrap[0]);
-  const index = localParsed.findIndex(e => e.sku === item.sku);
-  sumPrice(-item.salePrice);
-  localParsed.splice(index, 1);
-  localStorage.cart = JSON.stringify(localParsed);
+  const price = event.target.innerText.match(/([0-9.]){1,}$/)[0];
+  sumPrice(-price);
   event.target.remove();
 }
 async function createCartItemElement({ sku, name, salePrice }) {
@@ -58,11 +48,15 @@ async function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   document.querySelector('.cart__items').appendChild(li);
 }
+function createStorage() {
+  const cart = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('cart', cart);
+}
 const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
   const sku = await getSkuFromProductItem(e);
   const getDetails = await getDetailsToCart(sku);
-  await e.lastChild.addEventListener('click', () => {
-    createCartItemElement(getDetails);
+  e.lastChild.addEventListener('click', async () => {
+    await createCartItemElement(getDetails);
     createStorage(getDetails);
   });
 });
@@ -82,18 +76,27 @@ function emptyCart() {
   document.querySelector('.empty-cart').addEventListener('click', () => {
     document.querySelector('.total-price').innerText = 0;
     document.querySelectorAll('li.cart__item').forEach(e => e.remove());
-    localStorage.setItem('cart', '[]');
+    localStorage.clear();
   });
 }
 async function loadOnCart() {
   const storage = localStorage.getItem('cart');
-  const populateCart = local => local.forEach(e => createCartItemElement(e));
-  return await storage ? populateCart(JSON.parse(storage)) : localStorage.setItem('cart', '[]');
+  const populateCart = async (storage) => {
+    const cartList = document.querySelector('.cart__items');
+    cartList.innerHTML = storage;
+    const items = [...document.getElementsByClassName('cart__item')];
+    await items.forEach((e) => {
+      e.addEventListener('click', cartItemClickListener);
+      sumPrice(JSON.parse(e.innerText.match(/([0-9.]){1,}$/)[0]));
+    });
+  };
+  await storage ? populateCart(storage) : localStorage.clear();
 }
+
 window.onload = async function onload() {
   loadOnCart();
   emptyCart();
   getResponse()
     .then(() => document.querySelector('.loading').remove())
     .catch(error => console.error(error));
-};
+}
