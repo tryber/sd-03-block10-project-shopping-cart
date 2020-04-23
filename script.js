@@ -88,15 +88,16 @@ async function loadOnCart() {
     const items = [...document.getElementsByClassName('cart__item')];
     items.forEach(async (e) => {
       e.addEventListener('click', cartItemClickListener);
-      await sumPrice(JSON.parse(e.innerText.match(/([0-9.]){1,}$/)[0]));
+      sumPrice(JSON.parse(e.innerText.match(/([0-9.]){1,}$/)[0]));
     });
   };
   return await storage ? populateCart(storage) : localStorage.clear();
 }
+getResponse()
+  .then(() => document.querySelector('.loading').remove())
+  .catch(error => console.error(error));
 window.onload = async function onload() {
-  await loadOnCart();
+  loadOnCart();
   emptyCart();
-  await getResponse()
-    .then(() => document.querySelector('.loading').remove())
-    .catch(error => console.error(error));
+
 };
