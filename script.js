@@ -35,10 +35,15 @@ async function sumPrice(salePrice) {
   const sum = Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
   totalPrice.innerHTML = sum;
 }
+function createStorage() {
+  const cart = document.querySelector('.cart__items').innerHTML;
+  localStorage.setItem('cart', cart);
+}
 async function cartItemClickListener(event) {
   const price = event.target.innerText.match(/([0-9.]){1,}$/)[0];
   await sumPrice(-price);
   event.target.remove();
+  createStorage()
 }
 async function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -47,10 +52,6 @@ async function createCartItemElement({ sku, name, salePrice }) {
   await sumPrice(salePrice);
   await li.addEventListener('click', cartItemClickListener);
   document.querySelector('.cart__items').appendChild(li);
-}
-function createStorage() {
-  const cart = document.querySelector('.cart__items').innerHTML;
-  localStorage.setItem('cart', cart);
 }
 const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
   const sku = await getSkuFromProductItem(e);
