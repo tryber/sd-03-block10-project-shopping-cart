@@ -43,7 +43,7 @@ async function cartItemClickListener(event) {
   const price = event.target.innerText.match(/([0-9.]){1,}$/)[0];
   await sumPrice(-price);
   event.target.remove();
-  createStorage()
+  createStorage();
 }
 async function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
