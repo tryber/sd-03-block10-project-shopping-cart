@@ -75,3 +75,9 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.load {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  margin-top: 200px;
+  text-align: center;
+}

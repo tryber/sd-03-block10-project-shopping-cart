@@ -61,4 +61,5 @@ window.onload = async () => {
       cartIten.appendChild(createProductItemElement(elemento));
     });
   });
+  document.getElementsByClassName('load')[0].remove();
 };
