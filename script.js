@@ -35,9 +35,9 @@ async function sumPrice(salePrice) {
   const sum = Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
   totalPrice.innerHTML = sum;
 }
-function cartItemClickListener(event) {
+async function cartItemClickListener(event) {
   const price = event.target.innerText.match(/([0-9.]){1,}$/)[0];
-  sumPrice(-price);
+  await sumPrice(-price);
   event.target.remove();
 }
 async function createCartItemElement({ sku, name, salePrice }) {
@@ -45,7 +45,7 @@ async function createCartItemElement({ sku, name, salePrice }) {
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   await sumPrice(salePrice);
-  li.addEventListener('click', cartItemClickListener);
+  await li.addEventListener('click', cartItemClickListener);
   document.querySelector('.cart__items').appendChild(li);
 }
 function createStorage() {
@@ -55,7 +55,7 @@ function createStorage() {
 const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
   const sku = await getSkuFromProductItem(e);
   const getDetails = await getDetailsToCart(sku);
-  e.lastChild.addEventListener('click', async () => {
+  await e.lastChild.addEventListener('click', async () => {
     await createCartItemElement(getDetails);
     createStorage(getDetails);
   });
@@ -85,18 +85,17 @@ async function loadOnCart() {
     const cartList = document.querySelector('.cart__items');
     cartList.innerHTML = storage;
     const items = [...document.getElementsByClassName('cart__item')];
-    await items.forEach((e) => {
+    items.forEach(async (e) => {
       e.addEventListener('click', cartItemClickListener);
-      sumPrice(JSON.parse(e.innerText.match(/([0-9.]){1,}$/)[0]));
+      await sumPrice(JSON.parse(e.innerText.match(/([0-9.]){1,}$/)[0]));
     });
   };
   return await storage ? populateCart(storage) : localStorage.clear();
 }
-
 window.onload = async function onload() {
-  loadOnCart();
+  await loadOnCart();
   emptyCart();
-  getResponse()
+  await getResponse()
     .then(() => document.querySelector('.loading').remove())
     .catch(error => console.error(error));
 };
