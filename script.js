@@ -14,16 +14,12 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-let totalPrice = 0;
-
 function createCartItemElement({ id, title, price }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${id} | NAME: ${title} | PRICE: $${price}`;
   li.addEventListener('click', (del) => {
     del.target.remove();
-    totalPrice -= price;
-    cartPrice.innerHTML = totalPrice;
   });
   return li;
 }
