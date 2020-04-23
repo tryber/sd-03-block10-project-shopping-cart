@@ -99,4 +99,5 @@ window.onload = async function onload() {
   getResponse()
     .then(() => document.querySelector('.loading').remove())
     .catch(error => console.error(error));
-}
+};
+  //comment
