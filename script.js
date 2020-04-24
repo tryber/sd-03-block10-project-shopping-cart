@@ -57,10 +57,10 @@ async function getDetailsToCart(id) {
 const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
   const sku = await getSkuFromProductItem(e);
   const getDetails = await getDetailsToCart(sku);
-  e.lastChild.addEventListener('click', async () => {
-    await createCartItemElement(getDetails);
-    await sumPrice(getDetails.salePrice);
-    await createStorage();
+  e.lastChild.addEventListener('click', () => {
+    createCartItemElement(getDetails);
+    sumPrice(getDetails.salePrice);
+    createStorage();
   });
 });
 async function getResponse() {
@@ -84,7 +84,7 @@ function emptyCart() {
 }
 function loadOnCart() {
   const storage = localStorage.getItem('cart');
-  const populateCart = async () => {
+  const populateCart = () => {
     const cartList = document.querySelector('.cart__items');
     cartList.innerHTML = storage;
     const items = [...document.getElementsByClassName('cart__item')];
@@ -93,10 +93,13 @@ function loadOnCart() {
   };
   return storage ? populateCart(storage) : localStorage.clear();
 }
-window.onload = async function onload() {
+window.onload = function onload() {
   loadOnCart();
   emptyCart();
-  await getResponse()
+  getResponse()
     .then(() => document.querySelector('.loading').remove())
     .catch(error => console.error(error));
+};
+window.onunload = function onunload() {
+  createStorage();
 };
