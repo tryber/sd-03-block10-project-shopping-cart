@@ -8,15 +8,14 @@ function createProductImageElement(imageSource) {
 }
 
 function createCustomElement(element, className, innerText) {
-  const e = document.c
-function createProductItemElement({ sku, name, image }) {
-  const section = document.reateElement(element);
+  const e = document.createElement(element);
   e.className = className;
   e.innerText = innerText;
   return e;
 }
 
-createElement('section');
+function createProductItemElement({ sku, name, image }) {
+  const section = document.createElement('section');
   section.className = 'item';
 
   section.appendChild(createCustomElement('span', 'item__sku', sku));
