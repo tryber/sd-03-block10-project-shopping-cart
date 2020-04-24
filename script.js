@@ -67,6 +67,22 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
+function emptyCart() {
+  const list = document.getElementsByTagName('cart__items');
+  const productsList = list.child;
+  let first = productsList[0];
+  while (first) {
+    first.remove();
+    first = productsList[0];
+  }
+}
+
+const btn = document.getElementsByClassName('empty-cart')[0];
+
+console.log(btn);
+
+// btn.addEventListener('click', emptyCart)
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -81,3 +97,4 @@ async function addToCart(sku) {
   const productData = { sku: product.id, name: product.title, salePrice: product.price }
   ol.appendChild(createCartItemElement(productData))
 }
+
