@@ -36,7 +36,7 @@ function createStorage() {
 async function cartItemClickListener(event) {
   const price = event.target.innerText.match(/([0-9.]){1,}$/)[0];
   await sumPrice(-price);
-  document.getElementsByClassName('cart__items')[0].removeChild(event.target); 
+  document.getElementsByClassName('cart__items')[0].removeChild(event.target);
   await createStorage();
 }
 function createCartItemElement({ sku, name, salePrice }) {
@@ -97,6 +97,6 @@ window.onload = async function onload() {
   loadOnCart();
   emptyCart();
   await getResponse()
-  .then(() => document.querySelector('.loading').remove())
-  .catch(error => console.error(error));
+    .then(() => document.querySelector('.loading').remove())
+    .catch(error => console.error(error));
 };
