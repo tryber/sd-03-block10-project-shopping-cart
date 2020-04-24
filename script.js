@@ -33,9 +33,9 @@ function createStorage() {
   localStorage.setItem('cart', cart);
   localStorage.setItem('total-price', price);
 }
-function cartItemClickListener(event) {
+async function cartItemClickListener(event) {
   const price = event.target.innerText.match(/([0-9.]){1,}$/)[0];
-  sumPrice(-price);
+  await sumPrice(-price);
   document.getElementsByClassName('cart__items')[0].removeChild(event.target);
   createStorage();
 }
@@ -57,9 +57,9 @@ async function getDetailsToCart(id) {
 const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
   const sku = await getSkuFromProductItem(e);
   const getDetails = await getDetailsToCart(sku);
-  e.lastChild.addEventListener('click', () => {
+  e.lastChild.addEventListener('click', async () => {
     createCartItemElement(getDetails);
-    sumPrice(getDetails.salePrice);
+    await sumPrice(getDetails.salePrice);
     createStorage();
   });
 });
