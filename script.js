@@ -92,9 +92,15 @@ function emptyCart() {
   saveCart();
 }
 
+function chargeLocalStorage() {
+  const cartItems = localStorage.getItem('Cart Items');
+  document.querySelector('.cart__items').innerHTML = cartItems;
+  const array = document.querySelectorAll('.cart__item');
+  array.forEach(el => el.addEventListener('click', cartItemClickListener));
+}
+
 window.onload = function onload() {
-  const cartItem = document.querySelector('.cart__items')
-  cartItem.innerHTML = localStorage.getItem('Cart Items');
+  chargeLocalStorage()
 
   const clearAll = document.getElementsByClassName('empty-cart')[0];
   clearAll.addEventListener('click', emptyCart)
