@@ -36,14 +36,13 @@ function createStorage() {
 async function cartItemClickListener(event) {
   const price = event.target.innerText.match(/([0-9.]){1,}$/)[0];
   await sumPrice(-price);
-  event.target.remove();
-  createStorage();
+  document.getElementsByClassName('cart__items')[0].removeChild(event.target); 
+  await createStorage();
 }
-async function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  await sumPrice(salePrice);
   li.addEventListener('click', cartItemClickListener);
   document.querySelector('.cart__items').appendChild(li);
 }
@@ -60,7 +59,8 @@ const addListenerToButtons = () => document.querySelectorAll('.item').forEach(as
   const getDetails = await getDetailsToCart(sku);
   e.lastChild.addEventListener('click', async () => {
     await createCartItemElement(getDetails);
-    createStorage();
+    await sumPrice(getDetails.salePrice);
+    await createStorage();
   });
 });
 async function getResponse() {
