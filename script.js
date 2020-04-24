@@ -33,11 +33,11 @@ function createStorage() {
   localStorage.setItem('cart', cart);
   localStorage.setItem('total-price', price);
 }
-async function cartItemClickListener(event) {
+function cartItemClickListener(event) {
   const price = event.target.innerText.match(/([0-9.]){1,}$/)[0];
-  await sumPrice(-price);
+  sumPrice(-price);
   document.getElementsByClassName('cart__items')[0].removeChild(event.target);
-  await createStorage();
+  createStorage();
 }
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
