@@ -71,7 +71,7 @@ adicionarItemAoCarrinho = async (sku) => {
 
 window.onload = async function onload() {
   const loading1 = document.getElementsByClassName('loading')[0];
-  loading1.innerHTML = '<span class= loading class= sr-only>Loading...</span>';
+  loading1.innerHTML = '<span class= loadingb>Loading...</span>';
   await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
     .then(resp => resp.json())
     .then(json => json.results.forEach(products => document.getElementsByClassName('items')[0]

@@ -82,9 +82,9 @@
 
 .cabecalho {
   align-items: center;
-  background-color: cornflowerblue;
+  background-color: lightsteelblue;
   display: flex;
-  height: 100px;
+  height: 200px;
   justify-content: center;
   text-align: center;
 }
