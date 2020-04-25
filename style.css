@@ -74,3 +74,21 @@
   font-size: 16pt;
   text-align: center;
 }
+
+.loading {
+  color: black;
+  font-size: 30px;
+}
+
+.cabecalho {
+  align-items: center;
+  background-color: lightsteelblue;
+  display: flex;
+  height: 200px;
+  justify-content: center;
+  text-align: center;
+}
+
+.cart__item {
+  text-align: center;
+}
