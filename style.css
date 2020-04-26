@@ -62,7 +62,7 @@
 }
 
 .item .item__add {
-  background-color: rgba(18, 104, 216, 0.781);;
+  background-color: rgba(18, 104, 216, 0.781);
   border: 0;
   cursor: pointer;
   margin: 0;
@@ -82,10 +82,16 @@
 }
 
 .loading {
-  align-items: center;
-  color: rgba(18, 104, 216, 0.781);
-  display: flex;
-  font-family: Courier New, Courier, monospace;
-  font-size: 30px;
-  font-weight: 700;
+  animation: spin 2s linear infinite;
+  border: 16px solid rgb(228, 227, 227);
+  border-top: 16px solid rgba(18, 104, 216, 0.781);
+  border-radius: 50%;
+  margin-top: 20px;
+  height: 50px;
+  width: 50px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

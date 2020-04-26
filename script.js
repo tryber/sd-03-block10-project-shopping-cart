@@ -1,6 +1,5 @@
 const fetchSeachResult = async () => {
   const text = document.querySelector('.loading');
-  text.innerHTML = 'Loading...';
 
   const result = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   const apiJson = await result.json();
