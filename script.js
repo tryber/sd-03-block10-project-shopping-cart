@@ -25,19 +25,19 @@ function getSkuFromProductItem(item) {
 async function sumPrice(salePrice) {
   const totalPrice = document.querySelector('.total-price');
   const sum = await Math.round((JSON.parse(totalPrice.innerHTML) + salePrice) * 100) / 100;
-  totalPrice.innerHTML = sum;
+  totalPrice.innerHTML = await sum;
 }
-function createStorage() {
+function updateStorage() {
   const price = document.querySelector('.total-price').innerHTML;
   const cart = document.querySelector('.cart__items').innerHTML;
   localStorage.setItem('cart', cart);
   localStorage.setItem('total-price', price);
 }
-async function cartItemClickListener(event) {
+function cartItemClickListener(event) {
   const price = event.target.innerText.match(/([0-9.]){1,}$/)[0];
-  await sumPrice(-price);
+  sumPrice(-price);
   document.getElementsByClassName('cart__items')[0].removeChild(event.target);
-  await createStorage();
+  updateStorage();
 }
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -59,8 +59,8 @@ const addListenerToButtons = () => document.querySelectorAll('.item').forEach(as
   const getDetails = await getDetailsToCart(sku);
   e.lastChild.addEventListener('click', async () => {
     createCartItemElement(getDetails);
-    await sumPrice(getDetails.salePrice);
-    await createStorage();
+    sumPrice(getDetails.salePrice);
+    updateStorage();
   });
 });
 async function getResponse() {
@@ -89,7 +89,7 @@ function loadOnCart() {
     cartList.innerHTML = storage;
     const items = [...document.getElementsByClassName('cart__item')];
     document.querySelector('.total-price').innerHTML = localStorage.getItem('total-price');
-    return items.forEach(e => e.addEventListener('click', cartItemClickListener));
+    items.forEach(e => e.addEventListener('click', cartItemClickListener));
   };
   return storage ? populateCart(storage) : localStorage.clear();
 }
@@ -101,5 +101,5 @@ window.onload = function onload() {
     .catch(error => console.error(error));
 };
 window.onunload = function onunload() {
-  createStorage();
+  updateStorage();
 };
