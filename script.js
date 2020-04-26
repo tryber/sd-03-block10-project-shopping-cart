@@ -56,7 +56,7 @@ async function addToCart(sku) {
     .then(productData =>
       createCartItemElement({
         sku: productData.id, name: productData.title, salePrice: productData.price,
-      })
+      }),
     );
   ol.appendChild(product);
   sumItems();
