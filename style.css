@@ -1,5 +1,5 @@
 .empty-cart {
-  background-color: rgba(18 , 104 , 216 , 0.781);
+  background-color: rgb(106, 142, 250);
   font-weight: 700;
   justify-content: center;
 }
@@ -37,7 +37,7 @@
 }
 
 .item {
-  border: 2px solid rgba(18 , 104 , 216 , 0.781);
+  border: 2px solid rgb(106, 142, 250);
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
@@ -62,7 +62,7 @@
 }
 
 .item .item__add {
-  background-color: rgba(18 , 104 , 216 , 0.781);
+  background-color: rgb(106, 142, 250);
   border: 0;
   cursor: pointer;
   margin: 0;
@@ -84,7 +84,7 @@
 .loading {
   animation: spin 2s linear infinite;
   border: 16px solid rgb(228, 227, 227);
-  border-top: 16px solid rgba(18 , 104 , 216 , 0.781);
+  border-top: 16px solid rgb(106, 142, 250);
   border-radius: 50%;
   margin-top: 20px;
   height: 50px;
