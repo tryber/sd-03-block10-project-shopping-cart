@@ -1,3 +1,9 @@
+.empty-cart {
+  background-color: rgba(18, 104, 216, 0.781);
+  font-weight: 700;
+  justify-content: center;
+}
+
 .top-bar {
   align-items: center;
   display: flex;
@@ -31,7 +37,7 @@
 }
 
 .item {
-  border: 2px solid blue;
+  border: 2px solid rgba(18, 104, 216, 0.781);
   border-radius: 5px;
   box-sizing: border-box;
   display: flex;
@@ -56,7 +62,7 @@
 }
 
 .item .item__add {
-  background-color: green;
+  background-color: rgba(18, 104, 216, 0.781);;
   border: 0;
   cursor: pointer;
   margin: 0;
@@ -73,4 +79,13 @@
   flex-basis: 1;
   font-size: 16pt;
   text-align: center;
+}
+
+.loading {
+  align-items: center;
+  color: rgba(18, 104, 216, 0.781);
+  display: flex;
+  font-family: Courier New, Courier, monospace;
+  font-size: 30px;
+  font-weight: 700;
 }
