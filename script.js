@@ -37,7 +37,7 @@ async function cartItemClickListener(event) {
   const price = event.target.innerText.match(/([0-9.]){1,}$/)[0];
   await sumPrice(-price);
   document.getElementsByClassName('cart__items')[0].removeChild(event.target);
-  await createStorage();
+  createStorage();
 }
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
@@ -55,12 +55,12 @@ async function getDetailsToCart(id) {
   return { sku, name, salePrice };
 }
 const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
-  const sku = await getSkuFromProductItem(e);
+  const sku = getSkuFromProductItem(e);
   const getDetails = await getDetailsToCart(sku);
-  e.lastChild.addEventListener('click', async () => {
+  await e.lastChild.addEventListener('click', async () => {
     createCartItemElement(getDetails);
-    await sumPrice(getDetails.salePrice);
-    await createStorage();
+    sumPrice(getDetails.salePrice);
+    createStorage();
   });
 });
 async function getResponse() {
