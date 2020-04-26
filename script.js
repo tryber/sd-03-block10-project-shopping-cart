@@ -55,7 +55,7 @@ async function getDetailsToCart(id) {
   return { sku, name, salePrice };
 }
 const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
-  const sku = getSkuFromProductItem(e);
+  const sku = await getSkuFromProductItem(e);
   const getDetails = await getDetailsToCart(sku);
   e.lastChild.addEventListener('click', async () => {
     createCartItemElement(getDetails);
