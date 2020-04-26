@@ -12,6 +12,7 @@ const fetchProductData = async (itemId) => {
 
 const saveCart = () => {
   localStorage.setItem('Cart Items', document.querySelector('.cart__items').innerHTML);
+  localStorage.setItem('Total Price', document.querySelector('.total-price').innerHTML);
 };
 
 function createProductImageElement(imageSource) {
@@ -43,9 +44,12 @@ function createCartItemElement({ sku, name, salePrice }) {
 
 async function addToCart(sku) {
   const ol = document.getElementsByClassName('cart__items')[0];
-  const product = await fetchProductData(sku);
-  const productData = { sku: product.id, name: product.title, salePrice: product.price };
-  ol.appendChild(createCartItemElement(productData));
+  const product = await fetchProductData(sku)
+    .then(productData =>
+      createCartItemElement({ sku: productData.id, name: productData.title, salePrice: productData.price })
+    );
+  ol.appendChild(product);
+  sumItems();
   saveCart();
 }
 
@@ -86,13 +90,26 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+const sumItems = () => {
+  const Itens = document.querySelectorAll('.cart__item');
+  document.getElementsByClassName('total-price')[0].innerText = Math.round(
+    [...Itens].map(item => item.innerHTML.match(/[\d.\d]+$/))
+              .reduce((acc, add) => acc + parseFloat(add), 0) * 100) / 100;
+};
+
+
 function emptyCart() {
   const list = document.getElementsByClassName('cart__items')[0];
   list.innerHTML = '';
+  const totalPrice = document.getElementsByClassName('total-price')[0];
+  totalPrice.innerHTML = '0';
   saveCart();
 }
 
 function chargeLocalStorage() {
+  const lastTotalPrice = localStorage.getItem('Total Price');
+  document.querySelector('.total-price').innerHTML = lastTotalPrice;
+
   const cartItems = localStorage.getItem('Cart Items');
   document.querySelector('.cart__items').innerHTML = cartItems;
   const array = document.querySelectorAll('.cart__item');
