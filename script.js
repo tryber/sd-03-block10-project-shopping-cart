@@ -32,6 +32,7 @@ function createCustomElement(element, className, innerText) {
 function cartItemClickListener(event) {
   event.target.remove();
   saveCart();
+  sumItems();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -101,8 +102,7 @@ const sumItems = () => {
 function emptyCart() {
   const list = document.getElementsByClassName('cart__items')[0];
   list.innerHTML = '';
-  const totalPrice = document.getElementsByClassName('total-price')[0];
-  totalPrice.innerHTML = '0';
+  sumItems();
   saveCart();
 }
 
