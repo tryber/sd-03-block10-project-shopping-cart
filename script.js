@@ -29,6 +29,13 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+const sumItems = () => {
+  const Itens = document.querySelectorAll('.cart__item');
+  document.getElementsByClassName('total-price')[0].innerText = Math.round(
+    [...Itens].map(item => item.innerHTML.match(/[\d.\d]+$/))
+              .reduce((acc, add) => acc + parseFloat(add), 0) * 100) / 100;
+};
+
 function cartItemClickListener(event) {
   event.target.remove();
   saveCart();
@@ -47,7 +54,9 @@ async function addToCart(sku) {
   const ol = document.getElementsByClassName('cart__items')[0];
   const product = await fetchProductData(sku)
     .then(productData =>
-      createCartItemElement({ sku: productData.id, name: productData.title, salePrice: productData.price })
+      createCartItemElement({
+        sku: productData.id, name: productData.title, salePrice: productData.price
+      }),
     );
   ol.appendChild(product);
   sumItems();
@@ -90,14 +99,6 @@ displayItem();
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
-
-const sumItems = () => {
-  const Itens = document.querySelectorAll('.cart__item');
-  document.getElementsByClassName('total-price')[0].innerText = Math.round(
-    [...Itens].map(item => item.innerHTML.match(/[\d.\d]+$/))
-              .reduce((acc, add) => acc + parseFloat(add), 0) * 100) / 100;
-};
-
 
 function emptyCart() {
   const list = document.getElementsByClassName('cart__items')[0];
