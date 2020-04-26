@@ -57,9 +57,9 @@ async function getDetailsToCart(id) {
 const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
   const sku = getSkuFromProductItem(e);
   const getDetails = await getDetailsToCart(sku);
-  await e.lastChild.addEventListener('click', async () => {
+  e.lastChild.addEventListener('click', async () => {
     createCartItemElement(getDetails);
-    sumPrice(getDetails.salePrice);
+    await sumPrice(getDetails.salePrice);
     createStorage();
   });
 });
