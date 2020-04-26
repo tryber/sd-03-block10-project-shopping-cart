@@ -55,8 +55,8 @@ async function addToCart(sku) {
   const product = await fetchProductData(sku)
     .then(productData =>
       createCartItemElement({
-        sku: productData.id, name: productData.title, salePrice: productData.price
-      }),
+        sku: productData.id, name: productData.title, salePrice: productData.price,
+      })
     );
   ol.appendChild(product);
   sumItems();
