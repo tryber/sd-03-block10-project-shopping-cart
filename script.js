@@ -33,7 +33,7 @@ async function updateStorage() {
   const cart = document.querySelector('.cart__items').innerHTML;
   await sumPrice();
   localStorage.setItem('cart', cart);
-  localStorage.setItem('total-price', price);
+  await localStorage.setItem('total-price', price);
 }
 function cartItemClickListener(event) {
   document.getElementsByClassName('cart__items')[0].removeChild(event.target);
@@ -57,9 +57,8 @@ async function getDetailsToCart(id) {
 const addListenerToButtons = () => document.querySelectorAll('.item').forEach(async (e) => {
   const sku = await getSkuFromProductItem(e);
   const getDetails = await getDetailsToCart(sku);
-  await e.lastChild.addEventListener('click', () => {
+  e.lastChild.addEventListener('click', () => {
     createCartItemElement(getDetails);
-    sumPrice();
     updateStorage();
   });
 });
@@ -93,11 +92,11 @@ function loadOnCart() {
   return storage ? populateCart(storage) : console.log(null);
 }
 window.onload = function onload() {
+  emptyCart();
   getResponse()
     .then(() => document.querySelector('.loading').remove())
     .catch(error => console.error(error));
   loadOnCart();
-  emptyCart();
 };
 window.onunload = function onunload() {
   updateStorage();
