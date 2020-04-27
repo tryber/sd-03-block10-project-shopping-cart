@@ -1,10 +1,9 @@
 const fetchSeachResult = async () => {
-  const text = document.querySelector('.loading');
-
   const result = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   const apiJson = await result.json();
-  text.innerHTML = '';
-  text.classList.remove('loading');
+
+  document.querySelector('.loading').remove();
+
   return apiJson;
 };
 
