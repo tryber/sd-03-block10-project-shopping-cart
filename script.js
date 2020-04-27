@@ -76,10 +76,8 @@ async function getResponse() {
   addListenerToButtons();
 }
 function emptyCart() {
-  document.querySelector('.empty-cart').addEventListener('click', () => {
-    document.querySelector('.cart__items').innerHTML = '';
-    updateStorage();
-  });
+  document.querySelector('.cart__items').innerHTML = '';
+  updateStorage();
 }
 function loadOnCart() {
   const storage = localStorage.getItem('cart');
