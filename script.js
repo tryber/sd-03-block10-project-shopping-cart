@@ -1,4 +1,5 @@
 const fetchSeachResult = async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000))
   const result = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
   const apiJson = await result.json();
 

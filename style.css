@@ -81,7 +81,7 @@
   text-align: center;
 }
 
-/* .loading {
+.loading {
   animation: spin 2s linear infinite;
   border: 16px solid rgb( 228 , 227 , 227 );
   border-top: 16px solid rgb( 106 , 142 , 250 );
@@ -100,4 +100,4 @@
   100% {
     transform: rotate( 360deg );
   }
-} */
+}
