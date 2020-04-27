@@ -95,6 +95,6 @@ window.onload = function onload() {
   loadOnCart();
   document.querySelector('.empty-cart').addEventListener('click', emptyCart);
 };
-// window.onunload = function onunload() {
-//   updateStorage();
-// };
+window.onunload = function onunload() {
+  updateStorage();
+};
