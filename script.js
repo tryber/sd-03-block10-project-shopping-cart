@@ -87,12 +87,9 @@ function loadOnCart() {
   const storage = localStorage.getItem('cart');
   const populateCart = () => {
     const cartList = document.querySelector('.cart__items');
-    console.log(cartList);
     cartList.innerHTML = storage;
-    console.log(cartList);
     const items = document.getElementsByClassName('cart__item');
     document.querySelector('.total-price').innerHTML = localStorage.getItem('total-price');
-    console.log(items);
     [...items].forEach(e => e.addEventListener('click', cartItemClickListener));
   };
   return storage ? populateCart(storage) : console.log(null);
