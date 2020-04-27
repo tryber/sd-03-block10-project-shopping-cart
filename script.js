@@ -31,8 +31,8 @@ async function sumPrice() {
 async function updateStorage() {
   const price = document.querySelector('.total-price').innerHTML;
   const cart = document.querySelector('.cart__items').innerHTML;
-  await sumPrice();
   localStorage.setItem('cart', cart);
+  await sumPrice();
   await localStorage.setItem('total-price', price);
 }
 function cartItemClickListener(event) {
