@@ -96,5 +96,6 @@ window.onload = function onload() {
   document.querySelector('.empty-cart').addEventListener('click', emptyCart);
 };
 window.onunload = function onunload() {
+  sumPrice();
   updateStorage();
 };
