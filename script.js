@@ -77,8 +77,8 @@ async function getResponse() {
 }
 function emptyCart() {
   document.querySelector('.empty-cart').addEventListener('click', () => {
-    document.querySelector('.total-price').innerText = 0;
     document.querySelector('.cart__items').innerHTML = '';
+    document.querySelector('.total-price').innerHTML = 0;
     localStorage.clear();
   });
 }
