@@ -86,7 +86,7 @@ function loadOnCart() {
   cartList.innerHTML = lastCart;
   const items = document.querySelectorAll('.cart__item');
   items.forEach(item => item.addEventListener('click', cartItemClickListener));
-  sumPrices()
+  sumPrices();
   document.querySelector('.total-price').innerHTML = localStorage.getItem('total-price');
 }
 window.onload = function onload() {
