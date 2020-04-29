@@ -50,7 +50,7 @@ const url = 'computador';
 window.onload = async () => {
   const sectionItem = document.querySelector('.items');
   const cartItems = document.querySelector('.cart__items');
-  const buttonEmpty = document.querySelector('.empty-car');
+  // const buttonEmpty = document.querySelector('.empty-car');
 
   await urlItems(url)
     .then(resp => resp.json())
