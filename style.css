@@ -20,6 +20,7 @@
 .container {
   display: flex;
   justify-content: space-around;
+  margin-top: 25px;
   width: 100%;
 }
 
@@ -72,5 +73,11 @@
 .cart .cart__title {
   flex-basis: 1;
   font-size: 16pt;
+  text-align: center;
+}
+
+.loading {
+  font-family: Impact, Haettenschweiler, sans-serif;
+  margin-top: 200px;
   text-align: center;
 }
