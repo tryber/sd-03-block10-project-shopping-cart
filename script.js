@@ -1,4 +1,12 @@
-window.onload = function onload() { };
+window.onload = function onload() { 
+  const eraseAll = document.getElementById('empty-cart');
+  eraseAll.addEventListener('click', function () {
+    const lista = document.querySelector('.cart__items');
+    lista.innerHTML = '';
+    newLocalStorage();
+    return lista;
+  });
+};
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -31,7 +39,7 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  event.target.parentNode.removeChild(event.target);
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
