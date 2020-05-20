@@ -66,7 +66,8 @@ const createProductList = () => {
     .then(data => data.results.forEach(product => productArray.push({
       sku: product.id,
       name: product.title,
-      image: product.thumbnail })))
+      image: product.thumbnail,
+    })))
     .then(() => productArray.forEach(obj => itemsSec.appendChild(createProductItemElement(obj))));
 };
 
@@ -113,5 +114,4 @@ window.onload = function onload() {
   loadSavedItems();
   priceUpdate();
   getApi().then(() => document.getElementsByClassName('loading')[0].remove());
-  
 };
