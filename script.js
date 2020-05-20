@@ -1,5 +1,3 @@
-window.onload = function onload() { };
-
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -14,19 +12,6 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-const createProductList = () => {
-  const productArray = [];
-  const itemsSection = document.querySelector('.items');
-  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
-    .then(response => response.json())
-    .then(data => data.results.forEach(product => productArray.push({
-      sku: product.id,
-      name: product.title,
-      image: product.thumbnail })))
-    .then(() => productArray.forEach(obj =>
-      itemsSection.appendChild(createProductItemElement(obj))));
-};
-
 function createProductItemElement({ sku, name, image }) {
   const section = document.createElement('section');
   section.className = 'item';
@@ -39,14 +24,6 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
-
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
-
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -54,3 +31,21 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+const createProductList = () => {
+  const productArray = [];
+  const itemsSection = document.querySelector('.items');
+  fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador')
+    .then(response => response.json())
+    .then(data => data.results.forEach(product => productArray.push({
+      sku: product.id,
+      name: product.title,
+      image: product.thumbnail
+    })))
+    .then(() => productArray.forEach(obj =>
+      itemsSection.appendChild(createProductItemElement(obj))));
+};
+
+window.onload = function onload() {
+  return createProductList();
+};
