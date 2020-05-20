@@ -97,4 +97,5 @@ window.onload = function onload() {
   createProductList();
   loadSavedItems();
   priceUpdate();
+  getApi().then(() => document.querySelector('.loading')[0].remove());
 };
