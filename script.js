@@ -93,9 +93,25 @@ const emptyCart = () => {
 const emptyBtn = document.querySelector('.empty-cart');
 emptyBtn.addEventListener('click', emptyCart);
 
+const getApi = async () => {
+  await fetch(url)
+    .then(response => response.json())
+    .then(data => data.results.forEach(e => document.getElementsByClassName('items')[0]
+      .appendChild(createProductItemElement({
+        sku: e.id,
+        name: e.title,
+        image: e.thumbnail,
+      }))));
+  document.getElementsByClassName('empty-cart')[0].addEventListener('click', () => {
+    document.getElementsByClassName('cart__items')[0].innerHTML = '';
+    localStorage.clear();
+  });
+};
+
 window.onload = function onload() {
   createProductList();
   loadSavedItems();
   priceUpdate();
-  getApi().then(() => document.querySelector('.loading')[0].remove());
+  getApi().then(() => document.getElementsByClassName('loading')[0].remove());
+  
 };
