@@ -30,7 +30,7 @@ async function getTotalValue(valor, operador) {
     totCart -= valor;
   }
   document.getElementsByClassName('total-price')[0].innerText = ((totCart * 100) / 100);
-  // `Total: R$ ${totCart.toFixed(2)}` não passou no evaluator ;-;
+  // .toFixed(2) não passa, pois há um teste onde 1999 é diferente de 1999.00!!
   localStorage.setItem('cartItems', itensCarrinho);
 }
 
@@ -89,9 +89,9 @@ function createProductItemElement({ sku, name, image }) {
 async function getProducts() {
   document.querySelector('.items').innerHTML = '';
   loadingText(true);
-  // const campoBusca = document.querySelector('#input-search').value;
-  // A linha abaixo é necessária p/ passar nos requisitos, mas desabilita a caixa de pesquisa.
-  const campoBusca = 'computador';
+  const campoBusca = document.querySelector('#input-search').value;
+  // A linha abaixo é necessária p/ passar nos requisitos, mas desabilita a caixa de pesquisa acima
+  //const campoBusca = 'computador';
   fetch(urlBusca(campoBusca), { method: 'GET' })
     .then(resposta => resposta.json())
     .catch(erro => alert('Erro na obtenção da lista', erro))
